@@ -1,0 +1,98 @@
+<div id="<%= "task_#{@task.try(:id)}" %>" class='task padded'>
+  <%= form_for @task, :html => { :class => "form-horizontal uni" }, :remote => true do |f| %>
+    <% if @task.errors.count > 0 %>
+       <div class="alert alert-error">Oops! Something went wrong when we tried to save your data. Please review the errors below:</div>     
+    <% end %>
+
+    <div class="form-inputs narrow-control-groups">
+      
+      <div class="control-group string optional task_task compact-horizontal <%= @task.errors.has_key?(:task) ? "error": "" %>">
+        <%= f.label :task, :class => "string optional control-label" %>
+        <div class="controls">
+          <%= f.text_field :task, :class => "string optional" %>
+          <% if @task.errors.has_key?(:task) %>
+            <span class="help-inline"><%= @task.errors[:task].join(',') %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="control-group text optional task_note compact-horizontal">
+        <%= f.label :note, :class => "text optional control-label" %>
+        <div class="controls">
+          <%= f.text_area :note, :class => "text optional", :style => "min-height:50px;" %>
+        </div>
+      </div>
+
+
+      <div class="control-group date_picker optional task_due_date compact-horizontal <%= @task.errors.has_key?(:due_date) ? "error": "" %>">
+        <%= f.label :due_date, "Due", :class => "string optional control-label" %>
+        <div class="controls">
+          <%= f.text_field :due_date, :class => "date_picker optional", :readonly => true, :style => "width:105px;", :value => @task.due_date.try(:strftime,'%m/%d/%Y') %>
+          <%= f.hidden_field :due_date, :class => "due_date-alt" %>
+
+          <% if @task.errors.has_key?(:due_date) %>
+            <span class="help-inline"><%= @task.errors[:due_date].join(',') %></span>
+          <% end %>         
+        </div>
+      </div>
+
+      <% if @task.new_record? %>
+        <%= f.hidden_field :set_to_repeat, :class => "set-to-repeat-field" %>
+
+        <div class="control-group compact-horizontal show-set-to-repeat" style="<%= @task.set_to_repeat == 'true' ? 'display: none;' : '' %>">
+          <div class="controls">
+            <small><%= link_to "Set to repeat?", "#" %></small>
+          </div>
+        </div>
+
+        <div class="control-group text optional task_recurrence_rule compact-horizontal set-to-repeat" style="<%= @task.set_to_repeat == 'true' ? '' : 'display: none;' %>">
+          <%= f.label :recurrence_rule, "Repeats", :class => "optional control-label" %>
+          <div class="controls">
+            <%= f.select_recurring :recurrence_rule, [
+                IceCube::Rule.daily,
+                IceCube::Rule.weekly,
+                IceCube::Rule.weekly(2),
+                IceCube::Rule.monthly,
+              ] %>
+
+              <a href="#" rel="tooltip" data-toggle="tooltip" data-title="clear task recurrence" data-placement="left" class="close-toggle cancel-set-to-repeat" style="margin-left:20px;"><i class="icon-remove"></i></a>
+
+          </div>
+        </div>
+
+
+      <% else %>
+
+        <div class="control-group compact-horizontal" style="margin-bottom:10px;">
+          <div class="controls">
+            
+            <% if task.show_recurrence_information? %>
+              <span class="circle-icon">
+                <i class="icon-refresh"></i>
+              </span> <span>Repeats <%= task.task_recurrence.recurrence.to_s %></span><br>
+              <small style="line-height:8px;">If you want to change how often this task repeats, just delete this task and create a new one with same information and the desired repeat frequency</small>
+            <% else %>
+              <small style="line-height:8px;">If you want to set this task to repeat, just create a new task with the same information and the desired repeat frequency</small>
+            <% end %>
+          
+          </div>
+        </div>
+
+      <% end %>
+
+      </div>
+
+
+
+      <div class='actions' style="text-align:right;">
+        <%- if @task.id %>
+          <%= f.submit 'Save', :class => "btn btn-mini btn-green" %>
+          <%= link_to 'Cancel', task_path(@task), :class => "btn btn-mini", :method => :get, :data => {:remote => true, :type => "script"} %>
+        <% else %>
+          <%= f.submit 'Create', :class => "btn btn-mini btn-green" %>
+          <a href="#" class="btn btn-mini cancel">Cancel</a>
+        <% end %>
+      </div>
+      
+  <% end %>
+</div>

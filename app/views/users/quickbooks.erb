@@ -1,0 +1,86 @@
+<% provide(:title, "Quickbooks Integration") %>
+<% provide(:icon, "icon-cogs") %>
+
+
+<div class="container">
+
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+	<div class="row-fluid">
+		<div class="span12" style="padding-left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			<%= render 'users/settings_nav', :active => "Quickbooks Integration" %>
+		</div>
+	</div>		
+
+  	<div class="row-fluid">
+		<%= render 'shared/content_box_help', :message => "Here you can link your Quickbooks account to ZenMaid so that you can synchronize your customer information between both softwares. No more double entry!" %>
+	  </div>
+
+  	<div class="row-fluid">		
+		  <div class="span12">
+		  <div class="padded">
+		
+	    <%= render 'shared/flash_notice' %>	
+      
+
+          <%= hidden_field_tag "quickbooks_integration_page" %>
+
+          <div class="row-fluid">
+          <div class="span7 offset2">
+
+              <% if current_user.qb_company_id.blank? %>
+
+                <div class="green-message">
+
+                  <strong style="display:inline-block;margin-right:20px;line-height:40px;">Link your account to Quickbooks</strong>
+                  <div style="width:60px;display:inline-block;vertical-align:bottom;">
+                    <div>
+                      <ipp:connectToIntuit></ipp:connectToIntuit>
+                    </div>
+                  </div>
+
+                </div>
+              
+              <% else %>
+
+                <div class="green-message">
+
+                  <p><strong style="display:inline-block;margin-right:20px;line-height:40px;">You have successfully connected your account to Quickbooks!</strong></p>
+
+                  Visit the <%= link_to 'Contacts', customers_path %> page to sync your customer data from Quickbooks. <br>
+
+                </div>
+
+                <div class="blue-message">
+                  <%= link_to 'Disconnect My ZenMaid Account from QuickBooks', qb_disconnect_users_path, :class => "btn btn-red" %>           
+
+                </div>
+
+              <% end %>
+
+            </div>
+
+          </div>
+
+          </div>
+
+
+        <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+
+        <script>
+            intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= qb_authenticate_users_url %>'});
+        </script>
+
+  		</div>
+  		</div>
+  	</div>
+  	
+
+
+  	</div>
+  	</div>
+</div>

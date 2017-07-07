@@ -1,0 +1,50 @@
+
+
+<%= f.input :first_name %>
+<%= f.input :last_name %>
+<%= f.input :phone_number %>
+
+<%= f.input :email, :hint => "Cleaners can use this email address to sign in #{ link_to 'here', new_employee_session_path } and view their schedule".html_safe %>
+
+<% if @employee.active? %>
+
+
+	<% if current_employee.admin? %>
+
+		<% if current_employee.id != @employee.id %>
+			<%= f.input :allow_sign_in, :label => false, :as => :boolean, :input_html => {:id => "allow-employee-sign-in" }, :inline_label => "Allow this employee to sign in and view their schedule?", :as => :boolean, :checked_value => true, :unchecked_value => false %>
+		<% end %>
+
+		<div id="password-fields-wrapper" style="<%= !@employee.allow_sign_in? ? "display:none;" : nil %>">
+
+			<% if current_employee.id != @employee.id %>
+				<%= f.input :admin, :label => false, :as => :boolean, :inline_label => "Is this employee an office manager?", :hint => "Office managers can create, view, and edit customers, appointments, and employees", :checked_value => true, :unchecked_value => false %>
+
+				<%= f.input :allow_enter_time, :label => false, :as => :boolean, :inline_label => "Allow this employee to log their time in the system?", :hint => "If you enable this option, this employee will be able to log their time in and time out when they sign in, saving you time on payroll and time tracking", :checked_value => true, :unchecked_value => false %>
+
+			<% else %>
+
+				<div id="password-fields-wrapper" style="<%= !@employee.allow_sign_in? ? "display:none;" : nil %>">
+
+			<% end %>
+
+			<div class="control-group" id="show-password-fields" style="<%= "display:none;" if !@hide_password_fields %>">
+		   		<label class="control-label">Password</label>
+		    	<div class="controls">
+		    		<%= link_to "Change Password", "#", :style => "line-height:32px" %>
+		    	</div>
+			</div>	
+       
+   
+			<div id="password-fields" style="<%= "display:none;" if @hide_password_fields %>">
+
+
+				<%= f.input :password, :hint => '(leave blank if you don\'t want to change it)' %>
+				<%= f.input :password_confirmation %>
+			</div>
+
+		</div>
+
+	<% end %>
+<% end %>
+

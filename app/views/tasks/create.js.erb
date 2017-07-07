@@ -1,0 +1,15 @@
+if ($('#eventPreviewPanel').length) {
+		$.ajax({
+			type: "GET",
+            url: '/tasks/preview_panel/'+ <%= @task.id %> + '.js',
+         });
+		 filterObject.refresh_calendar();
+} else {
+	$(".new-task").html('');
+	$("#no-tasks-notification").remove();
+	$("#task-list").prepend("<%= escape_javascript("<li>#{render('tasks/task', :task => @task)}</li>".html_safe) %>");
+}
+
+$('#check_box_<%= @task.id %>').uniform();
+
+

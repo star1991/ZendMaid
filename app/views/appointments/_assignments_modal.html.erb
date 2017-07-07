@@ -1,0 +1,49 @@
+<div class="modal fade hide" id="assignments-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Assign Cleaners</h4>
+        </div>
+        <div class="modal-body form-horizontal">
+        	<% if @user.teams.count > 0 %>
+        		<%= f.input :team_id, :label => "Team", :collection => @user.teams.map { |team| [team.name, team.id] }, :wrapper_html => {:class => "compact-horizontal"}, :input_html => {:id => "team-field"} %>
+        	<% else %>
+        		<span class="blue" style="margin-right:20px;">You have not yet created any teams</span>
+				<%= link_to edit_teams_path, :class => "btn btn-blue" do %>
+					<i class="icon-plus"></i> Create Teams (optional)
+				<% end %><hr>
+			<% end %>
+        	
+        	
+        	
+        	<% if @user.employees.count > 0 %>
+        	
+				<div id="teams-employees-fields">
+					<% i = 0 %>
+					<%= f.simple_fields_for :assignments, @appointment.assignments.sort { |a, b| a.employee.first_name <=> b.employee.first_name } do |assignments_builder| %>
+						<% i += 1 %>
+						<%= assignments_builder.input :_destroy, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+						:inline_label => assignments_builder.object.employee.full_name, :input_html => {:checked => assignments_builder.object.new_record? ? false : true } %>
+						<%= assignments_builder.hidden_field :employee_id, :value => assignments_builder.object.employee_id %>
+						<% if i % 2 == 0 %><br><% end %>
+					<% end %>
+				</div>
+			
+				<div class="pull-right">
+					<%= link_to 'Assign Cleaners', '#', :class => "btn btn-green", :id => "assign-cleaners-button" %>
+				</div>
+			
+			<% else %>
+       			
+       			<span class="blue" style="margin-right:20px;margin-top:20px;">You have not yet created any employees</span>
+				<%= link_to new_employee_path, :class => "btn btn-red" do %>
+					<i class="icon-plus"></i> Create Employee
+				<% end %><br>
+			
+			<% end %>
+			
+		</div>
+	</div>
+	</div>
+</div>

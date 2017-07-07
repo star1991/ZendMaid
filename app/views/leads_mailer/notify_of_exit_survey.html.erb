@@ -1,0 +1,16 @@
+<p><%= "#{@user_profile.company_name} (ID #{@user.id}) just unsubscribed." %></p>
+
+<p>These are the results of their exit survey:</p>
+
+<strong>What made you want to cancel?</strong><br>
+<%= simple_format @user_profile.why_leaving %><br>
+<br>
+<strong>Which system are you using instead of ZenMaid?</strong><br>
+<%= simple_format @user_profile.previous_system %><br>
+
+<br>
+<strong>Would a specific feature have kept you onboard with us?</strong><br>
+<%= simple_format @user_profile.required_specific_feature %><br>
+<br>
+<strong>Despite leaving, how likely are you to recommend ZenMaid to another maid service or encourage them to check it out?</strong><br>
+<%= @user_profile.recommendation %><br>

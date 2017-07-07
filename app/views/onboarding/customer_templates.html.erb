@@ -1,0 +1,223 @@
+<% provide(:title, "Getting Started: Step 2") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+  	<div class="row-fluid">
+    	<div class="span12">
+      	<div class="padded">
+  			
+        <span style="font-size:24px;">Getting Started: Step 1 of 4</span>
+        <hr>
+
+        <div class="green-message">
+          <span class="headline"><strong>Do you spend hours every week trying to communicate with your clients?</strong> Wouldn't you rather be relaxing on the beach while your software handles it all for you?</span>
+          Let ZenMaid's automatic messaging do all the heavy lifting. When you put an appointment in your calendar on ZenMaid, you instantly schedule a variety of automated messages which keep your customers (and you) happy and grow your business on autopilot! 
+        </div>
+
+        <%= render 'shared/flash_notice' %>
+
+        <%= simple_form_for @user, :html => { :class => "form-horizontal uni template-form" }, :url => customer_templates_onboarding_path, :defaults => {:required => false}, :method => :post do |f| %>
+
+        <div class="row-fluid">
+        <div class="span11 offset1">
+
+          <div class="template-name"><strong>Appointment Confirmation Email</strong>
+          </div>
+           <%= link_to 'View Example', '#', :class => "btn btn-success btn-mini preview-email-template", :data => { :id =>  @email_confirmation_template.id} %>
+
+          <div class="row-fluid subheading">
+            <div class="span10">
+            <em>This email is sent right when you book an appointment on your calendar. Sending it is a great way to inspire confidence and makes your customer's life easier if they need to reach you.</em>
+            </div>
+          </div>
+
+
+          <%= f.simple_fields_for :email_templates, @email_confirmation_template do |template_builder| %>
+            <%= template_builder.input :time_offset, :as => :boolean, :label => false, :inline_label => "Ask me if I want to send this email after booking an appointment?", :checked_value => 1, :unchecked_value => nil %>
+          <% end %>
+
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="span11 offset1">
+
+          <div class="template-name"><strong>Appointment Reminder Email</strong><br>
+          </div>
+          <%= link_to 'View Example', '#', :class => "btn btn-info btn-mini preview-email-template", :data => { :id =>  @email_reminder_template.id} %>
+
+          <div class="row-fluid subheading">
+            <div class="span10">
+              <em><strong>How many times have you sent your cleaners to a client's house, only to find that they aren't even home?</strong> People can be forgetful. Both you and your customers will appreciate an email reminder about their upcoming cleaning. This email is proven to cut your no-shows in half (or more), meaning less stress and lost revenue for you and your cleaners.</em>
+            </div>
+          </div>
+
+          <%= f.simple_fields_for :email_templates, @email_reminder_template do |template_builder| %>          
+            <div class="control-group">
+            <div class="controls">
+
+            <strong class="timing-label">Send Email Reminder</strong>
+            <%= template_builder.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+              ["Never", nil], 
+              ["One day before appointment", -86400],
+              ["Two days before appointment", -172800],
+              ["Three days before appointment", -259200],
+              ["Four days before appointment", -345600],
+              ["Five days before appointment", -432000],
+              ["Six days before appointment", -518400],
+              ["One week before appointment", -604800],         
+              ]%>
+
+            </div>
+            </div>         
+          <% end %>
+
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="span11 offset1">
+
+          <div class="template-name"><strong>Appointment Reminder Text</strong>
+          </div>
+
+          <%= link_to 'View Example', '#', :class => "btn btn-danger btn-mini preview-text-template", :data => { :id =>  @text_reminder_template.id} %>
+          <br>
+          <div class="row-fluid subheading">
+            <div class="span10">
+              <em>Worried that your customers might not check their email in time? Send a quick reminder right to their phone or send both for maximum effectiveness! Used in combination, email and text reminders make your customers realize you really care. </em>
+            </div>
+          </div>
+
+          <%= f.simple_fields_for :text_templates, @text_reminder_template do |template_builder| %>          
+            <div class="control-group">
+            <div class="controls">
+
+            <strong class="timing-label">Send Text Reminder</strong>
+              <%= template_builder.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+                ["Never", nil], 
+                ["One day before appointment", -86400],
+                ["Two days before appointment", -172800],
+                ["Three days before appointment", -259200],
+                ["Four days before appointment", -345600],
+                ["Five days before appointment", -432000],
+                ["Six days before appointment", -518400],
+                ["One week before appointment", -604800],         
+                ]%>
+
+            </div>
+            </div>         
+          <% end %>
+
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="span11 offset1">
+
+          <div class="template-name"><strong>Appointment Follow-Up Email</strong><br>
+          </div>
+
+           <%= link_to 'View Example', '#', :class => "btn btn-inverse btn-mini preview-email-template", :data => { :id =>  @email_followup_template.id} %>  
+
+          <div class="row-fluid subheading">
+            <div class="span10">
+              <em><strong>Studies show that referral and social marketing are the MOST effective ways to acquire new clients!</strong> Every business owner knows that a good word from a friend is worth it's weight in gold. Use this email to follow up with your clients and ask for referrals and reviews right when it is <strong>most effective</strong> - after an amazing cleaning. Make it easy for your clients to recommend you to their friends with this simple email.</em>
+            </div>
+          </div>
+
+          <%= f.simple_fields_for :email_templates, @email_followup_template do |template_builder| %>       
+            <div class="control-group" style="margin-bottom:10px;">
+            <div class="controls">
+
+            <strong class="timing-label">Send Follow-Up Email</strong>
+            <%= template_builder.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+              ["Never", nil], 
+              ["One day after appointment", 86400],
+              ["Two days after appointment", 172800],
+              ["Three days after appointment", 259200],
+              ["Four days after appointment", 345600],
+              ["Five days after appointment", 432000],
+              ["Six days after appointment", 518400],
+              ["One week after appointment", 604800],         
+              ] %><br>
+            </div>
+            </div>
+
+          <% end %>
+
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="span11 offset1">
+
+          <div class="template-name"><strong>Come Back Email</strong>
+          </div>
+           <%= link_to 'View Example', '#', :class => "btn btn-red btn-mini preview-email-template", :data => { :id =>  @email_comeback_template.id} %>    
+          
+          <div class="row-fluid subheading">
+            <div class="span10">
+              <em><strong>Give yourself a chance to win your old customers back!</strong> This one email increased repeat business by 22% for Fast Friendly Spotless in Orange County, CA.</em> 
+            </div>
+          </div>
+          
+          <%= f.simple_fields_for :email_templates, @email_comeback_template do |template_builder| %>
+            <div class="control-group">
+            <div class="controls">
+
+            <strong class="timing-label">Send Come Back Email</strong>
+            <%= template_builder.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+              ["Never", nil], 
+              ["One week after customer's last appointment", 1],
+              ["Two weeks after customer's last appointment", 2],
+              ["Three weeks after customer's last appointment", 3],
+              ["Four weeks after customer's last appointment", 4],
+              ["Five weeks after customer's last appointment", 5],
+              ["Six weeks after customer's last appointment", 6],
+              ["Seven weeks after customer's last appointment", 7],         
+              ]%><br>
+
+              </div>
+              </div>  
+          <% end %>
+
+        </div>
+        </div>
+
+
+        <div class="blue-message">
+          <strong>Tip:</strong> ZenMaid makes it easy to send these any of these messages manually with a few clicks of a button so you can communicate with your customers when you need to, quckly!
+        </div>
+
+
+        <div class="row-fluid" style="margin-top:20px;">
+        <div class="span12">
+
+
+          <%= button_tag(type: 'submit', class: "btn btn-red pull-right") do %>
+             Information Tracking &nbsp; <i class="icon-arrow-right icon-white"></i><strong>Next</strong>
+          <% end %>
+
+        </div>
+        </div>
+
+        <% end %>
+  
+  			</div>
+     
+
+		</div>
+		</div>
+	</div>
+	</div>
+	
+  <%= render 'preview_email_modal' %>
+  <%= render 'preview_text_modal' %>
+	</div>
+</div>

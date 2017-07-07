@@ -1,0 +1,31 @@
+<%= f.simple_fields_for :appointment_fields, @user.appointment_fields[0] do |builder| %>
+	<%= builder.hidden_field :field_name, :value  => "Bedrooms" %>
+	<%= builder.hidden_field :input_type, :value => "select" %>
+	<%= builder.hidden_field :price, :value => "5.0" %>
+	<%= builder.hidden_field :max_field_value, :value => "5.0" %>
+	<%= builder.hidden_field :extra, :value => "0" %>
+	<%= builder.hidden_field :order, :value => "1" %>
+<% end %>
+
+<%= f.simple_fields_for :appointment_fields, @user.appointment_fields[1] do |builder| %>
+	<%= builder.hidden_field :field_name, :value  => "Bathrooms" %>
+	<%= builder.hidden_field :input_type, :value => "select" %>
+	<%= builder.hidden_field :price, :value => "5.0" %>
+	<%= builder.hidden_field :max_field_value, :value => "5.0" %>
+	<%= builder.hidden_field :extra, :value => "0" %>
+	<%= builder.hidden_field :order, :value => "2" %>
+<% end %>
+
+<%= f.simple_fields_for :appointment_fields, @user.appointment_fields[2] do |builder| %>
+	<%= builder.hidden_field :field_name, :value  => "Pets" %>
+	<%= builder.hidden_field :input_type, :value => "boolean" %>
+	<%= builder.hidden_field :price, :value => "15.0" %>
+	<%= builder.hidden_field :order, :value => "3" %>
+<% end %>
+
+<%= f.simple_fields_for :appointment_fields, @user.appointment_fields[3] do |builder| %>
+	<%= builder.hidden_field :field_name, :value  => "Deep Clean" %>
+	<%= builder.hidden_field :input_type, :value => "boolean" %>
+	<%= builder.hidden_field :price, :value => "50.0" %>
+	<%= builder.hidden_field :order, :value => "4" %>
+<% end %>

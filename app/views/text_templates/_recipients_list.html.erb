@@ -1,0 +1,26 @@
+
+<% if @with_number.size > 0 %>
+
+<b>Send text to: </b><br>
+
+<div style="padding-left:40px;margin-bottom:20px;">
+	<% @with_number.each_pair do |phone_number, label| %>
+		<%= f.hidden_field :sendable_numbers, :multiple => true, :value => phone_number %>
+    	<%= f.input phone_number.to_sym, :as => :boolean, :label => false, :checked => true, :input_html => {:checked => true}, :inline_label => label %>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @without_number.size > 0 %>
+
+<b class="red"> No cell phone number on record for: </b><br>
+
+<div style="padding-left:40px;margin-bottom:20px;max-width:400px;">
+     	<% @without_number.each_pair do |label, edit_link_url| %>
+         		<%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_link_url, :class => "btn btn-mini", :style => "margin-right:10px;margin-bottom:5px;" %><%= label %><br>
+        <% end %>
+</div>
+
+<% end %>
+

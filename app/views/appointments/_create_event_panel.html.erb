@@ -1,0 +1,34 @@
+<!-- create-event popup -->
+<div id="create-event-panel" style="display:none">
+	<h5 class="background-green" style="margin-top:47px;">
+		Create Appointment
+		<%= render 'shared/close_pageslide' %>
+	</h5>
+		
+	<div class="padded10">
+		<div class="description-panel">
+    	<div class="padded">
+        	<div style="margin-bottom:5px;" class="center"><strong>Choose a Customer</strong></div>
+            <select class="width200" id="customers" name="customers" style="text-align:left;">
+                <option value>New Record</option>
+                <optgroup label="Leads">
+                    <% @user.customers.order("customers.first_name ASC").where(:lead => true).each do |customer| %>
+                        <option value="<%= customer.id %>"><%= customer.full_name %></option>
+                    <% end %>
+                </optgroup>
+                <optgroup label="Customers">
+                    <% @user.customers.order("customers.first_name ASC").where(:lead => false).each do |customer| %>
+                        <option value="<%= customer.id %>"><%= customer.full_name %></option>
+                    <% end %>
+                </optgroup>
+            </select>
+            <div class="center">
+            	<div style="margin-top:10px;"><strong>Appointment time:</strong></div>
+            	<span class="time-range"></span><br>
+            	<button class="btn btn-blue create" style="margin:15px 0px;">Proceed to next step</button><br>
+            	<strong>You will be given the option to enter more information, set the recurrence, and edit the start and end time of this appointment on the next page</strong>
+            </div>
+   	 	</div>
+    	</div>
+    </div>
+</div>

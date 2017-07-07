@@ -1,0 +1,46 @@
+<% provide(:title, "Employees") %>
+<% provide(:icon, "icon-truck") %>
+
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+    	<div class="content-box-header">
+        	<i class="icon-truck"></i>Employees
+    	</div>
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+			<%= render 'shared/flash_notice' %>
+			<div class="row-fluid">
+				<div class="span12">
+   					<div class="pull-left">
+     					<%= link_to new_employee_path, :class => "btn btn-red" do %>
+          					<i class="icon-plus-sign"></i> New Employee
+          				<% end %>
+				  		<%= link_to payrolls_path, :class => "btn btn-blue" do %>
+				  			<i class="icon-briefcase"></i> Payroll
+				  		<% end %>
+    				</div>
+    				
+					<span class="pull-right"><span style="margin-right:5px">Filter </span><%= select_tag "employees-filter", options_for_select([['All', 'all'], ['Active', 'active'], ['Inactive', 'inactive']], :selected => params[:filter].present? ?  params[:filter] : 'active'), 
+          			:class => "width100" %></span>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+        	<div class="span12">
+        	<div id="dataTables">
+           		<%= render 'employees/employees_table', :employees => @employees, :id => 'employees-datatable' %>
+       		 </div>
+       		 </div>
+       		 </div>
+       	</div>
+      	</div>
+      	</div>
+    
+    </div>
+</div>
+
+</div>
+

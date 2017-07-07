@@ -1,0 +1,75 @@
+<div id="filter-panel" class="uni" style="display:none;margin-top:47px;">
+    	<h5 class="background-green">
+    		Filters
+			<%= render 'shared/close_pageslide' %>
+    	</h5>
+		<div class="padded10">
+		<div class="filters-wrapper description-panel-alt">
+		
+		<div style="<%= "display:none;" unless show_employees %>">
+		
+			<h6>Employees <span class="filter-notification blue"></span><a href="#" class="pull-right" style="margin-right:20px;"><i class="icon-minus"></i></a></h6>
+		
+			<div id="employees" class="filters">
+			<% @user.employees.active.each do |employee| %>
+		
+			<div class="control-group inline filter-wrapper" data-show="<%= grid && !employee.show_in_grid ? false : true %>" data-id="<%= employee.id %>">
+				<div class='color-preview' style=<%= "background-color:#{employee.calendar_color};" %> ></div><span class="name"><%= employee.full_name %></span>
+			</div>
+		
+			<% end %>
+			
+			<% if not grid%>
+				<div class="control-group inline filter-wrapper" data-show="true" data-id="0">
+					<div class='color-preview' style=<%= "background-color:#{@user.unassigned_color};" %> ></div><span class="name">No Cleaners Assigned</span>
+				</div>
+			<% end %>
+			
+			</div>
+		
+		</div>
+		
+		<div style="<%= "display:none;" unless show_teams %>">
+		
+		<h6>Team <span class="filter-notification blue"></span><a href="#" class="pull-right" style="margin-right:20px;"><i class="icon-minus"></i></a></h6>
+		
+		<div id="team" class="filters">
+			<% @user.teams.each do |team| %>
+		
+			<div class="control-group inline filter-wrapper" data-show="true" data-id="<%= team.id %>">
+				<div class='color-preview' style=<%= "background-color:#{team.calendar_color};" %> ></div><span class="name"><%= team.name %></span>
+			</div>
+		
+			<% end %>
+			
+			<% if not grid%>
+				<div class="control-group inline filter-wrapper" data-show="true" data-id="0">
+					<div class='color-preview' style=<%= "background-color:#{@user.no_team_color};" %> ></div><span class="name">No Team Assigned</span>
+				</div>
+			<% end %>
+			 
+		</div>
+	
+		</div>
+		
+		<% if @user.statuses.count > 0 %>
+		
+		<h6>Status <span class="filter-notification blue"></span><a href="#" class="pull-right" style="margin-right:20px;"><i class="icon-minus"></i></a></h6>
+		
+		<div id="status" class="filters">
+		<% @user.statuses.each do |status| %>
+		<div class="control-group inline filter-wrapper" data-show=<%= status.show_by_default %> data-id="<%= status.id %>">
+			<div class='color-preview' style=<%= "background-color:#{status.calendar_color};" %> ></div><span class="name"><%= status.name %></span>
+		</div>
+		
+		<% end %>
+		
+		<% end %>
+
+		</div>
+		<br><%= link_to "Apply Filter", '#', :id => "refresh-calendar-button", :class => "btn btn-red"%>
+		
+		</div>
+		</div>
+</div>
+

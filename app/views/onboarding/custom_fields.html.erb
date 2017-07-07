@@ -1,0 +1,76 @@
+<% provide(:title, "Getting Started: Step 3") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+  	<div class="row-fluid">
+    	<div class="span12">
+      	<div class="padded">
+  			
+        <span style="font-size:24px;">Getting Started: Step 2 of 4</span>
+        <hr>
+
+         <div class="green-message">
+          <span class="headline"><strong>Excellent service begins with excellent information!</strong> Go the extra mile and keep track of your customers' birthdays and quirky cleaning requirements. They will love the attention to detail.</span>
+          
+          Add anything and everything you can think of to make your customer's experience with you wonderful. ZenMaid can handle it! 
+        </div>
+
+        <%= render 'shared/flash_notice' %>
+
+        <div class="row-fluid">
+        <div class="span12" style="margin-bottom:10px;">
+
+          <strong style="font-size:18px;line-height:30px;"> Suggested Information </strong>
+      
+        </div>
+        </div>
+
+        <div class="row-fluid">
+        <div class="span12">
+
+            <ul class="activity bordered" id="custom-field-list" style="margin-bottom:20px;">
+              <% @user.customer_fields.each do |custom_field| %>
+                <%= render 'custom_fields/custom_field_wrapper', :custom_field => custom_field %>
+              <% end %>
+            </ul>
+
+          <%= link_to new_custom_field_path(:field_type => "customer"), :remote => true, :class => "btn btn-inverse btn-small" do %>
+            <i class="icon-plus"></i> Add Your Own!
+          <% end %>
+          
+        </div>
+        </div>     
+
+        <div class="blue-message" style="margin-top:10px;">
+          <strong>Tip!</strong> You can add and remove custom field information from your account at any time in the ZenMaid Settings.
+        </div>
+
+        <div class="row-fluid" style="margin-top:20px;">
+        <div class="span12">
+
+          <%= link_to customer_templates_onboarding_path, :class => "btn btn-blue pull-left" do %>
+            <i class="icon-arrow-left icon-white"></i><strong>Previous</strong> &nbsp; Customer Emails and Texts 
+          <% end %>
+
+          <%= link_to employee_management_onboarding_path, :class => "btn btn-red pull-right" do %>
+             Employee Management &nbsp; <i class="icon-arrow-right icon-white"></i><strong>Next</strong>
+          <% end %>
+
+        </div>
+        </div>
+
+  
+  			</div>
+		  </div>
+		</div>
+	</div>
+
+	</div>
+	
+	</div>
+</div>

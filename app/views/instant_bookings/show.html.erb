@@ -1,0 +1,43 @@
+<% provide(:title, "Booking for #{@instant_booking.full_name}") %>
+<% provide(:icon, "icon-book") %>
+
+
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+    	<div class="content-box-header">
+        	<i class="icon-book"></i> Booking for <%= @instant_booking.full_name %>
+    	</div>
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+
+		<%= render 'shared/flash_notice' %>
+
+		<% if @appointment.present? %>
+		<div class="alert alert-warning">
+			This booking was used to create an appointment on <%= @appointment.start_time.strftime('%a, %b %d') %>. <%= link_to "Click here to view", edit_appointment_path(@appointment), :class => "red" %>
+		</div>
+		<% else %>
+		<div class="alert alert-warning">
+			This booking has not yet been used to create an appointment.
+ 		</div>
+		<% end %>
+		
+		<%= render @instant_booking %>
+		
+        <div class="btn-group pull-left">
+            <%= link_to 'Back', instant_bookings_path, class: "btn" %>
+            <%= link_to 'Create Appointment From This Booking', new_customer_path(:instant_booking_id => @instant_booking.id), class: "btn btn-info" %>
+        </div>
+        <div class="btn-group pull-right">
+            <%= link_to 'Delete', @instant_booking, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you you want to delete this booking?' }  %>
+        </div>
+        <div class="clearfix"></div>
+        
+       	</div>
+		</div>
+		</div>
+	</div>
+</div>

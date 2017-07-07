@@ -1,0 +1,41 @@
+
+<div class="login-container center">
+
+<%= image_tag("zenmaid-logo.png") %>
+
+<div class="title">Sign In</div>
+
+<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "login-form" }) do |f| %>
+	<% flash.each do |name, msg| %>
+		<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+      	<a class="close" data-dismiss="alert">&#215;</a>
+      	<%= content_tag :div, msg, :id => "flash_#{name}" %>
+    	</div>
+	<% end %>
+ 
+  <ul class="fields-list">
+  	<li>
+	<i class="icon-envelope" style="float:left"></i>
+  	<%= f.input_field :email, :placeholder => "Email" %>
+  	</li>
+	
+  	<li>
+	<i class="icon-key" style="float:left"></i>
+  	<%= f.input_field :password, :placeholder => "Password" %>
+  	</li>
+ 
+  </ul>
+  
+  <div class="pull-left">
+  <%= f.input :remember_me, :as => :boolean, :label => false, :inline_label => "Remember Me", :wrapper_html => {:style => "margin-top: 10px;"}, :input_html => {:style => "padding-right: 4px;"} %>
+  </div>
+  
+  <div class="actions clearfix">
+  	<%= f.button :submit, "Sign In", :class => "btn btn-green btn-large login-btn" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+
+</div>

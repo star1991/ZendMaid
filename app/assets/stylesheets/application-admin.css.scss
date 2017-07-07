@@ -1,0 +1,61 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *
+ */
+
+@import "compass";
+@import "compass/css3";
+@import "bootstrap";
+@import "bootstrap-responsive";
+@import 'jqueryui';
+@import "font-awesome";
+
+@import "admin/uniform.default";
+@import "admin/jquery.pageslide";
+@import "admin/prettify";
+
+@import "admin/general/mixins";
+@import "admin/general/general";
+@import "admin/general/overrides";
+@import "admin/general/pages";
+
+@import "full_calendar/fullcalendar";
+@import "touchtouch/touchTouch";
+@import "toggles/toggles-full";
+@import "toastr/toastr";
+
+@import "chosen/mixin_helpers";
+@import "chosen/chosen";
+@import "chosen/chosen_fix";
+
+@import "admin/components/navigation";
+@import "admin/components/footer";
+@import "admin/components/buttons";
+@import "admin/components/labels";
+@import "admin/components/inputs";
+@import "admin/components/gallery";
+@import "admin/components/tables";
+
+@import "admin/dataTables";
+@import "admin/colorPicker";
+@import "admin/bootstrap-timepicker.min";
+@import "admin/admin-custom";
+@import "admin/task";
+@import "admin/credit-card";
+@import "admin/onboarding";
+@import "admin/leads";
+
+@import "admin/responsive_max480";
+@import "admin/responsive_max768";
+@import "admin/responsive_max1024";
+
+
+@import "recurring_select/recurring_select";

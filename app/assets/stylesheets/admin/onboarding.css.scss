@@ -1,0 +1,80 @@
+.green-message {
+  .headline {
+    font-size:16px;
+    color:darkred;
+    display:block;
+    margin-bottom:20px;
+  }
+
+  background-color:#cde0c4; 
+  padding:10px 40px;
+  font-size:14px;
+  color:#356635;
+  line-height:20px;
+  margin-bottom:20px;
+}
+
+.blue-message {
+  color: #305d8c;
+  background: #d6dde7;
+  padding:10px 40px;
+  font-size:14px;
+  line-height:20px;
+  margin-bottom:20px
+}
+
+.blue-message-small {
+  color: #305d8c;
+  background: #d6dde7;
+  padding:5px 10px;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.form-horizontal.template-form {
+  .template-name {
+    display: inline-block;
+    strong {
+      font-size: 14px;
+      color: #401600;
+    }
+    width: 500px;
+  }
+
+  .subheading {
+    margin-bottom: 10px;
+  }
+
+  .btn-mini {
+    vertical-align:top;
+  }
+
+  .controls {
+    margin-left: 50px;
+  }
+
+  a {
+    display: inline-block;
+  }
+
+  strong.timing-label {
+    display: inline-block;
+    width: 200px;
+  }
+
+  select, input {
+    width: 300px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .form-horizontal.template-form  {
+
+    .controls {
+      margin-left: 0px;
+    }
+  }
+
+}

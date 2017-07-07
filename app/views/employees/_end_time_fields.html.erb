@@ -1,0 +1,3 @@
+<%= f.input :end_time_date, :as => :date_picker, :input_html => {:value => @subscription.end_time.try(:strftime,'%m/%d/%Y'), :style => "width: 105px"}, :label => "End Date", :wrapper_html => {:class => "inline"} %>
+<%= f.input :end_time_time, :collection => appointment_times(:start_time => 9.hours, :end_time => 17.hours, :exact => false), :selected => f.object.end_time_time, :label => "End Time", :wrapper_html => {:class => "inline"}, :input_html => {:style => 'width: 230px'} %>
+<br>

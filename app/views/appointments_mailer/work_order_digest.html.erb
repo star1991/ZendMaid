@@ -1,0 +1,10 @@
+<p>You have <%= @appointments.size %> appointments scheduled for today</p>
+
+<hr>
+
+<% @appointments.each do |appointment| %>
+	<% appointment_drop = AppointmentDrop.new(appointment) %>
+    <%=  @body_template.render('appointment' => appointment_drop).html_safe %>
+	<hr>
+<% end %>
+

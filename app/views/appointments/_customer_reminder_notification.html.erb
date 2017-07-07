@@ -1,0 +1,26 @@
+<% if @appointment.reminder_sent_on.present? %>
+    <div class="alert alert-success">
+		A reminder for this cleaning was sent on <%= @appointment.reminder_sent_on.strftime('%a, %b %d %Y') %>.
+    </div>
+<% elsif @reminder_template.try(:time_offset) == nil %>
+	<div class="alert alert-info">
+		No customer reminder emails scheduled. <%= link_to "Click here to activate reminder emails", edit_email_template_path(@reminder_template), :class => "red" %>
+	</div>
+<% elsif Time.zone.now > @appointment.start_time %>
+    <div class="alert alert-error">
+    	No email reminder was sent for this appointment.
+    </div>	
+<% elsif @appointment.customer.automatable_emails.size == 0 %>
+    <div class="alert alert-error">
+		An email reminder for this cleaning is scheduled for <%= (@appointment.start_time + @reminder_template.time_offset.seconds).strftime('%a, %b %d') %>, but there is no email address configured for automated emails on record. 
+		<%= link_to "Edit Email Address(es)", edit_customer_path(@appointment.customer) %>
+    </div>
+<% else %>
+	<div class="alert alert-info">
+		An email reminder for this cleaning is scheduled for <%= (@appointment.start_time + @reminder_template.time_offset.seconds).strftime('%a, %b %d') %>.
+		<%= link_to "View Reminder", '#', :class => "red preview-email-template", :data => { :id => @reminder_template.id, :appointment_id => @appointment.id }%>
+    </div>
+<% end %>
+
+
+<%= render 'email_templates/preview_modal' %>

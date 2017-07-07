@@ -1,0 +1,7 @@
+$('#custom-field-modal').modal('hide');
+$('#custom-field-modal').remove();
+
+$el_to_replace = $('ul#custom-field-list').find('li[data-id="<%= @custom_field.id %>"]');
+$el_to_replace.delay(500).fadeOut(function () {
+	$(this).html("<%= escape_javascript(render(@custom_field)).html_safe %>").fadeIn().effect("highlight");
+});

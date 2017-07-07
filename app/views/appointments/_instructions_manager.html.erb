@@ -1,0 +1,64 @@
+
+<div class="row-fluid">
+
+<div class="span3 padded10 peach-background" style="margin-bottom:10px;">
+
+<div class="pull-right">
+	<%= link_to 'Edit', '#assignments-modal', :class => 'btn btn-mini btn-inverse', :data => {:toggle => "modal"} %>
+</div>
+
+<%= render 'assigned_employees_list' %>
+
+</div>
+
+<div class="span9">
+	
+
+<% if @user.preferences[:service_items_as_checkbox] %>
+
+<div id="alternate-service-items-fields">
+	<div class="container-fluid info-box padded10" style="margin-top:0px;">
+	
+	<% i = 0 %>
+	<%= f.simple_fields_for :appointment_service_items, @appointment.appointment_service_items.sort { |a, b| a.instruction.order <=> b.instruction.order } do |service_item_builder| %>
+		<% i += 1 %>
+		<%= service_item_builder.input :_destroy, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+		:inline_label => service_item_builder.object.field_name, :input_html => {:checked => service_item_builder.object.new_record? ? false : true } %>
+		<%= service_item_builder.hidden_field :instruction_id %>
+		<%= service_item_builder.hidden_field :field_name %>
+		<% if i % 2 == 0 %><br><% end %>
+	<% end %>
+	
+	</div>
+</div>
+
+<% else %>  
+	
+<div id="service-items-fields">
+   	
+   	<div class="container-fluid info-box" style="margin-top:0px;">
+   	
+   	<% if @appointment.appointment_service_items.count == 0 %>
+    	<div id="no-instructions-notification" class="blue bottom10">
+    		No instructions have yet been added to this appointment
+    	</div>	
+    <% end %>
+   	
+	<%= f.simple_fields_for :appointment_service_items, @appointment.appointment_service_items do |service_item_builder| %>
+		<%= render 'appointment_service_item_fields', :f =>  service_item_builder %>
+	<% end %>
+	
+	<div class="links">
+		<%= select_tag "service-item-select", options_from_collection_for_select(current_user.instructions, "id", "field_name") %>
+		<%= link_to_add_association '<i class="icon-plus"></i> Add Instruction'.html_safe, f, :appointment_service_items, :class => "btn btn-blue" %>
+	</div>
+	
+	</div>
+</div>
+
+<% end %>
+
+</div>
+</div>
+
+<%= render 'assignments_modal', :f => f %>

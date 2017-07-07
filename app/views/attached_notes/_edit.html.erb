@@ -1,0 +1,7 @@
+<%= simple_form_for @attached_note, :remote => true, :html => {:class => "attached-notes-form"} do |f| %>
+
+	<%= f.input_field :body, :rows => 2, :style => "width: 100%", :placeholder => "Add a note..." %>
+	<%= f.submit "Save" , :class => "btn btn-green btn-small" %>
+	<%= link_to "Cancel", attached_note_path(@attached_note), :remote => true, :class => "btn btn-inverse btn-small" %>
+
+<% end %>

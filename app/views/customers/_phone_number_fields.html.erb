@@ -1,0 +1,6 @@
+<div class="nested-fields narrow-control-groups" style="margin-bottom:5px;">
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger" %></div>
+	<%= f.input :phone_number_type, :collection => phone_number_types, :label => false, :include_blank => false, :wrapper_html => {:class => "inline controls-margin0" }, :input_html => {:style => "width:120px;"} %>
+    <%= f.input :phone_number, :label => false, :placeholder => "Phone Number...", :input_html => {:style => "width:130px;"}, :wrapper_html => {:class => "inline controls-margin0"} %>
+
+</div>

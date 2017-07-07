@@ -1,0 +1,56 @@
+ 			<%= simple_form_for :work_order, :html => { :class => "form-horizontal uni" }, :method => :post, :url => email_work_order_employees_path(:format => :pdf) do |f|%>
+				
+				<%= f.input :from_email_date, :as => :date_picker, :required => false, :input_html => { :readonly => true, :value => Time.zone.now.strftime('%m/%d/%Y'), :style => "width: 75px"}, :label => "From", :wrapper_html => {:class => "inline compact-horizontal", :style => "vertical-align:top;"} %>
+				<%= f.input :to_email_date, :as => :date_picker, :required => false, :input_html => {:readonly => true, :style => "width: 75px;"}, :label => "To", :wrapper_html => {:class => "inline compact-horizontal"}, :hint => "(leave blank to email schedule for single day)" %>
+				<br>
+				
+				<div>
+								
+				<div style="border: dashed 2px grey; padding:5px;padding-top:10px;">
+
+				<div class="side-by-side-list" id="employees-list">
+					<% if @user.employees.active.size > 0 %>
+					
+						<% i = 0 %>
+						<% @user.employees.active.each do |employee| %>
+							<% i += 1 %>
+							
+							<%= f.simple_fields_for :employees do |e| %>
+								<% if employee.email.present? %>
+									<%= e.input employee.id.to_s.to_sym, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline", :style => "width:100%"},
+										:inline_label => "#{employee.full_name} <#{employee.email}>", :input_html => { :checked => true} %>
+								<% else %>
+									<%= e.input employee.id.to_s.to_sym, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+										:inline_label => "#{employee.full_name} - <em class='red'>No email on record</em>".html_safe, :input_html => {  :checked => true} %>									
+								<% end %>
+							<% end %>
+							<% if i % 2 == 0 %><br><% end %>
+							
+						<% end %>
+					
+					<% else %>
+						<%= render 'employees/no_employees_notification' %>
+					<% end %>
+				</div>
+				
+				
+				</div>
+
+				<div class="checkbox darkblue">
+					<%= f.input :all_employees, :as => :boolean, :label => false, :inline_label => "Email all selected employees their own work order", :wrapper_html => {:style  => "margin-top:10px; margin-bottom: 0px;"}, :input_html => {:checked => false, :id => "simple-schedule"} %>				
+				</div>
+
+				<div class="checkbox darkblue">
+					<%= f.input :me, :as => :boolean, :label => false, :inline_label => "Email a copy of all selected work orders to me", :wrapper_html => {:style  => "margin-top:2px; margin-bottom: 0px;"}, :input_html => {:checked => false, :id => "simple-schedule"} %>				
+				</div>
+
+				<div class="checkbox darkblue">
+					<%= f.input :all, :as => :boolean, :label => false, :inline_label => "Email me work orders for all appointments without grouping by team or employee", :wrapper_html => {:style  => "margin-top:2px; margin-bottom: 0px;"}, :input_html => {:checked => false, :id => "simple-schedule"} %>				
+				</div>
+				
+				</div>
+				
+				<div class="pull-right" style="margin-top:10px;">
+					<%= f.button :submit, "Email Work Orders", :class => "btn btn-green" %>
+				</div>
+			<% end %>

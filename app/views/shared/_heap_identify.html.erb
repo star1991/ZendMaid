@@ -1,0 +1,27 @@
+<% if Rails.env.production? && current_admin.blank? %>
+
+<script>
+	heap_props = {};
+
+	heap_props["email"] = "<%= current_employee.email %>";
+
+	heap_props["name"] = "<%= current_employee.full_name %>";
+	heap_props["owner"] = "<%= current_employee.owner? %>";
+	heap_props["company_name"] = "<%= current_user.user_profile.company_name %>";
+
+	<% if current_user.plan_id.present? %>
+		heap_props["plan"] = "<%= current_user.plan_id %>";
+	<% end %>
+
+	heap_props["active"] = "<%= current_user.active? %>";
+
+	heap["sign_up_at"] = <%= current_user.created_at.to_i %>;
+	heap["user_created_at"] = <%= current_employee.created_at.to_i %>;
+    heap["employees"] = <%= current_user.employees.size %>;
+    heap["customers"] = <%= current_user.customers.size %>;
+    heap["services"] = <%= current_user.subscriptions.size %>;
+	
+	heap.identify(heap_props);
+</script>
+
+<% end %>

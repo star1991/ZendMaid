@@ -1,0 +1,149 @@
+<% provide(:title, "Create Appointment") %>
+<% provide(:icon, "icon-edit") %>
+
+<div class="container">
+<%= render 'shared/flash_notice' %>
+
+<%= simple_form_for @subscription, :html => { :class => "form-horizontal uni" }, :method => :post, :url => appointments_path(:customer_id => @customer.id) do |f| %>
+
+<%= hidden_field_tag "instant_booking_id", @instant_booking.try(:id) %>
+
+<%= f.simple_fields_for :appointments, @appointment do |appointment_builder| %>
+
+<% if @instant_booking.present? %>
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="content-box">
+    		<div class="content-box-header">
+        		<i class="icon-book"></i> Booking for <%= @instant_booking.full_name %>
+    		</div>
+    		<div class="row-fluid">
+    		<div class="span12 padded">
+				<%= render @instant_booking %>
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div class="row-fluid">
+<div class="span6">
+	<div class="content-box">
+  		<div class="content-box-header">
+    		<i class="icon-person"></i> <%= @customer.full_name %> - Information
+  		</div>
+
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+				<%= render 'contact_info' %>
+				<%= link_to "View Customer Activity and Past Cleanings", @customer, :class => "btn btn-mini btn-blue pull-right" %>
+		
+    		</div>
+  		</div>
+	</div>
+</div>
+
+<div class="span6">     
+	<div class="content-box" id="addresses-wrapper">
+  		<div class="content-box-header">
+    		Service Address
+  		</div>
+		
+  		
+  		<div class="row-fluid">
+      		<div class="span12 padded narrow-control-groups">
+				<%= render 'appointment_address_fields', :f => appointment_builder %>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="row-fluid">
+<div class="span12">	
+
+	<% if @conflicts.present? && @conflicts.size > 0 %>
+		<div class="content-box">
+			<div class="content-box-header">
+				<i class="icon-warning-sign red"></i> Scheduling Conflicts Detected!
+			</div>
+			
+			<div class="row-fluid">
+				<div class="span12 padded">				
+					<%= render 'conflicts_notification' %>
+					<%= appointment_builder.input :allow_conflicts, :label => false, :as => :boolean, :inline_label => "Save Anyway?"%>
+				</div>
+			</div>
+			
+		</div>
+	<% end %>
+
+	<div class="content-box">
+  		<div class="content-box-header">
+    		Time and Recurrence
+  		</div>
+
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+			<div id="recurrence-toggle" class="padded10 info-box">
+    			<strong class="darkblue">This service is</strong><%= f.input_field :repeat, :class => "repeat-toggle inline", :collection => [["One Time", false], ["Recurring", true]], :as => :radio_buttons %><br>
+    		</div>
+    		
+			<div id="repeat-fields">
+				<%= render "subscriptions/recurrence_fields_admin", :f => f %>
+			</div>
+			
+			<div id="no-repeat-fields">
+    			<%= appointment_builder.input :start_time_date, :as => :date_picker,  :wrapper_html => {:class => "compact-horizontal" }, :input_html => {:class => "mirrored-start", :readonly => true, :value => @appointment.start_time.try(:strftime,'%m/%d/%Y'), :style => "width: 105px"}, :label => "Date"  %>
+			</div>
+			
+			<%= render 'appointments/time_fields_admin', :f => appointment_builder %>
+			
+			</div>
+		</div>
+	</div>
+
+ 	<div class="content-box">
+  		<div class="content-box-header">
+    		Details and Work Order
+  		</div>
+
+  		<div class="row-fluid">
+      		<div class="span11 padded">
+				<%= render 'appointments/appointment_details_fields' , :f => appointment_builder %>
+			</div>
+			<div class="span1"></div>
+		</div>
+	</div>    		
+
+	
+	<div class="content-box">
+  		<div class="content-box-header">
+    		Billing
+  		</div>
+
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+			<%= appointment_builder.input :price, :input_html => {:style => "width:100px", :value => number_to_currency(@appointment.price)}, :as => :string, :label => "Balance Owed", :wrapper_html => {:class => 'inline'} %>
+			<%= appointment_builder.input :paid, :label => false, :inline_label => "Paid", :wrapper_html => {:class => 'inline'} %>
+			</div>
+		</div>
+	</div>
+	
+	<div class="content-box">
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+        		<%= f.button :submit, "Create Appointment" , :class => "pull-right btn btn-green" %>
+     		</div>
+		</div>
+	</div>
+
+</div>
+</div><!-- End of row -->
+
+<% end %><!-- End of appointment nested form -->
+
+<% end %>
+
+</div>

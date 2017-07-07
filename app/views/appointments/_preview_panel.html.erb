@@ -1,0 +1,157 @@
+<div id="eventPreviewPanel">
+	<h5 class="background-green" style="margin-top:47px;">
+		Appointment Information
+		<%= render 'shared/close_pageslide' %>
+	
+	</h5>
+	<div class="padded10">
+		
+		<%= render 'shared/flash_notice' %>
+		
+		<% if @appointment.payroll_id.present? %>
+			<div class="alert alert-warning">
+				This appointment is linked to <%= link_to "Payroll ID ##{@appointment.payroll.payroll_number}", @appointment.payroll %>
+			</div>
+		<% end %>
+		
+		<div class="center" id="status-panel">
+			<div class="btn-group">
+				<button class="btn btn-blue" id="current-status"><%= @appointment.status.name %></button>
+				<button class="btn btn-blue dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<% current_user.statuses.each do |status| %>
+						<li><%= link_to status.name, '#', :data => {:id => status.id } %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="description-panel">
+			<% if @appointment.subscription.repeat %>
+				<div class="pull-right">
+					<%= link_to edit_subscription_path(@appointment.subscription), :class => "btn btn-mini btn-green" do %>
+						<i class="icon-edit"></i> Manage recurring service
+					<% end %>
+				</div>
+			<% end %>
+			<span class="service-type"><%= @appointment.service_type.present? ? "#{@appointment.service_type.name} Service" : "Residential Service" %></span><br>
+			<span class="appointment-recurrence"><%= @appointment.subscription.repeat ? "Repeats #{recurrence_in_words(@appointment.subscription)}" : "One Time" %></span><br>
+			<span class="appointment-time"><%= "#{@appointment.start_time.strftime('%a, %b %-d %-I:%M %p')} - #{@appointment.end_time.strftime('%-I:%M %p')}" %></span><br>
+		</div>
+		<div class="description-panel-alt">
+			<span class="pull-right">
+				<%= link_to "#", :class => "btn btn-orange btn-mini fetch-customer-recent-activity", :data => {:id => @customer.id} do %>
+					<i class="icon-reorder"></i> History
+				<% end %>
+			</span>
+			<span class="grey">Customer Information</span><br>
+			<span class="customer-name"><%= link_to @customer.full_name, @customer %></span>
+			<div class="contact-info-panel"><%= render 'customers/contact_info' %></div>
+			
+			<h6 class="toggle-control">Show Details<a href="#" class="pull-right" style="margin-right:20px;"><i class="icon-plus"></i></a></h6>
+			
+			<div class="toggleable" style="display:none;">
+				<% @customer.customer_items.includes(:custom_field).order("custom_fields.order ASC").each do |item| %>
+					<em class="darkgrey"><%= item.custom_field.field_name %></em><span class="blue" style="margin-left:5px;"><%= item.value_name %></span><br>
+				<% end %>
+
+				<div style="margin-top:7px;">
+					<strong>Public Notes</strong><br>
+					<%= simple_format(@customer.notes) %>				
+				</div>
+			</div>
+		
+		</div>
+		
+		<div class="row-fluid">
+		<div class="peach-background padded5 pull-left" style="width:48%;">
+			<div class="pull-right">
+				<%= link_to '#time_in_time_out_modal', :id => 'edit_time_in_time_out', :class => "btn btn-mini btn-inverse", :data => {:id => @appointment.id} do %>
+					<i class="icon-time"></i>
+				<% end %>
+				<%= link_to '#assignments-modal', :id => "edit-assigned-appointments", :class => 'btn btn-mini btn-inverse', :data => {:toggle => "modal"} do %>
+					<i class="icon-user"></i>
+				<% end %>
+
+			</div>
+		
+			<%= render 'assigned_employees_list' %>
+			
+			<%= render 'edit_assignments_modal' %>
+		</div>
+		
+		<div class="description-panel pull-right" style="width: 48%;margin:0px;">
+			<span class="darkgrey">Actions</span><br>
+			
+			<div style="margin-top:10px;">
+						
+			<%= link_to '#select-text-template-modal', :class => "btn btn-mini btn-red", :data => {:toggle => "modal"}, :id => "select-text-template-link" do %>
+    			<i class="icon-phone"></i> Send Text
+    		<% end %><br>
+			
+			<%= link_to '#select-template-modal', :class => "btn btn-mini btn-blue", :data => {:toggle => "modal"}, :id => 'select-template-link', :style => "margin-top:5px;" do %>
+    			<i class="icon-envelope"></i> Send Email
+    		<% end %>	
+
+    		<% if @user.allow_cc_processing? %>
+				<%= link_to '#manage-credit-card-modal', :id => "manage-credit-card", :class => 'btn btn-mini btn-inverse', :data => {:id => @customer.id, :appointment_id => @appointment.id}, :style => "margin-top:5px;" do %>
+					<i class="icon-credit-card"></i> Charge Credit Card
+				<% end %>
+			<% end %>
+			
+			</div>
+		</div>
+		</div>
+		
+		
+		<div class="appointment-info description-panel-alt">
+			<span class="edit-event-link pull-right">
+				<%= link_to edit_appointment_path(@appointment), :class => "btn btn-green btn-mini" do %>
+					<i class="icon-edit"></i>  Edit this appointment
+				<% end %>
+			</span>
+			<span class="grey">Appointment Information</span>
+			<div class="address-panel"><i class='icon-map-marker'></i> <%= render(@appointment.address) %></div>
+			
+			<div style="margin-top:5px;">
+				<strong>Amount due </strong><%= @appointment.price.present? ? number_to_currency(@appointment.price) : "<span class='red'> Not set</span>".html_safe %>
+				<span style="margin-left:10px;"><%= @appointment.paid? ? "<i class='icon-ok green'></i> Paid".html_safe : "<i class='icon-remove red'></i> Not paid".html_safe %></span><br>
+			</div>
+			
+			<h6 class="toggle-control">Show Appointment Details<a href="#" class="pull-right" style="margin-right:20px;"><i class="icon-plus"></i></a></h6>
+			
+			<div class="toggleable" style="display:none;">
+				<div class='row-fluid'>
+					<div class="span6">
+						<strong>WORK ITEMS</strong><br>
+						<% @appointment.appointment_service_items.joins(:instruction).order("instructions.order").each do |item| %>
+							<%= item.field_name %><br>
+						<% end %>
+					</div>
+				
+					<div class="span6">
+						<strong>CUSTOM FIELDS</strong><br>
+						<% @appointment.appointment_items.includes(:custom_field).order("custom_fields.order ASC").each do |item| %>
+							<em class="darkgrey"><%= item.custom_field.field_name %></em><span class="blue" style="margin-left:5px;"><%= item.value_name %></span><br>
+						<% end %>
+					</div>
+				</div>
+				
+				<div style="margin-top:7px;">
+					<strong>Notes</strong><br>
+					<%= simple_format_no_tags(@appointment.notes) %>				
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="description-panel-alt">
+			<span class="darkgrey">Emails</span>
+			<%= render 'email_sent_on_table' %>
+			
+			<span class="darkgrey">Texts</span>
+			<%= render 'text_sent_on_table' %>
+		</div>
+
+	</div>
+</div>

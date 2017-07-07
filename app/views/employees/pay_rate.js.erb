@@ -1,0 +1,8 @@
+$('#pay-rate-modal').remove();
+
+$('body').append("<%= escape_javascript(render('pay_rate_modal').html_safe) %>");
+
+$('#pay-rate-modal').modal('show');
+
+
+<%= render 'pay_rate_fields' %>

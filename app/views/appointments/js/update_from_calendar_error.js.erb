@@ -1,0 +1,30 @@
+$('#time_in_time_out_modal').modal('hide');
+
+<% if @conflicts.present? %>
+
+var conflicts_modal = $('#conflicts-modal');
+
+conflicts_modal.find('.modal-body').html("<%= escape_javascript(render('appointments/conflicts_modal_content').html_safe) %>");
+
+conflicts_modal.find('#cancel-button').click(function () {
+	eventUpdateNotifier.revertFunc();
+	eventUpdateNotifier.hide();
+	conflicts_modal.modal('hide');
+})
+
+conflicts_modal.find('#save-button').click(function () {
+	eventUpdateNotifier.hide();
+	conflicts_modal.modal('hide');
+})
+
+conflicts_modal.modal({
+	backdrop: 'static',
+	keyboard: false
+});
+
+<% else %>
+
+toastr.error("<%= escape_javascript flash[:error] %>");
+eventUpdateNotifier.revertFunc();
+
+<% end %>

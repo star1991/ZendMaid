@@ -1,0 +1,16 @@
+%= simple_form_for(@appointment_field) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :user_id %>
+    <%= f.input :field_name %>
+    <%= f.input :input_type %>
+    <%= f.input :price %>
+    <%= f.input :max_field_value %>
+    <%= f.input :min_field_value %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

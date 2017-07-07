@@ -1,0 +1,5 @@
+$('ul#custom-field-list').find('li[data-id="<%= @custom_field.id %>"]').effect('highlight', {}, 400, function(){
+    $(this).fadeOut('fast', function(){
+        $(this).remove();
+    });
+});

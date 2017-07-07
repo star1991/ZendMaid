@@ -1,0 +1,25 @@
+            <tr class="<%= "success" if payroll.draft? %>">
+                <td style="text-align:center;">
+                	<strong style="font-size:15px;line-height:45px;"><%= payroll.payroll_number %></strong>
+                </td>
+                <td>
+                	<div style="margin-left:20px;">
+                	<strong style="font-size:14px;"><%= "#{payroll.start_date.strftime('%-m/%-d/%Y')} - #{payroll.end_date.strftime('%-m/%-d/%Y')}" %></strong>
+                	<% if payroll.draft? %>
+                		<span class="label" style="margin-bottom:-1px;margin-left:10px;font-size:14px;background-color:blue">Draft</span>
+                	<% end %>
+                	<br>
+                	<em class="blue"><%= payroll.appointments_count %> appointments, <%= payroll.payroll_entries_count %> employees</em>
+                	</div>
+                </td>
+                <td>
+                	<div style="margin-left:20px;font-size:25px;line-height:40px;"><%= number_to_currency payroll.total_pay %></div>
+                </td>
+                <td style="text-align:center;">
+                	<% if payroll.draft? %>
+                		<%= link_to "View and Edit", payroll, :class => "btn btn-large btn-red" %>
+                	<% else %>
+                		<%= link_to "View", payroll, :class => "btn btn-large btn-blue" %>
+                	<% end %>
+                </td>
+            </tr>

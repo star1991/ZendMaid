@@ -1,0 +1,23 @@
+<div style="margin-left:100px;;">
+
+<%= simple_form_for @assignment, :html => { :class => "form-horizontal uni" }, :method => :post, :remote => true, :url => update_fixed_rate_assignment_path(@assignment) do |f| %>
+
+	<%= f.input :updated_from_payroll_entry, :as => :hidden, :input_html => {:value => true} %>
+
+	<%= f.input :job_wage, :label => "Wage", :as => :string, :input_html => {:value => number_to_currency(@assignment.job_wage), :style => "width:100px;", :id => 'job-wage'},:wrapper_html => {:style => "margin-bottom:5px;"} %>
+	
+	<%= f.input :extras, :as => :string, :label => "+ Extras", :input_html => {:value => number_to_currency(@assignment.extras), :style => "width:100px;", :id => 'job-extras'}, :wrapper_html => {:style => "margin-bottom:5px;"} %>
+	
+	<div style="border-top:2px solid black;margin-right:60px;text-align:right;width:260px;"></div>
+
+	<div class="control-group">
+		<label class="control-label">Total</label>
+		<div class="controls">
+			<strong id='total-job-pay' style="color:darkblue;font-size:16px;line-height:30px;"><%= number_to_currency @assignment.total %></strong>
+		</div>
+	</div>
+	
+	<%= f.button :submit, "Save Job Pay" , :class => "pull-right btn btn-blue" %>
+<% end %>
+
+</div>

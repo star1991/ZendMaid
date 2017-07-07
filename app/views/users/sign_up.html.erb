@@ -1,0 +1,89 @@
+<% provide(:title, "Sign Up for ZenMaid") %>
+
+<div class="container">
+
+<div class="row-fluid" id="sign-up-form-container">
+  <div class="span12">
+      
+    <div class="content-box">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="padded">
+
+        <div class="row-fluid">
+       
+        <div class="span6 offset3">
+
+        <div style="text-align:center;">
+          <%= image_tag "zenmaid-logo.png" %>
+        </div>
+
+        <div class="padded" style="background-color: #e5e5e5;border: 1px solid #d2d2d2">
+
+          <span style="font-size:24px;color:#60ad48">Start Your 14-Day Free Trial</span><br><br>
+
+          <%= simple_form_for(resource, :as => resource_name, :url => flexible_plan_sign_up_path, :html => { :class => "form-horizontal uni sign-up-form" }, :defaults => {:required => false}) do |f| %>
+          
+            <%= f.input :company_name, :placeholder => "Company Name" %>
+
+            <%= f.input :full_name, :placeholder => "Your Name" %>
+
+            <%= f.input :email, :placeholder => "Email" %>
+
+            <%= f.input :phone_number, :placeholder => "Phone Number", :maxlength => 40 %>
+
+            <%= f.input :password, :placeholder => "Password" %>
+
+            <%= f.input :password_confirmation, :placeholder => "Confirm Password" %>
+            
+            <hr>
+
+            <% if @user.api_error.present? %>
+              <div class="alert alert-error">
+                <%= @user.api_error %>
+              </div>
+            <% end %>
+
+            <%= f.input :plan_id, :as => :hidden %>
+
+            <%= f.input :card_number, :placeholder => "Card Number" %>
+
+            <%= f.input :expiry_date, :label => "Exp. Date", :input_html => {:style => "width:100px;margin-right:20px;", :id => "expiry-date"}, :wrapper_html => {:class => "inline"}, :placeholder => "Exp. Date" %>
+
+            <%= f.input :cvc, :label => "CVC", :input_html => {:style => "width:50px;"}, :wrapper_html => {:class => "compact-horizontal inline"}, :placeholder => "CVC" %> 
+
+            <div class="actions clearfix">
+              <%= f.button :submit, "Start My 14-Day Trial", :class => "btn btn-green btn-large", :style => "width:100%;" %>
+            </div>
+            <small>Your 14-day free trial begins once you click the "Start My Free 14-Day Trial" button above. If you cancel your subscription in your first month you will not be charged. If you don't cancel by day 14, your card will be charged based on the plan your account qualifies for. You can cancel your subscription at any time.</small>
+          <% end %>
+
+        </div>
+        </div>
+
+        </div>
+
+        <div class="row-fluid" style="margin-top:20px;">
+          <div class="span12">
+            <div class="padded" style="background-color: #f5f5f5;border: 2px solid #d2d2d2;font-size:16px;">
+              <div>
+                <strong class="blue" style="font-size:24px;">"</strong><em>I have had the pleasure of using Zenmaid, and it has relieved so much stress &amp; headache. Amar &amp; his staff are incredibly knowledgable &amp; easy to get ahold of. I highly recommend using this product no matter the size of your business.</em><strong class="blue" style="font-size:24px;">"</strong><br>
+              </div>
+              <div style="text-align:right;"><strong>Amanda Bartlett</strong>,  Owner at Essence Home Cleaning, LLC </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+  </div>
+  
+  </div>
+  </div>
+
+</div>
+
+</div>
+
+<%= stylesheet_link_tag "sign_up" %>

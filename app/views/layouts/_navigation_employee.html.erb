@@ -1,0 +1,63 @@
+<div class="navbar navbar-fixed-top navbar-inverse top-nav">
+  <div class="navbar-inner">
+
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span12">
+
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <div class="nav-collapse collapse">
+            <ul class="nav primary">
+              <li class="brand">
+                <span class="title"> <i class="icon-leaf"></i> ZenMaid </span>
+              </li>
+
+			</ul>
+            <!-- profile -->
+            <ul class="nav pull-right primary">
+              
+              <li class="dropdown profile">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-bottom:2px;">
+               	<div style="display:inline-block;vertical-align:top;">
+                  		<% if current_user.user_profile.try(:logo).present? %>
+                  			<%= image_tag current_user.user_profile.logo, :class => "menu-avatar" %>
+                  		<% else %>
+                  			<%= image_tag 'profile-thumb.png', :class => "menu-avatar" %>
+                  		<% end %>
+                  	</div>
+                  
+                  <div class="user-info"  style="display:inline-block;line-height:16px;">
+                  	<strong style="color:yellow;"><%= current_user.user_profile.try(:company_name) %></strong><br>
+                  	<em>Hi, <%= current_employee.try(:first_name) %></em>
+                  </div>
+                  <div  style="display:inline-block;vertical-align:top;">
+                  	<b class="caret"></b>
+                  </div>
+                </a>
+                <ul class="dropdown-menu secondary ">
+                  <li class>
+                  	 	<%= link_to edit_my_account_employees_path, :class => "Settings" == yield(:title)?"open":"" do %>
+	        				<i class="icon-cog"></i> Account Settings
+	        			<% end %>   	
+                  </li>
+                  <li class="divider"></li>
+                  <li class>
+              		<%= link_to destroy_employee_session_path, :method => :delete do %>
+              			<i class="icon-off"></i> Sign Out
+              		<% end %>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

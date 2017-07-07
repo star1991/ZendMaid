@@ -1,0 +1,2 @@
+module TextTemplateHelper
+end

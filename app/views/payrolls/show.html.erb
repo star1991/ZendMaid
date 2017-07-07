@@ -1,0 +1,104 @@
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+
+			<%= render 'shared/flash_notice' %>
+			
+			<div style="margin-bottom:20px;margin-top:20px;">
+				<div class="row-fluid">
+				<div class="span6">
+					<strong style="font-size:18px;"><%= "Payroll ID ##{@payroll.payroll_number}" %></strong>
+					<div class="darkgrey" style="margin-top:5px;font-size:16px;"><em><%= "#{@payroll.start_date.strftime('%-m/%-d/%Y')} - #{@payroll.end_date.strftime('%-m/%-d/%Y')}" %></em></div>
+				</div>
+				<div class="span6">
+					<div class="pull-right">
+						<% if @payroll.draft? %>
+							<%= link_to 'Approve', approve_payroll_path(@payroll), :class => "btn btn-large btn-green" %>
+							<%= link_to 'Recalculate', recalculate_payroll_path(@payroll), :class => "btn btn-large btn-blue" %>
+						<% else %>
+							<%= link_to report_payroll_path(@payroll, :format => :pdf), :class => "btn btn-large btn-green" do %>
+								<i class="icon-print"></i> Print
+							<% end %>
+						<% end %>
+						<%= link_to 'Delete', @payroll, :method => :delete, :class => "btn btn-large btn-red", :data => {:confirm => "Are you sure you want to PERMANENTLY delete this payroll record?" } %>
+						<%= link_to 'Back', payrolls_path, :class => "btn btn-large btn-inverse" %>
+					</div>
+				</div>
+				</div>
+			</div>
+		
+			<% if @payroll.draft? %>
+				<div class="alert alert-warning">
+					This payroll is a <strong class="blue">draft</strong> and can still be edited.
+ 				</div>
+			<% else %>
+				<div class="alert alert-warning">
+					This payroll has been <strong style="color:green;">approved</strong> and can no longer be edited.
+ 				</div>			
+			<% end %>
+		
+			<table class="table table-hover table-bordered">
+				<thead>
+				</thead>
+				<tbody>
+				<% @payroll.payroll_entries.each do |entry| %>
+					<tr class="<%= "error" if entry.pay_type.blank? %>">
+						<td style="padding: 20px 40px;">
+						<div class="pull-left">
+							<strong style="font-size:20px;"><%= entry.full_name %></strong><br>
+							<span class="blue" style="font-size:14px;">Worked <%= entry.assignments_count %> appointments</em><br>
+							<em class="darkgrey" style="font-size:14px"><%= display_pay_rate entry %></em>
+						</div>
+						</td>
+						<td style="padding: 20px 40px;border-left:0px !important;">
+
+						<div class="pull-right" style="width:120px;text-align:right;margin-top:3px;">
+							<% if @payroll.draft? %>
+								<% if entry.pay_type.blank? %>
+									<%= link_to 'Add Pay Rate', '#', :data => {:entry => entry.id, :id => entry.employee.try(:id), :source => 'payroll' }, :class => "btn btn-mini btn-blue add-pay-rate" %>
+								<% else %>
+									<%= link_to 'View and Edit', entry, :id => 'edit_time_in_time_out', :class => "btn btn-mini btn-green"  %>
+								<% end %><br>
+								
+								<%= link_to 'Remove', entry, :method => :delete, :class => 'btn btn-mini btn-danger', :data => {:confirm => "Are you sure you want to remove this employee from this payroll draft?"}  %>
+							<% end %>
+						</div>
+
+					 	 
+						<div class="pull-right">
+							<table class="table table-condensed no-border">
+								<tr style="font-size:14px;"><td><strong>Wages</strong></td> <td style="width:70px;"><strong><%= number_to_currency entry.wage %></strong></td></tr>
+								<tr><td class="green">Bonus</td> <td><strong>+<%= number_to_currency entry.bonus %></strong></td></tr>
+								<tr><td class="red">Deductions</td> <td><strong>-<%= number_to_currency entry.deductions %></strong></td></tr>
+							</table>
+						</div>
+
+					 	 <div class="pull-right" style="width:200px;margin-top:20px;text-align:left;">
+ 							<span style="font-size:35px;color:#484848 ;text-align:right;"><%= number_to_currency entry.total_pay %></span>
+            			 </div>
+
+
+						</td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+			
+			<div class="pull-right" style="text-align:left;margin-top:20px;width:616px;">
+				<span style="font-size:35px;color:#909090;text-align:right;"><strong>Total:</strong>&nbsp;&nbsp;&nbsp;<%= number_to_currency @payroll.total_pay %></span>
+			</div>
+			
+			<br>
+			
+		
+		</div>
+		</div>
+	</div>
+</div>
+
+</div>

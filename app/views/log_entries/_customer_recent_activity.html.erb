@@ -1,0 +1,7 @@
+<ul class="activity">
+	<% if @customer.log_entries.size > 0 %>
+		<%= render @customer.log_entries.limit(15) %>
+	<% else %>
+		<em class="blue">No activity yet recorded for this customer</em>
+	<% end %>
+</ul>

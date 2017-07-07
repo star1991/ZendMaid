@@ -1,0 +1,44 @@
+<div class="row-fluid" style="margin-bottom:20px;">
+	<div class="span12" style="font-size:18px;line-height:30px;">
+		<span style="width:200px;display:inline-block;"><em class="darkgrey">Revenue</em></span>
+		<span class="green" style="margin-right:10px;"><%= number_to_currency @revenue %></span>
+		<em style="color:darkred">(<%= number_to_currency @outstanding_revenue %> outstanding)</em><br>
+		
+		<span style="width:200px;display:inline-block;"><em class="darkgrey">Net After Payroll</em></span>
+		<span><%= number_to_currency (@revenue - @payroll) %></span>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span3">
+	
+		<div class="report-panel" onclick="<%= "location.href='#{list_appointments_path(:use_for_invoice => true, :date_range => {:to => @to.strftime("%d/%m/%Y"), :from => @from.strftime("%d/%m/%Y") })}'".html_safe %>">
+			<div class="report-panel-interior">
+				<span style="font-size:20px;color:red;"><%= @appointments_count %></span><br>
+				<span><%= "#{"Appointment".pluralize(@appointments_count)}" %></span><br>
+				<em style="color:#555555;">(<%= number_to_currency @revenue %>)</em>
+			</div>
+		</div>
+
+		<div class="report-panel" onclick="<%= "location.href='#{list_appointments_path(:use_for_invoice => true, :date_range => {:to => @to.strftime("%d/%m/%Y"), :from => @from.strftime("%d/%m/%Y"), :paid_status => "Unpaid Appointments" })}'".html_safe %>">
+			<div class="report-panel-interior">
+				<span style="font-size:20px;color:red;"><%= @outstanding_appointments_count %></span><br>
+				<span>Unpaid <%= "#{"Appointment".pluralize(@outstanding_appointments_count)}" %></span><br>
+				<em style="color:#555555;">(<%= number_to_currency @outstanding_revenue %>)</em>
+			</div>
+		</div>
+
+		<div class="report-panel" onclick="<%= "location.href='#{payrolls_path(:date_range => {:to => @to.strftime("%d/%m/%Y"), :from => @from.strftime("%d/%m/%Y") })}'".html_safe %>">
+			<div class="report-panel-interior">
+				<span style="font-size:20px;color:red;"><%= @payrolls_count %></span><br>
+				<span>Approved <%= "#{"Payroll".pluralize(@payrolls_count)}" %></span><br>
+				<em style="color:#555555;">(<%= number_to_currency @payroll %>)</em>
+			</div>
+		</div>
+	
+	</div>
+	<div class="span9">
+		<canvas id="report-graph" style="width:100%;height:400px;">
+		</canvas>
+	</div>
+</div>

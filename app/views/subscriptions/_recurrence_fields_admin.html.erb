@@ -1,0 +1,17 @@
+<%= f.hidden_field :from_admin_console, :value => true %>
+				
+<%= f.input :start_date, :as => :date_picker, :input_html => {:class => "mirrored-start", :readonly => true, :value => @subscription.constraints[:start_date].try(:strftime,'%m/%d/%Y'), :style => "width: 75px"}, :label => "Starting", :wrapper_html => {:class => "inline compact-horizontal", :style => "vertical-align:top;"} %>
+<%= f.input :repeat_until, :as => :date_picker, :input_html => {:value => @subscription.constraints[:end_date].try(:strftime,'%m/%d/%Y'), :readonly => true, :style => "width: 75px;"}, :label => "Ending", :wrapper_html => {:class => "inline compact-horizontal"}, :hint => "(leave blank to repeat forever)" %>
+<br>
+				
+<div id="hidden-recurrence-fields">
+	<%= f.hidden_field :frequency %>
+	<%= f.hidden_field :interval %>
+</div>
+				
+<div class="control-group compact-horizontal">
+<label class="control-label">Repeats</label>
+<div class="controls">
+    <%= select_tag "repeats", options_for_select([["weekly", "weekly"], ["every 2 weeks", "every 2 weeks"], ["every 3 weeks", "every 3 weeks"], ["every 4 weeks", "every 4 weeks"], ["every 5 weeks", "every 5 weeks"], ["every 6 weeks", "every 6 weeks"], ["every 7 weeks", "every 7 weeks"], ["every 8 weeks", "every 8 weeks"], ["monthly", "monthly"], ["every 2 months", "every 2 months"], ["quarterly", "quarterly"], ["semi-yearly", "semi-yearly"]]), :id => "recurrence-select" %>
+ </div>
+</div>

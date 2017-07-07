@@ -1,0 +1,72 @@
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Instant Booking</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+      <div class="padd">
+
+
+        <%= f.simple_fields_for :user_profile, @user_profile do |profile_builder| %>
+
+          <%= render 'user_profiles/user_profile_fields', :f => profile_builder %>
+
+      	<% end %>
+      	
+      	<%= f.simple_fields_for :instant_booking_profile, @instant_booking_profile do |profile_builder| %>
+      		
+      	  <%= render 'instant_booking/instant_booking_profile_fields', :f => profile_builder %>
+      		
+      	<% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Instant Price Estimation</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+      <div class="padd">
+
+        <strong>To our founding members: Please <%= mail_to "lindseyaadevs@gmail.com", "email us" %> directly if you wish to change your price estimation. Thank you for your patience, we hope to allow you full customizability of your instant booking form soon </strong>
+		<hr>
+
+        <h6 class="appointment-field-elements">Attributes</h4>
+        <hr>
+        <%= f.simple_fields_for :appointment_fields, @appointment_fields do |appointment_field_builder| %>
+
+          <%= render 'appointment_fields/appointment_field_fields', :f => appointment_field_builder %>
+
+      	<% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Billing</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+
+
+      <div class="form-actions">
+        <p>You are on the <%= @user.plan_id.present? ? @user.plan_id: 'free' %> plan <%=link_to 'Edit',  billing_path, :class => "btn btn-primary", :style => "margin-left:20px" %></p>
+      </div>
+
+
+    </div>
+  </div>

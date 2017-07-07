@@ -1,0 +1,1 @@
+$(".comment-box[data-id=<%= @attached_note.id %>]").html("<%= escape_javascript(render('note_guts', :attached_note => @attached_note).html_safe) %>");

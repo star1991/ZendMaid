@@ -1,0 +1,49 @@
+<% provide(:title, "Billing") %>
+<% provide(:icon, "icon-cogs") %>
+
+
+<div class="container">
+  <div class="row-fluid">
+ 	  <div class="span12">
+    	<div class="content-box">
+       <div class="row-fluid">
+		     <div class="span12" style="padding- left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			     <%= render 'users/settings_nav', :active => "Billing" %>
+		     </div>
+	     </div>		
+
+  	   <div class="row-fluid">
+		     <%= render 'shared/content_box_help', :message => "Here you can manage your ZenMaid subscription" %>
+	     </div>
+	
+  	   <div class="row-fluid">		
+		     <div class="span12">
+		       <div class="padded">
+  		         <%= render 'shared/flash_notice' %>	
+               <% if @user.plan_id.blank? %>
+                 <%=  render 'enter_cc_billing' %>
+               <% else %>
+
+                <div class="row-fluid">
+                  <div class="span8 offset2">
+
+                    <div class="blue-message">
+
+                      <strong style="display:inline-block;margin-right:20px;line-height:40px;">You are subscribed to the <span style="color:green;"><%= plan_id_to_name @user %></span> plan</strong>
+
+                     <%= link_to "ZenMaid isn\'t helping my  business, I'd like to cancel my account", exit_survey_path, :class => "btn btn-danger" %><br>
+
+                     If you would like to subscribe to a different ZenMaid plan, please contact us at <%= mail_to 'amar@zenmaid.com', 'amar@zenmaid.com' %>
+                   </div>
+                 </div>
+                </div>  			     
+             <% end %>
+  		     </div>
+  		    </div>
+  	   </div>
+     </div>
+  	</div>
+ </div>
+</div> 
+  
+

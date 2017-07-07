@@ -1,0 +1,8 @@
+Hi!
+
+<p>Please see the attached file for work order summaries for all assigned appointments from <%= @from.strftime('%-m/%-d/%Y') %> to <%= @to.strftime('%-m/%-d/%Y') %> for the following employees:</p>
+
+<% @employees_with_appointments.each do |employee| %>
+	
+	<%= employee.full_name %><br>
+<% end %>

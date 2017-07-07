@@ -1,0 +1,5 @@
+<div class="service-item-fields" data-id=<%= f.object.custom_field_id %>>
+<%= f.hidden_field :custom_field_id %>
+<%= f.input :value_name, simple_form_hash(f.object.custom_field) %>
+<%= f.hidden_field :_destroy, :class => "destroy-field" %>
+</div>

@@ -1,0 +1,8 @@
+<p>You just received an appointment request through ZenMaid.net!</p>
+
+<b>Customer Contact Information</b><br>
+Name: <%= @appointment.customer.full_name %><br>
+Email: <%= @appointment.customer.email %><br>
+Phone Number: <%= formatted_phone_number @appointment.customer.phone_number %><br><p>
+
+<%= render :partial => './appointments_mailer/appointment_info', :locals => {:appointment => @appointment, :exact => true} %>

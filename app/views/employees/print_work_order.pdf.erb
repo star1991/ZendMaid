@@ -1,0 +1,53 @@
+<% if !@appointments.nil? %>
+
+	<div>
+		<span style="font-size:22px;color:blue;">Work orders for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span><br>	
+		<span style="color:#555555;"><%= @appointments.size %> Appointments</span>
+		<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+	</div><hr>
+
+	<% @appointments.each do |appointment| %>
+		<div style="page-break-inside: avoid;padding: 10px 0px;border-bottom:1px solid grey;">
+			<%= @body_template.render('appointment' => AppointmentDrop.new(appointment)).html_safe %>
+		</div>
+	<% end %>
+
+<% elsif !@employees_with_appointments.nil? %>
+
+	<% @employees_with_appointments.each do |employee| %>
+
+	<div style="<%= "page-break-after: always;" if employee.id != @employees_with_appointments.last.id %>">
+	<div>
+		<span style="font-size:22px;color:blue;"><%= employee.full_name %></span><br>
+		<span style="font-size:14px;color:#555555;">Work order for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span>
+		<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+	</div><hr>
+	<% employee.assigned_appointments.each do |appointment| %>
+		<div style="page-break-inside: avoid;padding: 10px 0px;border-bottom:1px solid grey;">
+			<%= @body_template.render('appointment' => AppointmentDrop.new(appointment)).html_safe %>
+		</div>
+	<% end %>
+	</div>
+
+	<% end %>
+
+<% else %>
+
+	<% @teams_with_appointments.each do |team| %>
+
+	<div style="<%= "page-break-after: always;" if team.id != @teams_with_appointments.last.id %>">
+	<div>
+		<span style="font-size:22px;color:blue;"><%= team.name %></span><br>
+		<span style="font-size:14px;color:#555555;">Work order for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span>
+		<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>		
+	</div><hr>
+	<% team.appointments.each do |appointment| %>
+		<div style="page-break-inside: avoid;padding: 10px 0px;border-bottom:1px solid grey;">
+			<%= @body_template.render('appointment' => AppointmentDrop.new(appointment)).html_safe %>
+		</div>
+	<% end %>
+	</div>
+
+	<% end %>
+
+<% end %>

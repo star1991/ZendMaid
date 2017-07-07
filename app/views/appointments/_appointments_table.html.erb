@@ -1,0 +1,35 @@
+<% fields_for_table = current_user.appointment_fields.for_table %>
+
+
+<table id=<%= id %> class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr>
+			<th><div>Date</div></th>
+			<th><div>Time</div></th>
+			<th><div>Customer Name</div></th>
+			<% fields_for_table.each do |field| %>
+				<th><div><%= field.field_name %></div></th>
+			<% end %>
+			<th><div>Balance Owed</div></th>
+			<th><div>Paid</div></th>
+			<th><div>Status</div></th>
+			<th><div>Link</div></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% appointments.each do |appointment| %>
+			<tr>
+				<td><%= appointment.start_time.strftime('%a, %b %d, %Y') %></td>
+				<td><%= appointment.start_time.strftime('%l:%M %p') %></td>
+				<td><%= appointment.customer.full_name %></td>
+				<% fields_for_table.each do |field| %>
+					<td><%= appointment.appointment_items.select {|i| i.custom_field_id == field.id }.first.try(:value_name) %></td>
+				<% end %>
+				<td><%= number_to_currency appointment.price %></td>
+				<td style="text-align:center;"><%= yes_no appointment.paid? %></td>
+        		<td style="text-align:center;"><span class="label" style="background-color: <%= appointment.status.try(:calendar_color) %>"><%= appointment.status.try(:name) %></span></td>
+        		<td style="text-align:center;"><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+			</tr>
+		<% end%>
+	</tbody>
+</table>

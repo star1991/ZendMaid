@@ -1,0 +1,41 @@
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+    	<div class="content-box-header"><i class="icon-check"></i> Tasks </div>
+	
+	<div id="tasks" class="padded">
+      <div class ='row-fluid top-bar'>
+        <div class="span12">
+          <div class="pull-left">
+            <%= form_tag tasks_path, :method => :get do %>
+              <%= select_tag "task_filter", options_for_select({'Upcoming' => 'upcoming', 'Overdue' => 'overdue', 'Recently Completed' => 'completed', 'All Complete and Incomplete' => 'all'}, params[:task_filter] || 'upcoming'), :class => 'width100' %>
+              <span style="font-size:14px;margin-left:10px;"> 
+                <%= @tasks.count %> Total Tasks
+              </span>
+            <% end %>
+          </div>
+
+          <div class="pull-right">
+            <a href="/tasks/new" class="btn btn-blue" data-remote="true">
+              <i class="icon-plus-sign"></i> New Task
+            </a>            
+          </div>
+
+        </div>
+      </div>
+
+      <div class='row-fluid'>
+        <div class='span12'>
+          <%= render 'task_list' %>
+          <%= will_paginate @tasks, :class => 'will-paginate' %>
+          
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+</div>

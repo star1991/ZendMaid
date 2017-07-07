@@ -1,0 +1,91 @@
+<% provide(:title, "Exit Survey") %>
+
+<div class="container">
+
+  <div class="row-fluid">
+    <div class="span12">
+        
+      <div class="content-box">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="padded">
+            <% if current_user.active %>
+
+              <div class="row-fluid">
+                  <div class="span8 offset2">
+                  <div class="blue-message">
+
+                    <p><span class="headline"><strong>Answer the following questions to complete cancellation</strong> of your ZenMaid account.</span></p>
+
+                    <p>Your feedback here helps us build a great product for other maid service owners and maybe even for you in the future ...</p>
+
+                    <p>We appreciate you giving us a chance!</p>
+
+                  </div>
+                  </div>
+                </div>
+
+        
+              <%= simple_form_for @user_profile, :html => { :class => "form-vertical uni",}, :url => exit_survey_path, :defaults => {:required => false}, :method => :post do |f| %>
+
+                <div class="row-fluid">
+                  <div class="span8 offset2">
+
+                    <%= render 'shared/flash_notice' %>
+                    <%= f.input :why_leaving, :label => "What made you want to cancel?" %>
+
+                    <%= f.input :previous_system, :label => "Which system are you using instead of ZenMaid?" %>
+
+                    <%= f.input :required_specific_feature, :label => "Would a specific feature have kept you onboard with us?" %>
+
+                    <%= f.input :recommendation, :include_blank => false, :label => "Despite leaving, how likely are you to recommend ZenMaid to another maid service or encourage them to check it out?", :collection => [
+                      ["1 - Not likely at all", 1], 
+                      ["2", 2],
+                      ["3", 3],
+                      ["4", 4],
+                      ["5", 5],
+                      ["6", 6],
+                      ["7", 7],
+                      ["8", 8],
+                      ["9", 9],
+                      ["10 - Very likely", 10],         
+                      ] %>
+
+                  </div>
+
+                </div>
+
+                <div class="row-fluid" style="margin-top:20px;">
+                  <div class="span12">
+                    <%= button_tag(type: 'submit', class: "btn btn-green pull-right") do %>
+                      Submit and Cancel my ZenMaid Subscription
+                    <% end %>
+                  </div>
+                </div>
+              <% end %> 
+            <% else %>
+
+              <div class="row-fluid">
+                <div class="span8 offset2">
+                <div class="green-message" style="font-size:16px;line-height:20px;">
+
+                  <p style="margin-bottom:20px;"><span class="headline"><strong>Thanks for filling out our survey and thanks again for giving ZenMaid a try!</strong></span></p>
+
+                  <p>Your subscription to ZenMaid has been successfully cancelled. Feel free to give us another try anytime, just <%= mail_to "amar@zenmaid.com", "email us at amar@zenmaid.com" %> or call us at 747-222-6243 to reactivate your account!</p>
+
+                </div>
+                </div>
+              </div>
+              
+            <% end %>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+
+    </div>  
+  </div>
+
+</div>

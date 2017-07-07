@@ -1,0 +1,107 @@
+
+<ul class="nav nav-pills" id="settings-navigation">
+	<li class="<%= "active" if active == "Account" %>">
+		<%= link_to edit_my_account_employees_path do %>
+			<i class="icon-user icon-large"></i> Account	
+		<% end %>
+	</li>
+	
+	<li class="<%= "active" if active == "Company" %>">
+		<%= link_to edit_user_profile_path(current_user.user_profile) do %>
+			<i class="icon-home icon-large"></i> Company	
+		<% end %>
+	</li>
+	
+	<li class="<%= "active" if active == "Calendar" %>">
+		<%= link_to calendar_options_path do %>
+			<i class="icon-calendar icon-large"></i> Calendar
+		<% end %>
+	</li>
+	
+	<li class="<%= "active" if active == "Statuses" %>">
+		<%= link_to edit_statuses_path do %>
+			<i class="icon-eye-open icon-large"></i> Statuses
+		<% end %>
+	</li>	
+	
+	<li class="dropdown <%= "active" if active == "Custom Fields" %>">
+   		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+       	<i class="icon-cog icon-large"></i> Custom Fields
+       	<b class="caret"></b>
+     	</a>
+	    <ul class="dropdown-menu">
+	  			<li><%= link_to appointment_custom_fields_path do %>
+						<i class="icon-calendar"></i> Appointment Fields
+					<% end %></li>
+					<li><%= link_to customer_custom_fields_path do %>
+						<i class="icon-group"></i> Customer Fields
+					<% end %></li>
+					<li><%= link_to employee_custom_fields_path do %>
+						<i class="icon-truck"></i> Employee Fields
+					<% end %></li>
+					<li><%= link_to instruction_custom_fields_path do %>
+						<i class="icon-pencil"></i> Instructions
+					<% end %></li>
+    	</ul>
+  	</li>
+
+
+	<li class="dropdown <%= "active" if active == "Templates" %>">
+   		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		<i class="icon-wrench icon-large"></i> Templates
+       	<b class="caret"></b>
+     	</a>
+	    <ul class="dropdown-menu">
+	  		<li><%= link_to edit_email_template_path(current_user.email_templates.where(:mass_email => false).first) do %>
+	  			<i class="icon-cogs"></i> Automated Email Templates
+	  			<% end %></li>
+	  		<li><%= link_to new_email_template_path(:mass_email => true) do %>
+	  			<i class="icon-envelope"></i> Mass Email Templates
+	  			<% end %></li>
+	  		<li><%= link_to edit_text_template_path(current_user.text_templates.first) do %>
+	  			<i class="icon-mobile-phone"></i> Automated Text Templates
+	  			<% end %></li>
+    	</ul>
+	</li>
+	
+	<li class="<%= "active" if active == "Teams" %>">	
+		<%= link_to edit_teams_path do %>
+			<i class="icon-truck icon-large"></i> Teams
+		<% end %>
+	</li>
+
+	<li class="<%= "active" if active == "Instant Booking" %>">
+	    <%= link_to edit_instant_booking_profile_path(current_user.instant_booking_profile) do %>
+			<i class="icon-book icon-large"></i> Bookings Page
+		<% end %>
+	</li>
+
+	<li class="<%= "active" if active == "Credit Card Processing" %>">
+	    <%= link_to credit_card_processing_path do %>
+			<i class="icon-credit-card icon-large"></i> Credit Card Processing
+		<% end %>
+	</li>
+
+ 	<li class="<%= "active" if active == "Quickbooks Integration" %>">
+ 	    <%= link_to quickbooks_users_path do %>
+ 			<i class="icon-suitcase icon-large"></i> Quickbooks Integration
+ 		<% end %>
+ 	</li>
+
+    <li class="<%= "active" if active == "Mailchimp" %>">
+      <%= link_to mailchimp_setting_path do %>
+        <i class="icon-envelope icon-large"></i> Mailchimp Integration
+      <% end %>
+    </li>
+
+	<% if current_employee.owner? %>
+
+	<li class="<%= "active" if active == "Billing" %>">
+		<%= link_to billing_path do %>
+			<i class="icon-money icon-large"></i> Billing
+		<% end %>
+	</li>
+
+	<% end %>
+</ul>
+

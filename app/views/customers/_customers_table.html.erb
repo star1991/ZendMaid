@@ -1,0 +1,34 @@
+<table id=<%= id %> class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th><div>First Name</div></th>
+            <th><div>Last Name</div></th>
+            <th><div>Company Name</div></th>
+            <th><div>Email</div></th>
+            <th><div>Phone number</div></th>
+            <th><div>Balance</div></th>
+            <th style="text-align:center;"><div>Type</div></th>
+            <th>Link</th>
+            <!--<th></th> -->
+        </tr>
+    </thead>
+    <tbody>
+
+        <% @customers.each do |customer| %>
+            <tr>
+                <td><%= link_to(customer.first_name, customer) if customer.first_name.present? %></td>
+                <td><%= link_to(customer.last_name, customer) if customer.last_name.present? %></td>
+                <td><%= link_to(customer.company_name, customer) if customer.company_name.present? %></td>                
+                <td><%= customer.emails.try(:first).try(:address) %></td>
+                <td><%= formatted_phone_number customer.phone_numbers.try(:first).try(:phone_number) %></td>
+                <td>
+                    <strong class="<%= customer.balance > 0 ? 'red' : 'green' %>"><%= number_to_currency customer.balance %></strong>
+                </td>
+                <td style="text-align:center;"><span class="label" style="background-color: <%= customer.lead? ? "blue" : "green" %>"><%= customer.lead? ? "Lead" : "Customer" %></span></td>
+                <td class="center"><%= link_to 'Edit', edit_customer_path(customer)%></td>
+                <!--
+                <td><%= link_to customer, class: "btn btn-mini btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %> <i class="icon-remove-circle"></i> Delete <% end %></td>-->
+            </tr>
+        <% end %>
+    </tbody>
+</table>

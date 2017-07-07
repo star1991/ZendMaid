@@ -1,0 +1,26 @@
+
+<% if @with_email.size > 0 %>
+
+<b>Send email to: </b><br>
+
+<div style="padding-left:40px;margin-bottom:20px;">
+	<% @with_email.each_pair do |email, label| %>
+		<%= f.hidden_field :sendable_emails, :multiple => true, :value => email %>
+    	<%= f.input email.to_sym, :as => :boolean, :label => false, :checked => true, :input_html => {:checked => true}, :inline_label => label %>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @without_email.size > 0 %>
+
+<b class="red"> No email on record for: </b><br>
+
+<div style="padding-left:40px;margin-bottom:20px;max-width:200px;">
+     	<% @without_email.each_pair do |label, edit_link_url| %>
+         		<%= label %><%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_link_url, :class => "pull-right btn btn-mini" %><br>
+        <% end %>
+</div>
+
+<% end %>
+

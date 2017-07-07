@@ -1,0 +1,57 @@
+
+
+
+ 		<%= f.input :title, :label => "Subject", :as => :string %>
+    	<%= f.input :body, :as => :ckeditor %>
+    	
+    	<div class="appointment-reminders-select">
+    	<% if @email_template.template_type == "Appointment Reminder" %>
+    		<span class="darkblue">Send appointment reminders</span>
+    		<%= f.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+    			["Never", nil], 
+    			["One day before appointment", -86400],
+    			["Two days before appointment", -172800],
+    			["Three days before appointment", -259200],
+    			["Four days before appointment", -345600],
+    			["Five days before appointment", -432000],
+    			["Six days before appointment", -518400],
+    			["One week before appointment", -604800],    			
+    			]%><br>
+    		<span class="darkblue">If appointment status is</span>
+    		<%= f.input_field :after_status, :as => :select, :include_blank => false, :collection => @user.statuses.map { |status| [status.name, status.id]}, :style => "width:100px;"%>
+    	<% elsif @email_template.template_type == "Work Order" %>
+    		<%= f.input :time_offset, :as => :boolean, :label => false, :inline_label => "Send daily schedule to employees the night before?", :checked_value => -86400, :unchecked_value => nil %>
+    	<% elsif @email_template.template_type == "Appointment Confirmation" %>
+    		<%= f.input :time_offset, :as => :boolean, :label => false, :inline_label => "Prompt for confirmation email after scheduling appointment?", :checked_value => 1, :unchecked_value => nil %>
+    	<% elsif @email_template.template_type == "Appointment Follow-Up" %>
+    		<span class="darkblue">Send follow-up emails</span>
+    		<%= f.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+    			["Never", nil], 
+    			["One day after appointment", 86400],
+    			["Two days after appointment", 172800],
+    			["Three days after appointment", 259200],
+    			["Four days after appointment", 345600],
+    			["Five days after appointment", 432000],
+    			["Six days after appointment", 518400],
+    			["One week after appointment", 604800],    			
+    			] %><br>
+    		<span class="darkblue">If appointment status is</span>
+    		<%= f.input_field :after_status, :as => :select, :include_blank => false, :collection => @user.statuses.map { |status| [status.name, status.id]}, :style => "width:100px;"%>
+    		<%= f.input :only_on_first, :as => :boolean, :label => false, :inline_label => "Send only for client's first appointment?", :checked_value => true, :unchecked_value => false %>    
+    	<% elsif @email_template.template_type == "Come Back" %>
+    		<span class="darkblue">Send come back email</span>
+     		<%= f.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+    			["Never", nil], 
+    			["One week after customer's last appointment", 1],
+    			["Two weeks after customer's last appointment", 2],
+    			["Three weeks after customer's last appointment", 3],
+    			["Four weeks after customer's last appointment", 4],
+    			["Five weeks after customer's last appointment", 5],
+    			["Six weeks after customer's last appointment", 6],
+    			["Seven weeks after customer's last appointment", 7],    			
+    			]%><br>   		
+    		
+    		
+    	<% end %>
+    
+    	</div>

@@ -1,0 +1,25 @@
+
+
+ 				<%= f.input :field_name, :label => "Name" %>
+
+ 				<%= f.input :input_type, :label => "Type", :as => "select", :include_blank => false, :input_html => {:id => "input-type-select" }, :collection => custom_field_input_types %>
+
+ 				<div id="input-type-fields">
+ 					<div class="field-type" id="boolean">
+ 						<%= f.input :default_checkbox, :as => :boolean, :label => false, :inline_label => "Checked by default?", :checked_value => "Yes", :unchecked_value => "No", :input_html => {:checked => @custom_field.default == "Yes" ? true : false } %>
+ 					</div>
+
+ 					<div class="field-type" id="select">
+ 						<%= f.input :value_names_input, :as => :text, :label => "Options", :hint => "Write each option you want in your dropdown menu on a new line", :input_html => {:value => @custom_field.value_names.values.try(:join, "\r\n")} %>
+ 						<%= f.input :default_select, :label => "Default", :as => "string", :hint => "Default value must match one of the defined options exactly", :input_html => {:value => @custom_field.default} %>
+ 					</div>
+
+ 					<div class="field-type" id="string">
+ 						<%= f.input :default_string, :label => "Default", :as => "string", :input_html => {:value => @custom_field.default} %>
+ 					</div>
+ 				</div>
+
+ 				<% if f.object.toggle_visibility? %>
+ 					<%= f.input :hide_from_employees, :as => :boolean, :inline_label => 'Hide from employees?', :label => false, :hint => " These field will be hidden from employees when they log in and on work orders. Office admins will still be able to view and edit this field." %>
+ 				<% end %>
+

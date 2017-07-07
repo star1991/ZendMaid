@@ -1,0 +1,13 @@
+<span class="grey">Assigned to</span><br>
+<div id="assigned-employees-preview">
+<div><strong><%= @appointment.team.try(:name) %></strong></div>
+
+<% if @appointment.assignments.count > 0 %>
+	<% @appointment.employees.each do |employee| %>
+		<%= employee.full_name %><br>
+	<% end %>
+<% else %>
+	<span class="blue">No Cleaners Assigned</span>
+<% end %>
+
+</div>

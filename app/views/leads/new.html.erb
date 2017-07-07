@@ -1,0 +1,17 @@
+<div class="well">
+<% provide(:title, "Get Started") %>
+
+<h2 class="standard-h2title line2">Get Started</h2>
+
+<%= simple_form_for @lead do |f| %>
+
+  <%= f.input :name %>
+  <%= f.input :email %>
+  <%= f.input :phone_number %>
+  <%= f.input :company_name %>
+
+  
+<div class="form-actions"><%= f.button :submit, "Get Started", :class => "btn btn-primary" %></div>
+<% end %>
+</div>
+

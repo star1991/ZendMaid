@@ -1,0 +1,65 @@
+<% provide(:title, instant_booking_title(@user) ) %>
+<%= provide(:banner_title, @instant_booking_profile.call_to_action)%>
+
+<div class="instant-booking-form">
+<div class="row-fluid">
+
+<div class="span12">
+
+
+<% if params[:embed] %>
+<h1><%= @instant_booking_profile.call_to_action %></h1>	
+<% end %>
+
+
+<%= simple_form_for @instant_booking, :url => instant_bookings_path(:embed => params[:embed], :profile_id => @instant_booking_profile.id), :defaults => {:required => false}, :html => { :class => @instant_booking_profile.compact? ? "" : "form-horizontal" }  do |f| %>
+	
+	<% if @instant_booking_profile.show_about_us? %>
+	
+	<div class="form-actions" style="padding:7px;">
+		<%= simple_format @instant_booking_profile.about_us %>
+	</div>
+	
+	<% end %>
+
+	<h2 class="standard-h2title line2">Step 1: Your Contact Information</h2> 	
+	
+ 	<%= render 'instant_bookings/customer_fields', :f => f %>
+	<%= f.hidden_field :nested_validation_user_id, :value => @user.id %>
+	
+	<h2 class="standard-h2title line2">Step 2: Your Address</h2>
+		
+		<%= f.simple_fields_for :address do |address_builder| %>
+			<%= render 'instant_bookings/address_fields', :f => address_builder %>
+			<%= address_builder.hidden_field :from_instant_booking, :value => true %>
+		<% end %>
+
+	
+	<h2 class="standard-h2title line2"> Step 3: Your Appointment Details</h3>
+		
+		<%= render "instant_bookings/start_time_fields", :f => f %>
+		
+		<%= render "instant_bookings/booking_details_fields", :f => f %>
+		<%= f.input :requests, :hint => '(e.g., special instructions and anything else you want to let us know)', :input_html => {:style => 'width:400px', :rows => 5}%>
+		
+	
+	<%= hidden_field_tag "estimated_price", "0.00", :id => "estimated-price-tag"%>
+	
+
+	<div class="form-actions">
+		<h4 class="price-estimate">
+		<% if @user.instant_booking_profile.show_price? %>
+		Estimated Price: <span id="total-price">$0.00</span>
+		<% end %>
+		<%= button_tag(type: 'submit', class: "btn instant-booking-submit #{@instant_booking_profile.button_color_class}") do %>
+    	<i class="fa-icon-ok"></i> Book
+  		<% end %></h4>
+    </div>
+
+
+<% end %>
+</div>
+</div>
+</div>
+
+

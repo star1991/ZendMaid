@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Appointment:</b>
+  <%= @appointment_service_item.appointment_id %>
+</p>
+
+<p>
+  <b>Appointment field:</b>
+  <%= @appointment_service_item.appointment_field_id %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @appointment_service_item.amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_appointment_service_item_path(@appointment_service_item) %> |
+<%= link_to 'Back', appointment_service_items_path %>

@@ -1,0 +1,74 @@
+<div class="row-fluid" style="margin-top:10px;">
+
+	<div class="span6">
+
+		<%= render 'calendar_view_toggle_menu', :current_calendar_view => "Grid" %>
+
+	</div>
+
+<div class="span6">
+	
+	<%= link_to '#', :class => "btn btn-danger", :id => "filter-button", :style => "float:right;" do %>
+		Filters<strong class="blue">OFF</strong>
+	<% end %>
+	
+	<span id="source-select" style="float:right;">
+		<strong>Show by </strong><%= select_tag "source", options_for_select([["Employees", "employees"], ["Teams", "team"]], "employees"), :style => "width:100px;margin-right:10px;"%>
+	</span>
+	
+</div>
+
+</div>
+
+<div class="row-fluid">
+
+<div class="span12">
+
+<%= render 'shared/flash_notice' %>
+
+<div class="description-panel-alt center" style="margin:auto;width:470px;background-color:#ddd;border: 1px solid grey;">
+<div id="calendar-date-manager">
+	<%= link_to '#', :class => "btn btn-success", :id => "date-prev" do %>
+		<i class="icon-chevron-left"></i> 
+	<% end %>
+
+	<span id="date-wrapper">
+		<input type="text" id="datepicker-focus" />
+		<i class="icon-calendar"></i> 
+		<strong id="selected-date"></strong>
+	</span>
+	
+	
+	<%= link_to '#', :class => "btn btn-success", :id => "date-next" do %>
+		<i class="icon-chevron-right"></i> 
+	<% end %>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+<div id="unassigned-panel">
+	<div id="grid-headers">
+		<div class="header-item"><strong class="darkblue">Unassigned</strong></div>
+	</div>
+	
+	<div id="grid-calendars">
+		<div class="calendar-item" data-id="0"></div>
+	</div>
+</div>
+
+
+<div id="grid-content">
+	<div id="grid-headers">
+	
+	</div>
+	
+	<div id="grid-calendars">
+
+	</div>
+
+</div>
+

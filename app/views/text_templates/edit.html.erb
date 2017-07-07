@@ -1,0 +1,93 @@
+<% provide(:title, "Edit Text Template") %>
+<% provide(:icon, "icon-cogs") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+	<div class="row-fluid">
+		<div class="span12" style="padding-left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			<%= render 'users/settings_nav', :active => "Templates" %>
+		</div>
+	</div>		
+
+  	<div class="row-fluid">
+		<%= render 'shared/content_box_help', :message => "This is where you can edit the default content of texts that ZenMaid can automatically generate for you. You can also set whether you'd like these texts to go out automatically or manually." %>
+	</div>
+
+  	<div class="row-fluid">		
+
+  	<div class="row-fluid padded">
+  		<div class="span2">
+  			
+			<h5>Text Templates</h5>
+  			<ul class="nav nav-pills nav-stacked">
+				<% @user.text_templates.each do |template| %>
+					<li class=<%= template.template_type == @text_template.template_type ? "active" : "" %>><%= link_to template.template_type, edit_text_template_path(template) %></li>
+				<% end %>
+  			</ul>
+  		</div>
+  		
+		<div class="span10">
+
+			<div class="blue-message">
+				<i class="icon-large icon-info-sign blue"></i> This is where you can edit text templates. The values in the curly {{ }} brackets are wildcards which tell the system where to put the corresponding information for each appointment. Currently supported wildcards are <br><br>
+					<ul>
+						<li> {{appointment.start_time}} - exact appointment start time (e.g., 12:30 PM)</li>
+						<li> {{appointment.start_time_approx_one}} - approximate appointment start time (e.g., 12 PM - 1 PM)</li>
+						<li> {{appointment.start_date}} - date of appointment (e.g., 10/3/2013)</li>
+						<li> {{appointment.start_date_in_words}} - date of appointment in words (e.g., Thursday, Oct 3) </li>
+						<li> {{appointment.address}} - address of appointment</li>
+						<li> {{appointment.contact_name}} - name of client (e.g., John Smith)</li>
+					</ul>
+					<strong>Please email Amar at <%= mail_to "amar@zenmaid.com" %> if you want to put information in the template which isn't listed above</strong> 
+			</div>
+
+			<%= simple_form_for @text_template, :html => { :class => "form-vertical" }, :defaults => {:required => false} do |f| %>
+
+    		<%= render 'shared/flash_notice' %>			
+			<%= f.input :body, :as => :text, :input_html => {:rows => 5} %>
+			
+			<div class="appointment-reminders-select">
+    		<% if @text_template.template_type == "Appointment Reminder" %>
+    			<span class="darkblue">Send appointment reminders</span>
+    			<%= f.input_field :time_offset, :as => :select, :include_blank => false, :collection => [
+    				["Never", nil], 
+    				["One day before appointment", -86400],
+    				["Two days before appointment", -172800],
+    				["Three days before appointment", -259200],
+    				["Four days before appointment", -345600],
+    				["Five days before appointment", -432000],
+    				["Six days before appointment", -518400],
+    				["One week before appointment", -604800],    			
+    				]%><br>
+    			<span class="darkblue">If appointment status is</span>
+    			<%= f.input_field :after_status, :as => :select, :include_blank => false, :collection => @user.statuses.map { |status| [status.name, status.id]}, :style => "width:100px;"%>
+   			<% elsif @text_template.template_type == "Work Order" %>
+    			<%= f.input :time_offset, :as => :boolean, :label => false, :inline_label => "Text daily schedules to employees the day before (in the afternoon)?", :checked_value => -86400, :unchecked_value => nil %>
+    		<% end %>
+    
+			</div>
+			
+			<div class="control-group">
+     			<div class="controls">
+
+     				<%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+        		</div>
+     		</div>
+
+					
+			<% end %>
+			
+		</div>
+	
+	</div>
+	</div>
+	
+	</div>
+</div>
+
+</div>

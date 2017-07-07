@@ -1,0 +1,28 @@
+<div class="row-fluid">
+<div class="span12">
+
+<% if @user.statuses.count > 0 %>
+<%= f.association :status, :collection => current_user.statuses, :label_method => :name, :value_method => :id, :include_blank => false %>
+<% end %>
+
+
+<% if @user.service_types.count > 1 %>
+<%= f.input :service_type_id, :label => "Cleaning Type", :collection => @user.service_types.map { |type| [type.name, type.id] }, :input_html => {:id => "service-type"} %>
+<% else %>
+<%= f.hidden_field :service_type_id, :value => @user.service_types.first.try(:id), :id => "service-type" %>
+<% end %>
+
+<div class="service-items">
+<%= f.simple_fields_for :appointment_items, @appointment.appointment_items.sort { |a, b| a.custom_field.order <=> b.custom_field.order } do |item_builder| %>
+	<%= render "appointments/appointment_items_fields", :f => item_builder %>
+<% end %>
+</div>
+
+</div>
+</div>
+
+<h6 class="darkblue bottom-bordered">Work Order</h6>
+
+<%= render 'appointments/instructions_manager', :f => f %>
+
+<%= f.input :notes, :input_html => { :rows => 5} %>

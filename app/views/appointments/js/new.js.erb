@@ -1,0 +1,7 @@
+$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+
+$('#pageslide').append("<%= escape_javascript(render('appointments/new_pageslide').html_safe) %>");
+
+gon["service_addresses"] = JSON.parse("<%= escape_javascript(Hash[@customer.addresses.map { |address| [address.id, {:street => address.line1, :city => address.city, :state => address.state, :zip => address.postal_code}] }].to_json.html_safe) %>");
+createPanel.reattach_events();
+

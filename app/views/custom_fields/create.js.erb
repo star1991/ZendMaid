@@ -1,0 +1,4 @@
+$('#custom-field-modal').modal('hide');
+$('#custom-field-modal').remove();
+
+$("<%= escape_javascript(render('custom_field_wrapper', :custom_field => @custom_field)).html_safe %>").appendTo('ul#custom-field-list').hide().delay(500).fadeIn('slow').effect("highlight");

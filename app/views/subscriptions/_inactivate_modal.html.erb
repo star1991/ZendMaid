@@ -1,0 +1,27 @@
+<!-- edit location and contanct info popup -->
+<div class="modal fade hide" id="inactivate-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="icon-cog red"></i> Inactivate Recurring Service</h4>
+        </div>
+        <div class="modal-body">
+        	<%= simple_form_for @subscription, :html => { :class => "form-horizontal uni" }, :method => :post, :url => inactivate_subscription_path(@subscription) do |f| %>
+         		<div class="alert alert-error">
+        			<strong>Warning:</strong> This action will PERMANENTLY delete all appointments in this service scheduled after the selected date!
+        		</div>	
+        	
+ 				<%= f.input :inactivate_on, :as => :date_picker, :input_html => {:value => Time.zone.now.try(:strftime,'%m/%d/%Y'), :readonly => true, :style => "width: 75px;"}, :label => "Inactivate service on" %>
+ 				
+				<%= f.button :submit, 'Inactivate', :class => "pull-right btn btn-red", :data => {:confirm => "Are you SURE you want to inactivate this recurring service?"} %>
+			
+			<% end %>
+			
+		</div>
+    </div>
+	</div>
+</div>
+
+
+</div>

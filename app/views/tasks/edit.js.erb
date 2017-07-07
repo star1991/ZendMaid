@@ -1,0 +1,9 @@
+$("#task_<%= @task.id %>").replaceWith("<%= escape_javascript(render('tasks/form', :task => @task).html_safe) %>")
+$("input.date_picker").each( function(i){
+  $(this).datepicker({
+    altFormat: "dd/mm/yy",
+    dateFormat: "mm/dd/yy",
+    altField: $(this).next(), 
+  })
+})
+

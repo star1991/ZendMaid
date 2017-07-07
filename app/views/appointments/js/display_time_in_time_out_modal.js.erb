@@ -1,0 +1,15 @@
+var $time_modal = $('#time_in_time_out_modal');
+$time_modal.find('.modal-body').html("<%= escape_javascript(render('appointments/time_in_time_out_modal_content').html_safe) %>");
+
+$time_modal.find('#cancel-button').click(function () {
+	$time_modal.modal('hide');
+});
+
+$time_modal.find('#save-button').click(function () {
+	$(this).prop('value', 'Saving...');
+});
+
+$time_modal.find('#edit-assigned-appointments').click(function () {
+	$time_modal.modal('hide');
+	$('#assignments-modal').appendTo("body").modal('show');	
+});

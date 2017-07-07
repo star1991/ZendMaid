@@ -1,0 +1,33 @@
+<% if current_employee.present? %>
+
+<script id="IntercomSettingsScriptTag">
+  window.intercomSettings = {
+    name: "<%= current_employee.full_name %>",
+    email: "<%= current_employee.email %>",
+    owner: "<%= current_employee.owner? %>",
+    created_at: <%= current_employee.created_at.to_i %>,
+    app_id: "6b27cdb7860d5024f49af6dc8c64484ccbb3eaf9",
+    company: {
+    	id: <%= current_user.id %>,
+    	name: "<%= current_user.company_name %>",
+    	created_at: <%= current_user.created_at.to_i %>,
+    	plan: "<%= current_user.plan_id %>",
+    	employees: <%= current_user.employees.size %>,
+        cc_processing: <%= current_user.allow_cc_processing? %>,
+        instant_booking: <%= current_user.booking_form_started? %>,
+        quickbooks: <%= current_user.qb_company_id.present? %>,
+        mailchimp: <%= current_user.mailchimp_auth_exists? %>,
+        phone_number: <%= current_user.user_profile.company_phone_number %>,
+    	customers: <%= current_user.customers.size %>,
+    	services: <%= current_user.subscriptions.size %>,
+        payrolls: <%= current_user.payrolls.size %>,
+        onboarding_page: <%= current_user.onboarding_page %>,
+        onboarding_completed: <%= current_user.completed_onboarding? %>,
+        paying: <%= current_user.plan_id.present? %>    	
+    }
+  };
+</script>
+
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+<% end %>

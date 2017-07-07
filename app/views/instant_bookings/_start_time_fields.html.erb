@@ -1,0 +1,2 @@
+<%= f.input :start_time_date, :as => :date_picker, :input_html => {:class => "mirrored-start", :value => @instant_booking.start_time.try(:strftime,'%m/%d/%Y'), :style => "width: 105px"}, :label => "Date", :wrapper_html => {:class => "inline"} %>
+<%= f.input :start_time_time, :collection => @instant_booking_profile.time_options, :label => "Start Time", :wrapper_html => {:class => "inline"}, :input_html => {:style => 'width: 230px'} %>

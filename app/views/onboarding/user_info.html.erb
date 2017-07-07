@@ -1,0 +1,56 @@
+<% provide(:title, "Getting Started: Step 1") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+  	<div class="row-fluid">
+    	<div class="span12">
+      	<div class="padded">
+  			
+
+        <div class="green-message">
+          <span class="headline"><strong>Welcome to ZenMaid!</strong> Are you ready to grow your business faster than ever before?</span>
+        </div>
+
+        <div class="blue-message">
+          To start off, please add basic information about your business below. This information will help us automatically generate the marketing materials ZenMaid can send out automatically on your behalf.
+        </div>
+
+        <%= render 'shared/flash_notice' %>
+  
+  			<%= simple_form_for @user_profile, :html => { :class => "form-horizontal uni", :multipart => true }, :url => user_info_onboarding_path, :defaults => {:required => false}, :method => :post do |f| %>
+			        
+			  <div class="row-fluid">
+          <div class="span8 offset1">
+            <%= f.input :full_name, :label => "Your Name" %>
+            
+            <%= render 'user_profiles/user_profile_fields', :f => f %>
+
+            <%= button_tag(type: 'submit', class: "btn btn-red pull-right") do %>
+                Take me to my calendar! &nbsp; <i class="icon-arrow-right icon-white"></i>
+            <% end %>
+          </div>
+
+        </div>
+
+     
+      			
+			<% end %>		
+  			</div>
+     
+
+		</div>
+		</div>
+	</div>
+	</div>
+	
+	</div>
+</div>
+
+  <%= render 'shared/heap_identify' %>
+
+  <%= render 'shared/capterra' %>

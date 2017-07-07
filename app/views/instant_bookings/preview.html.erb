@@ -1,0 +1,81 @@
+<%= provide(:banner_title, "Appointment Confirmation") %>
+
+
+<div class="row-fluid instant-booking-confirmation">
+
+<% if @user.user_profile.present? && !params[:embed] %>
+<div class="span3">
+	<%= render @user.user_profile, :show_about_us => false, :show_contact_us => true %>	
+</div>
+
+<div class="span9">
+<% else %>
+
+<div class="span12">
+
+<% end %>
+
+<% if params[:embed] %>
+<h1>Appointment Confirmation</h1>	
+<% end %>
+
+<%= render 'shared/flash_notice' %>
+
+
+<h3 class="standard-h2title line2">Contact Information</h2>
+<dl class="dl-horizontal">
+	<dt>Name</dt>
+	<dd><%= @instant_booking.full_name %></dd>
+    <dt>Email</dt>
+    <dd><%= @instant_booking.email %></dd>
+    <dt>Phone</dt>
+    <dd><%= formatted_phone_number @instant_booking.phone_number %></dd>
+</dl>
+
+<h3 class="standard-h2title line2">Appointment Details</h2>
+
+	<dl class = "dl-horizontal">
+		<dt>Date</dt>
+		<dd><%= @instant_booking.start_time.strftime('%a, %b %d, %Y') %></dd>
+		<dt>Start Time</dt>
+		<dd><%= formatted_time @instant_booking.start_time %></dd>
+		<dt>Address</dt>
+		<dd><%= render @instant_booking.address %></dd>
+		<dt>Cleaning Type</dt>
+		<dd><%= @instant_booking.service_type.name %></dd>
+		<dt>Requests</dt>
+		<dd class="clearfix"><%= @instant_booking.requests %></dd>
+	</dl>
+
+	
+	<% if @instant_booking.instant_booking_items.count > 0 %>
+	<strong>Booking Details</strong>
+	<table id="price-table" class="table table-condensed">
+		<tbody>
+			<% @instant_booking.instant_booking_items.each do |item| %>
+				<tr>
+					<td class="quantity-item"><%= item.custom_field.field_name %></td>
+					<td class="quantity-price"><%= item.value_name %></td>
+				</tr>
+			<% end %>
+			<% if @user.instant_booking_profile.show_price? && @instant_booking.price > 0 %>
+			<tr>
+				<td class="quantity-price"><strong>Estimated Price</strong></td>
+				<td class="quantity-price"><%= number_to_currency @instant_booking.price %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% end %>
+	
+	<%= link_to "Book another appointment!", new_instant_booking_path(:profile_id => @user.instant_booking_profile.id, :embed => params[:embed]), :class => "btn #{@user.instant_booking_profile.button_color_class}" %>
+	<% if @user.user_profile.try(:facebook_page).present? %>
+		<div style="margin-top:10px;">
+			<div class="fb-like" data-href="<%= smart_add_url_protocol(@user.user_profile.facebook_page, :secure => true) %>" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+		</div>
+	<% end %>
+	
+	<br />
+	
+</div>
+</div>

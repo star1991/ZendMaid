@@ -1,0 +1,47 @@
+<div id="<%= "task_#{task.id}" %>" class='task'>
+  <div class='row-fluid'>
+    <div class ='span1'>
+      <%= form_tag task_path(task.id), :method => :put, :remote => true, :class => 'uni' do %>
+        <%= check_box_tag "completed", task.completed? ? '0' : '1' , task.completed?, :id => "check_box_#{task.id}" %>
+      <% end %>
+    </div>
+
+    <div class='span11'>
+      <div class='row-fluid'>
+        <div class='pull-right task-menu' style="margin-bottom:9px;margin-left:10px;">
+          <%- unless task.completed? %>
+            <%= link_to 'Edit', edit_task_path(task), :class => "btn btn-mini btn-green", :method => :get, :remote => true %>
+          <% end %> 
+
+          <%= link_to 'Delete', task_path(task), :class => "btn btn-mini btn-danger delete", :alt => "delete", :method => :delete, :remote => true, :data => { :confirm => task.task_recurrence.present? ? "Are you sure you want to delete all repeating tasks for this recurrence?\n\nTasks marked as complete will not be deleted.".html_safe : 'Are you sure you want to delete this task?' } %>
+        </div>
+
+    	  <div class='task-content'>
+            
+          <%- if task.completed? %>
+            <b><del> <%= task.task %></del> </b>
+			      <em class="darkgrey"> <%= task.note %> </em><br>
+          <% else %>
+           <b> <%= task.task %> </b>
+			     <em class="darkgrey"> <%= task.note %> </em><br>
+          <% end %>
+
+    			<div style="font-size: 10px">
+      		  <span class='red'> Due on <%= task.due_date.strftime('%-m/%-d/%Y') %> </span>		      
+      	      <%- if task.completed? %>
+      			<span class='green'> (Completed <%= task.completed_on.strftime('%-m/%-d/%Y') %>) </span>
+    		  <%- end %><br>
+
+            <% if task.show_recurrence_information? %>
+              <span class="circle-icon">
+                <i class="icon-refresh"></i>
+              </span> <span>Repeats <%= task.task_recurrence.recurrence.to_s %></span>
+            <% end %>
+
+    		  </div>
+
+    	  </div>
+	  </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<% provide(:title, "Calendar Options") %>
+<% provide(:icon, "icon-cogs") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+	<%= simple_form_for @user, :url => registration_path(resource_name), :html => { :class => "form-horizontal uni" }, :defaults => {:required => false} do |f| %>
+	<%= hidden_field_tag "calendar_options_page" %>
+
+	<div class="row-fluid">
+		<div class="span12" style="padding-left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			<%= render 'users/settings_nav', :active => "Calendar" %>
+		</div>
+	</div>		
+
+  	<div class="row-fluid">
+		<%= render 'shared/content_box_help', :message => "This is where you can set the color of appointments on your calendar based on which cleaners or team are assigned to them or what status they have. You can also set which cleaners show up by default in the grid view." %>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="span12" style="margin-top:10px;">
+			
+			<div style="padding-left:10px;padding-right:10px;">
+				<%= render 'shared/flash_notice' %>
+			</div>
+			
+			<%= f.input :default_calendar_coloring, :collection => ["Employees", "Team", "Status"], :include_blank => false, :label => "Default Coloring", :wrapper_html => {:style => "margin-bottom:0px;"} %>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		<div class="padded">
+		
+    	<div class="span4 padded10">
+    		<h6 class="bottom-bordered">Employees</h6>
+			<%= f.simple_fields_for :employees, @user.employees.active do |employee_builder| %>
+
+			<div class="control-group text inline" style="margin-bottom:0px;">
+         		<%= employee_builder.input_field :calendar_color, :class => "colorpicker" %>
+			</div>
+			<div style="display:inline-block;margin-left:10px;"><%= employee_builder.object.full_name %></div><br>
+			
+			<div style="display:inline-block;margin-left:10px;"><%= employee_builder.input :show_in_grid, :as => :boolean, :label => false, :inline_label => "Show in grid?", :checked_value => true, :unchecked_value => false, :wrapper_html => {:class => "compact-horizontal", :style => "margin-bottom:5px;"} %></div><br>
+			
+			<% end %>
+
+			<div class="control-group text inline">
+   	 			<%= f.input_field :unassigned_color, :class => "colorpicker" %>
+			</div>
+			<div style="display:inline-block;margin-left:10px;">No Cleaners Assigned</div><br>
+		</div>
+		
+    	<div class="span4 padded10">
+    		<h6 class="bottom-bordered">Teams</h6>
+			<%= f.simple_fields_for :teams do |team_builder| %>
+
+			<div class="control-group text inline">
+         		<%= team_builder.input_field :calendar_color, :class => "colorpicker" %>
+			</div>
+			<div style="display:inline-block;margin-left:10px;"><%= team_builder.object.name %></div><br>
+
+			<% end %>
+
+			<div class="control-group text inline">
+   	 			<%= f.input_field :no_team_color, :class => "colorpicker" %>
+			</div>
+			<div style="display:inline-block;margin-left:10px;">No Team Assigned</div><br>
+		</div>		
+		
+		<div class="span4 padded10">
+
+			<h6 class="bottom-bordered">Status</h6>
+			<%= f.simple_fields_for :statuses do |status_builder| %>
+
+			<div class="control-group text inline">
+         		<%= status_builder.input_field :calendar_color, :class => "colorpicker" %>
+			</div>
+			<div style="display:inline-block;margin-left:10px;"><%= status_builder.object.name %></div><br>
+			
+			<% end %>
+		</div>
+		
+		
+		</div>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="span12">
+		<div class="padded">
+    		<div class="control-group">
+     			<div class="controls">
+     				<%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+        		</div>
+     		</div>
+
+		</div>
+		</div>
+	</div>
+	
+	<% end %>
+
+	</div>
+	</div>
+</div>
+</div>

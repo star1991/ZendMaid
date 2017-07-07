@@ -1,0 +1,14 @@
+<div class="nested-fields" style="margin-bottom:5px;">
+	<span class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger" %></span>
+	<div class="row-fluid">
+		<div class="span11">
+			<div class="peach-background padded10 narrow-control-groups">				
+				<%= render 'addresses/address_fields', :f => f %>
+				
+				<%= link_to "#", :class => "set-billing-link" do %>
+					<i class="icon-circle-arrow-right"></i> Set as billing address
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

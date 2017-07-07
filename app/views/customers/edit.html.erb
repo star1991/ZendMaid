@@ -1,0 +1,45 @@
+<% provide(:title, "Edit Customer Information") %>
+<% provide(:icon, "icon-edit") %>
+
+<div class="container">
+<div class="row-fluid">
+    <div class="span12">
+
+	<%= simple_form_for @customer, :html => { :class => "form-horizontal compact-horizontal" } do |f| %>
+
+
+	<div class="content-box">
+  	<div class="content-box-header">
+    	<i class="icon-edit"></i> <%= @customer.full_name %> - Edit
+  	</div>
+
+  	<div class="row-fluid">
+      	<div class="span7 offset2 padded">
+				
+			<%= render 'shared/flash_notice' %>
+
+            <%= hidden_field_tag :commit %>
+ 
+            <%= render 'customers/customer_fields', :f => f %>
+            
+			<%= render 'customers/customer_details_fields', :f => f%>
+			<%= render 'customers/customer_addresses_fields', :f => f %>
+
+      <div class="blue-message">
+        <span class="red"><strong>Warning: </strong> Addresses on recurring services will NOT automatically update if the customer address is modified. The address must also be updated on the recurring service.</span>
+      </div>
+       		
+       		<br>
+			<div class="pull-right">
+                	<%= f.button :submit, 'Save Changes', :class => "btn btn-green new-customer" %>
+                	<%= link_to 'Cancel', @customer, :class => "btn btn-inverse" %>
+            </div>
+			</div>
+	</div>	
+	</div>
+
+	<% end %>
+
+	</div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+<%= f.simple_fields_for :address do |address_builder| %>
+        
+<h6>Appointment Address</h6>
+<hr>
+
+<%= render 'instant_booking/address_fields', :f => address_builder %>
+
+<% end %>
+	
+<h6>Appointment Details</h6>
+<hr>
+<%= render 'instant_booking/appointment_fields' , :f => f %>
+
+<%= f.input :notes, :input_html => {:style => 'width:400px', :rows => 5} %>
+<%= f.input :price, :input_html => {:value => number_to_currency(@appointment.price)}, :as => :string %>
+
+<%= f.input :confirmed, :label => false, :inline_label => true , :wrapper_html => {:class => 'inline'} %>
+<%= f.input :paid, :label => false, :inline_label => true, :wrapper_html => {:class => 'inline'} %>
+
+<div class="control-group text">
+	<label class="control-label">Requests</label>
+        <div class="controls">
+          <p><%= @appointment.requests %></p>
+        </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="modal fade hide" id="customer-export-modal">
+    <div class="modal-dialog">
+      <%= form_tag export_customers_page_path, :method => :get do %>
+        <%= hidden_field_tag 'current_filter', params %>
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Export Customers</h4>
+          </div>
+          
+          <div class="modal-body padded20">
+           <h5> Export data for </h5> 
+            <%= label_tag  do %>
+              <%= radio_button_tag 'filter', 'filtered-customers', true %>
+              <%= pluralize(@num_customers, 'Customer') %>  Matching Filtering Criteria
+            <% end %>
+
+            <%= label_tag do %>
+              <%= radio_button_tag 'filter', 'active-customers' %>
+              All Active Customers
+            <% end %>
+
+            <%= label_tag do %>
+              <%= radio_button_tag 'filter', 'all-customers' %>
+              All Customers
+            <% end %>
+
+            <h5> Additional Columns </h5>
+            <div class="container-fluid " >
+              <div class="row-fluid">
+                <div class="span6">
+                  <%= label_tag do %>
+                    <%= check_box_tag 'emails', true, true %>
+                    Email Address
+                  <% end %>
+
+                  <%= label_tag do %>
+                    <%= check_box_tag 'home_phone', true, true %>
+                    Home Phone Number
+                  <% end %>
+
+                  <%= label_tag do %>
+                    <%= check_box_tag 'cell_phone', true, true %>
+                    Cell Phone Number
+                  <% end %>
+
+                 <%= label_tag do %>
+                    <%= check_box_tag 'work_phone', true, true %>
+                    Work Phone Number
+                  <% end %> 
+                  
+                  <%= label_tag do %>
+                    <%= check_box_tag 'spouse_phone', true, true %>
+                    Spouse Phone Number
+                  <% end %>
+
+                 <%= label_tag do %>
+                    <%= check_box_tag 'address', true, true %>
+                    Address
+                  <% end %>
+
+                  <%= label_tag do %>
+                    <%= check_box_tag 'notes', true, true %>
+                    Public Notes
+                  <% end %>
+                </div>
+                <div class='span6'>
+                  
+                  <% current_user.customer_fields.pluck(:field_name).each do |field| %>
+                    <%= label_tag do %>
+                      <%= check_box_tag field.parameterize.underscore, true %>
+                      <%= field %>
+                    <% end %>
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input id='export_btn' name="commit" class="btn btn-primary" type="submit" value="Export" />
+          </div>
+        </div>
+      <% end %> 
+  </div>
+  </div>
+</div>

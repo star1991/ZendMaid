@@ -1,0 +1,8 @@
+$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+$('#pageslide').append("<%= escape_javascript(render('tasks/preview_panel', :task => @task).html_safe) %>");
+eventPopoverPanel.reattach_events();
+
+// re-bind elements. A work-around a newly replaced a tag with remote-true does not work !
+$('#pageslide').unbind();
+$('#pageslide').data("validator", null);
+$.validator.unobtrusive.parse(document);

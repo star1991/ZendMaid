@@ -1,0 +1,85 @@
+<% provide(:title, "Calendar") %>
+<% provide(:icon, "icon-calendar") %>
+
+<div class="container-fluid" id="calendar-container">
+
+<%= render 'shared/top_notification_calendar' %>
+
+<div class="row-fluid" style="margin-top:20px;">
+
+	<div class="span6">
+
+		<%= render 'calendar_view_toggle_menu', :current_calendar_view => "Calendar" %>
+
+	</div>
+	
+	<div class="span6">
+		<div id="color-select" style="display:inline-block;">
+			<strong>Color by </strong><%= select_tag "color", options_for_select(["Employees", "Team", "Status"], @user.default_calendar_coloring), :style => "width:130px;margin-left:10px;"%>
+		</div>
+	
+		<%= link_to '#', :class => "btn btn-danger", :id => "filter-button", :style => "float:right;" do %>
+    		Filters<strong class="blue">OFF</strong>
+    	<% end %>
+    					
+	</div>
+</div>
+
+<div class="row-fluid">
+
+				<div class="row-fluid" style="padding-bottom:10px;">
+					<div class="span12" id="calendar-wrapper">
+						<%= render 'shared/flash_notice' %>
+          				
+          				<div id="calendar" style="width:auto;">
+          					<div id="calendar-loading" style="display:none;"><%= image_tag "ajax-loader-calendar.gif"%></div>
+          				</div>
+        			</div>
+       			</div>
+
+</div>
+
+
+</div>
+
+
+			<div class="pull-right calendar-info-panel" style="margin-left: 0px;display:none;">
+				<%= render 'calendar_filter_panel', :grid => false, :show_teams => true, :show_employees => true %>
+				<%= render 'create_event_panel' %>
+				<div id="calendar-info">
+				<h5 class="background-green">How to use the calendar</h5>
+				<ul class="padded">
+					<li>Toggle between week, month, and day view using the buttons on the top right of the calendar</li>
+					<li>Click the left and right arrows to navigate to the previous or next day, week, or month (depending on which view you are in)</li>
+					<li>Click on an appointment to view and edit it</li>
+					<li>Click and drag appointments around on the calendar to reschedule them (you will be given the option to reschedule the entire recurrence if the appointment is part of a recurring service)</li>
+					<li>Click and drag on an empty area of the calendar to create an appointment</li>
+					<li>Click the red "Filters" button in the top left corner to filter and color appointments by assigned employee or status</li>
+					<li>Information about filters, existing appointments, and new appointments will show up here</li>
+				</ul>
+				</div>
+			</div>
+
+<div id="for-pageslide" style="display:none;">
+
+</div>
+
+<%= render 'reschedule_appointment_modal'%>
+
+<%= render 'email_templates/select_template_modal' %>
+
+<%= render 'text_templates/select_template_modal' %>
+
+<%= render 'customers/log_entries_modal' %>
+
+<%= render 'time_in_time_out_modal' %>
+
+<%= render 'conflicts_modal' %>
+
+<%= render 'employees/print_schedule_modal' %>
+
+<%= render 'employees/email_schedule_modal' %>
+
+<%= render 'customers/manage_credit_card_modal' %>
+
+<%= render 'shared/heap_identify' %>

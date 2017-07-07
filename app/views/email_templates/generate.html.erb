@@ -1,0 +1,63 @@
+<% provide(:title, "Preview #{@email_template.template_type}") %>
+<% provide(:icon, "icon-thumbs-up") %>
+
+<%= simple_form_for :generated_email, :url => send_generated_email_path(:appointment_id => @appointment.try(:id), :customer_id => @customer.try(:id)), :defaults => {:required => false}, :method => :post, :html => {:class => "form-vertical"} do |f| %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+  	<div class="content-box-header">
+    	<i class="icon-envelope-alt"></i> <%= @email_template.template_type %> Email
+  	</div>
+	
+
+	<div class="row-fluid">
+		<div class="span12 padded">
+			
+			<% if @email_template.marketing_plan? && !current_user.marketing_plan? %>
+	
+				<%= render 'shared/upgrade_plan' %>
+		
+			<% else %>
+
+			
+			<% if @customer.present? %>
+				<% if @customer.sent_on["#{@email_template.template_type} Email"].present? %>
+					<div class="alert alert-success">This email was last sent to <%= @customer.full_name %> on <%= @customer.sent_on["#{@email_template.template_type} Email"].strftime('%b %-d, %Y') %></div>
+				<% else %>
+					<div class="alert alert-warning">This email has not been sent to <%= @customer.full_name %> yet</div>
+				<% end %>
+			<% end %>
+			
+			<%= f.hidden_field :template_type, :value => @email_template.template_type %>
+			
+			<%= f.input :subject, :label => "Subject", :as => :string, :input_html => {:value => @title } %>
+    		<%= f.input :body, :as => :ckeditor, :input_html => {:value => @body } %>
+			
+			<%= render 'recipients_list', :f => f %>
+
+			<div class="pull-right">
+				<% if @with_email.size == 0 %>
+					<em class="red" style="margin-right:20px;"> No valid recipients available for this email </em> 
+				<% else %>
+        			<%= f.button :submit, "Send Email", :class => "btn btn-green"%>
+				<% end %>
+        		<%= link_to "Back", :back, :class => "btn btn-inverse" %>
+     		</div>
+     	
+     		<% end %>
+     		
+     	</div>
+	</div>
+
+
+	</div>
+	
+	</div><!-- End row -->
+</div>
+</div>
+
+<% end %>

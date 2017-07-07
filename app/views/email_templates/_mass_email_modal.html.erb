@@ -1,0 +1,27 @@
+<div class="modal fade hide" id="mass-email-modal">
+    <div class="modal-dialog">
+      <%= simple_form_for :email_template, :url => prep_mass_email_path, :defaults => {:required => false }, :html => { :class => "form-horizontal uni narrow-control-groups compact-horizontal-wide" }, :method => :post do |f| %>
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Send Mass Email</h4>
+          </div>
+          
+          <div class="modal-body padded20">
+            <%= f.input :email_template_id, :as => :select, :include_blank => false, :collection => current_user.email_templates.where(:mass_email => true).map { |template| [ template.template_type, template.id] } + [["New Template", nil]], :label => "Select Template",
+              :wrapper_html => {:class => "compact-horizontal-wide"} %>        
+
+            <%= f.input :send_to, :as => :select, :include_blank => false, :collection => [["All Contacts", "All Contacts"], ["Leads Only", "Leads Only"], ["Customers Only", "Customers Only"]], :label => "Send To", :wrapper_html => {:class => "compact-horizontal-wide"} %>    
+
+          </div>
+
+          <div class="modal-footer">
+            <%= f.button :submit, "Create Mass Email", :class => "btn btn-green" %><br>
+            <strong class="blue">You will have a chance to review the contents of the email before it is sent</strong>
+          </div>
+        </div>
+      <% end %> 
+  </div>
+  </div>
+</div>

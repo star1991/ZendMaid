@@ -1,0 +1,9 @@
+<%= link_to @customer.full_name, @customer %><br>
+
+<%= render 'customers/contact_info' %><br>
+
+   	<% @customer.customer_items.each do |item| %>
+    	<dt><%= item.custom_field.field_name %></dt>
+    	<dd class="clearfix"><%= item.value_name %></dd>
+    <% end %>
+

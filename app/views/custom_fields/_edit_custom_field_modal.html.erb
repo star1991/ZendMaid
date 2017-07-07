@@ -1,0 +1,27 @@
+<div class="modal fade hide" id="custom-field-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Edit <%= @custom_field.field_type.tr('_', ' ').titleize %> Custom Field</h4>
+        </div>
+        <div class="modal-body">
+
+ 			<%= simple_form_for @custom_field, :html => { :class => "form-horizontal uni modal-form"}, :defaults => {:required => false}, :remote => true do |f| %>
+
+        		<%= render 'form_fields', :f => f %>
+
+   				<div class="pull-right">
+   					<%= f.button :submit, "Save Changes" , :class => "btn btn-blue" %>
+   					<%= link_to "Cancel", "#", :data => {:dismiss => "modal" }, :class => "btn btn-red" %>
+   				</div>
+
+ 			<% end %>
+
+		</div>
+    </div>
+	</div>
+</div>
+
+
+</div>

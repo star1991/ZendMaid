@@ -1,0 +1,66 @@
+ 			<%= simple_form_for :work_order, :html => { :class => "form-horizontal uni" }, :method => :post, :url => print_work_order_employees_path(:format => :pdf) do |f|%>
+				
+				<%= f.input :from_print_date, :as => :date_picker, :required => false, :input_html => { :readonly => true, :value => Time.zone.now.strftime('%m/%d/%Y'), :style => "width: 75px"}, :label => "From", :wrapper_html => {:class => "inline compact-horizontal", :style => "vertical-align:top;"} %>
+				<%= f.input :to_print_date, :as => :date_picker, :required => false, :input_html => {:readonly => true, :style => "width: 75px;"}, :label => "To", :wrapper_html => {:class => "inline compact-horizontal"}, :hint => "(leave blank to print schedule for single day)" %>
+				<br>
+				
+				<div class="teams-employees-lists-wrapper">
+				
+        		<%= f.input :group, :label => "For", :required => false, :collection => ["Employees", "Teams"], :include_blank => false, :wrapper_html => {:class => "inline compact-horizontal"}, :input_html => {:class => "work-order-select", :value => "Employees"} %><br>
+				
+				<div style="border: dashed 2px grey; padding:5px;padding-top:10px;">
+
+				<div class="side-by-side-list employees-list">
+					<% if @user.employees.active.size > 0 %>
+					
+						<% i = 0 %>
+						<% @user.employees.active.each do |employee| %>
+							<% i += 1 %>
+							
+							<%= f.simple_fields_for :employees do |e| %>
+								<%= e.input employee.id.to_s.to_sym, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+									:inline_label => employee.full_name, :input_html => { :checked => true} %>
+							<% end %>
+							<% if i % 2 == 0 %><br><% end %>
+							
+						<% end %>
+					
+					<% else %>
+						<%= render 'employees/no_employees_notification' %>
+					<% end %>
+				</div>
+				
+				<div class="side-by-side-list teams-list" style="display:none;">
+					<% if @user.teams.size > 0 %>
+					
+						<% i = 0 %>
+						<% @user.teams.each do |team| %>
+							<% i += 1 %>
+							
+							<%= f.simple_fields_for :teams do |t| %>
+								<%= t.input team.id.to_s.to_sym, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+									:inline_label => team.name, :input_html => { :checked => true} %>						
+							<% end %>
+							<% if i % 2 == 0 %><br><% end %>
+						<% end %>
+					
+					<% else %>
+					
+						<%= render 'teams/no_teams_notification' %>
+					
+					<% end %>
+										
+				</div>
+				
+				</div>
+				
+				</div>
+				
+				<div class="checkbox darkblue">
+					<%= f.input :all, :as => :boolean, :label => false, :inline_label => "Print schedule without grouping by team or employee", :wrapper_html => {:style  => "margin-top:10px; margin-bottom: 0px;"}, :input_html => {:checked => false, :class => "simple-schedule"} %>				
+				</div>
+				
+				<div class="pull-right" style="margin-top:10px;">
+					<%= f.button :submit, "Print Work Orders", :class => "btn btn-green" %>
+				</div>
+			<% end %>

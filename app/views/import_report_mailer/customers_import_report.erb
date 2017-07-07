@@ -1,0 +1,14 @@
+<h3>Import Details</h3>
+
+Number of customers successfully imported: <%=@saved_customer %><br><br>
+Number of customers having error: <%= @not_saved_customer %><br><br>
+ <strong>List of customers having errors while import:</strong><br>
+
+ <%@failed_customers.each do |fc|%>
+  <% fc.each do |k, v| %>
+    <b>CustomerName:</b> <%= k %><br>
+    <b>Errors:</b> <%= v%> 
+    <br>
+    <br>
+  <% end %>
+ <% end %>

@@ -1,0 +1,12 @@
+	<p class="pull-right timestamp" style="line-height:25px;"><i class="icon-time"></i> <%= attached_note.created_at.strftime('%-m/%-d/%Y %l:%M %p') %></p>
+	<div class="pull-right note-actions" style="margin-bottom:9px;margin-left:10px;margin-right:5px;">
+		<%= link_to edit_attached_note_path(attached_note), :class => "edit btn btn-mini btn-blue", :alt => "edit", :remote => true do %>
+			<i class="icon-edit"></i>
+		<% end %>
+		<%= link_to attached_note_path(attached_note), :class => "delete btn btn-mini btn-red", :alt => "delete", :method => :delete, :remote => true, :data => { :confirm => 'Are you sure you want to delete this note?' }  do %>
+			<i class="icon-trash"></i>
+		<% end %>
+	</div>
+	<div class="note-content">
+		<%= simple_format(attached_note.body) %>
+	</div>

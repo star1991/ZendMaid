@@ -1,0 +1,47 @@
+<div class="row-fluid">
+<div class="span4">
+<h6 class="darkblue bottom-bordered">Contact Information</h6>
+<dl>
+	<dt>Name</dt>
+	<dd><%= instant_booking.full_name %></dd>
+    <dt>Email</dt>
+    <dd><%= instant_booking.email %></dd>
+    <dt>Phone</dt>
+    <dd><%= formatted_phone_number instant_booking.phone_number %></dd>
+	<dt>Address</dt>
+	<dd><%= render instant_booking.address %></dd>
+</dl>
+</div>
+
+<div class="span4">
+<h6 class="darkblue bottom-bordered">Appointment Information</h6>
+
+	<dl>
+		<dt>Date</dt>
+		<dd><%= instant_booking.start_time.strftime('%a, %b %d, %Y') %></dd>
+		<dt>Start Time</dt>
+		<dd><%= formatted_time instant_booking.start_time %></dd>
+		<dt>Cleaning Type</dt>
+		<dd><%= instant_booking.service_type.name %></dd>
+		<% if instant_booking.user.instant_booking_profile.show_price? && instant_booking.price > 0 %>
+			<dt>Estimated Price</dt>
+			<dd><%= number_to_currency instant_booking.price %></dd>
+		<% end %>
+	</dl>
+</div>
+	
+<div class="span4">
+<h6 class="darkblue bottom-bordered">Details</h6>
+
+	<dl>		
+		<% if instant_booking.instant_booking_items.count > 0 %>
+			<% instant_booking.instant_booking_items.each do |item| %>
+				<dt><%= item.custom_field.field_name %></dt>
+				<dd class="clearfix"><%= item.value_name.present? ? item.value_name : "<span class='blue'>None</span>".html_safe %></dd>
+			<% end %>
+		<% end %>
+		<dt>Requests</dt>
+		<dd class="clearfix"><%= instant_booking.requests.present? ? instant_booking.requests : "<span class='blue'>None</span>".html_safe %></dd>
+	</dl>
+</div>
+</div>

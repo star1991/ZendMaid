@@ -1,0 +1,6 @@
+<div class="nested-fields narrow-control-groups">
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger" %></div>
+	<%= f.input :address, :label => false, :placeholder => "Email...", :wrapper_html => {:class => "inline controls-margin0" }, :input_html => {:style => "width:250px;"} %>
+    <%= f.input :send_automated, :label => false, :inline_label => "Send automated emails to this address?",  :wrapper_html => {:class => "inline controls-margin0"} %>
+
+</div>

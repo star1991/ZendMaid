@@ -1,0 +1,25 @@
+$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+
+<% if params[:employee_calendar] %>
+	$('#pageslide').append("<%= escape_javascript(render('appointments/employee_preview_panel').html_safe) %>");
+	$('.close-pageslide').click( function (e) {
+		e.preventDefault();
+		$.pageslide.close();
+		window.employee_calendar.fullCalendar('windowResize');
+	})
+	$('#pageslide').find('#edit_time_in_time_out').click(edit_time_in_time_out);
+	
+<% else %>
+	$('#pageslide').append("<%= escape_javascript(render('appointments/preview_panel').html_safe) %>");
+	eventPopoverPanel.id = <%= @appointment.id %>;
+	eventPopoverPanel.reattach_events();
+<% end %>
+
+<% if params[:refresh] %>
+	filterObject.refresh_calendar();
+	gridObject.refreshDateInfo();
+<% end %>
+
+<% if @confirmation_email.present? && @confirmation_email.time_offset != nil %>
+	<%= render 'email_templates/confirmation_email' %>
+<% end %>

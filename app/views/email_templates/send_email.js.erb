@@ -1,0 +1,2 @@
+
+$("#" + "<%= escape_javascript("#{@email_template.template_type.downcase.gsub(' ', '-')}-email") %>").html("<%= escape_javascript("<span class=\"green\">Sent on #{Time.zone.now.strftime('%b %-d, %Y')}</span>").html_safe %>");

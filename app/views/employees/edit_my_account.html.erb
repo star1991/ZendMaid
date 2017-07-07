@@ -1,0 +1,54 @@
+<% provide(:title, "My Account") %>
+<% provide(:icon, "icon-edit") %>
+
+
+
+<div class="container">
+<div class="row-fluid">
+    <div class="span12">
+	
+	<%= simple_form_for @employee, :html => { :class => "form-horizontal" }, :method => :post, :url => edit_my_account_employees_path do |f| %>
+
+
+	<div class="content-box">
+	<% if @employee.admin? %>
+
+	<div class="row-fluid">
+		<div class="span12" style="padding-left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			<%= render 'users/settings_nav', :active => "Account" %>
+		</div>
+	</div>
+	
+	<% end %>	  		
+	
+	
+	
+  	<div class="row-fluid">
+
+		<%= render 'shared/content_box_help', :message => "This is where you can edit your login details and contact information" %>
+	
+      	<div class="span7 offset2 padded">
+
+			<%= render 'shared/flash_notice' %>
+ 
+            <%= render 'employees/employee_fields', :f => f %>
+
+			<hr>
+					
+      		<div class="control-group">
+     			<div class="controls">
+     				<%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+        		</div>
+     		</div>
+            
+            </div>
+			</div>
+	</div>	
+	</div>
+
+	<% end %>
+
+	</div>
+</div>
+</div>
+

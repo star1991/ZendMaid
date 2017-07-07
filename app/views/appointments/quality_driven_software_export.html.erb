@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="content-box">
+        <div class="padded">
+          <div class="row-fluid">
+            <%= render 'shared/flash_notice' %>
+            <div class="span12 offset3">
+              <div>
+                <strong style="font-size:16px;">Quality Driven Software Export</strong>
+              </div><br>
+              <div>
+                <%= simple_form_for :date_range, :html => { :class => "form-horizontal uni" }, :method => :get, :url => quality_driven_software_export_process_path do |f|%> 
+                  <%= f.input :from, :as => :date_picker, :required => false, :input_html => { :readonly => true, :class => "input-calendar", :style => "width:100px;", :id => "appointments-from", :value => @from.try(:strftime, "%m/%d/%Y")}, :label => 'From', :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+                  <%= f.input :to, :as => :date_picker, :required => false, :input_html => {:readonly => true, :class => "input-calendar", :style => "width: 100px;", :id => "appointments-to", :value => @to.try(:strftime, "%m/%d/%Y")}, :label => "To", :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+                  <%= f.button :submit, "Export Jobs", :class => "btn btn-blue" %>
+                  <br>
+                <% end %>    
+              </div>          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

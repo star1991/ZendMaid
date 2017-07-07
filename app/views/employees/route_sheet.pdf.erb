@@ -1,0 +1,186 @@
+<% if !@appointments.nil? %>
+
+<div>
+	<span style="font-size:22px;color:blue;">Route sheet for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span><br>	
+	<span style="color:#555555;"><%= @appointments.size %> Appointments</span>
+	<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+</div><hr>
+
+<% @appointments.each do |appointment| %>
+	<div style="margin-bottom:10px;page-break-inside: avoid;">
+	
+	<div style="display:inline-block;vertical-align:top;width:15%;">
+		<strong><%= appointment.start_time.strftime('%-m/%-d/%Y') %></strong>
+	</div>
+	
+	<div style="display:inline-block;line-height:17px;width:80%;">
+		<%= "#{formatted_time(appointment.start_time, :exact => true)} - #{formatted_time(appointment.end_time, :exact => true)}" %> &nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><%= appointment.customer.full_name %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>
+			<strong>Amount due </strong><%= appointment.price.present? ? number_to_currency(appointment.price) : "<span class='red'>not set</span>".html_safe %>
+			<span style="margin-left:2px;"><%= appointment.paid? ? "<span class='green'>(paid)</span>".html_safe : "<span class='red'>(not paid)</span>".html_safe %></span>
+		</span><br>
+		
+		<div style="width:100px;display:inline-block;"><em><strong>CONTACT</strong></em></div> 
+			<% if appointment.customer.phone_numbers.size > 0 %>
+				<%= appointment.customer.phone_numbers.map { |ph| "<span class='darkgrey'>#{formatted_phone_number ph.phone_number}</span>".html_safe + (" <span class='blue'>(#{ph.phone_number_type})</span>".html_safe if ph.phone_number_type.present?) }.join(', ').html_safe %>,
+			<% else %>
+				<span class="blue">no phone numbers</span>,
+			<% end %>&nbsp;
+			
+			<% if appointment.customer.emails.size > 0 %>
+				<%= appointment.customer.emails.map { |email| "<span class='darkgrey'>#{email.address}</span>" }.join(', ').html_safe %>			
+			<% else %>
+				<span class="blue">no email addresses</span>
+			<% end %>
+			
+			<br>
+		<div style="width:100px;display:inline-block;"><em><strong>ADDRESS</strong></em></div> <span class="darkgrey"><%= render appointment.address %></span><br>
+		<div style="width:100px;display:inline-block;"><em><strong>ASSIGNED</strong></em></div>
+             <% if appointment.assignments.size > 0 %>
+             	<span class="darkgrey"><%= appointment.employees.map(&:full_name).join(', ') %></span>
+             <% else %>
+             	<span class="red"> no cleaners assigned </span>
+             <% end %>
+             	
+             <% if appointment.team.present? %>
+             	<span class="blue">(<%= appointment.team.name %>)</span> 
+            <% end %>
+		
+	</div>
+	
+	</div>
+	<br>
+	
+	
+<% end %>
+
+<% elsif !@employees_with_appointments.nil? %>
+
+<% @employees_with_appointments.each do |employee| %>
+
+<div style="<%= "page-break-after: always;" if employee.id != @employees_with_appointments.last.id %>">
+<div>
+	<span style="font-size:22px;color:blue;"><%= employee.full_name %></span><br>
+	<span style="font-size:14px;color:#555555;">Route sheet for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span>
+	<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+		
+</div><hr>
+
+<% employee.assigned_appointments.each do |appointment| %>
+	<div style="margin-bottom:10px;page-break-inside: avoid;">
+	
+	<div style="display:inline-block;vertical-align:top;width:15%;">
+		<strong><%= appointment.start_time.strftime('%-m/%-d/%Y') %></strong>
+	</div>
+	
+	<div style="display:inline-block;line-height:17px;width:80%;">
+		<%= "#{formatted_time(appointment.start_time, :exact => true)} - #{formatted_time(appointment.end_time, :exact => true)}" %> &nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><%= appointment.customer.full_name %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>
+			<strong>Amount due </strong><%= appointment.price.present? ? number_to_currency(appointment.price) : "<span class='red'>not set</span>".html_safe %>
+			<span style="margin-left:2px;"><%= appointment.paid? ? "<span class='green'>(paid)</span>".html_safe : "<span class='red'>(not paid)</span>".html_safe %></span>
+		</span><br>
+		
+		<div style="width:100px;display:inline-block;"><em><strong>CONTACT</strong></em></div> 
+			<% if appointment.customer.phone_numbers.size > 0 %>
+				<%= appointment.customer.phone_numbers.map { |ph| "<span class='darkgrey'>#{formatted_phone_number ph.phone_number}</span>".html_safe + (" <span class='blue'>(#{ph.phone_number_type})</span>".html_safe if ph.phone_number_type.present?) }.join(', ').html_safe %>,
+			<% else %>
+				<span class="blue">no phone numbers</span>,
+			<% end %>&nbsp;
+			
+			<% if appointment.customer.emails.size > 0 %>
+				<%= appointment.customer.emails.map { |email| "<span class='darkgrey'>#{email.address}</span>" }.join(', ').html_safe %>			
+			<% else %>
+				<span class="blue">no email addresses</span>
+			<% end %>
+			
+			<br>
+		<div style="width:100px;display:inline-block;"><em><strong>ADDRESS</strong></em></div> <span class="darkgrey"><%= render appointment.address %></span><br>
+		<div style="width:100px;display:inline-block;"><em><strong>ASSIGNED</strong></em></div>
+             <% if appointment.assignments.size > 0 %>
+             	<span class="darkgrey"><%= appointment.employees.map(&:full_name).join(', ') %></span>
+             <% else %>
+             	<span class="red"> no cleaners assigned </span>
+             <% end %>
+             	
+             <% if appointment.team.present? %>
+             	<span class="blue">(<%= appointment.team.name %>)</span> 
+            <% end %>
+		
+	</div>
+	
+	</div>
+	<br>
+	
+<% end %>
+
+</div>
+
+<% end %>
+
+<% else %>
+
+<% @teams_with_appointments.each do |team| %>
+
+<div style="<%= "page-break-after: always;" if team.id != @teams_with_appointments.last.id %>">
+<div>
+	<span style="font-size:22px;color:blue;"><%= team.name %></span><br>
+	<span style="font-size:14px;color:#555555;">Team members: <%= team.employees.map(&:full_name).join(', ') %></span><br>
+	<span style="font-size:14px;color:#555555;">Route sheet for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span>
+	<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+		
+</div><hr>
+
+<% team.appointments.each do |appointment| %>
+	<div style="margin-bottom:10px;page-break-inside: avoid;">
+	
+	<div style="display:inline-block;vertical-align:top;width:15%;">
+		<strong><%= appointment.start_time.strftime('%-m/%-d/%Y') %></strong>
+	</div>
+	
+	<div style="display:inline-block;line-height:17px;width:80%;">
+		<%= "#{formatted_time(appointment.start_time, :exact => true)} - #{formatted_time(appointment.end_time, :exact => true)}" %> &nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><%= appointment.customer.full_name %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>
+			<strong>Amount due </strong><%= appointment.price.present? ? number_to_currency(appointment.price) : "<span class='red'>not set</span>".html_safe %>
+			<span style="margin-left:2px;"><%= appointment.paid? ? "<span class='green'>(paid)</span>".html_safe : "<span class='red'>(not paid)</span>".html_safe %></span>
+		</span><br>
+		
+		<div style="width:100px;display:inline-block;"><em><strong>CONTACT</strong></em></div> 
+			<% if appointment.customer.phone_numbers.size > 0 %>
+				<%= appointment.customer.phone_numbers.map { |ph| "<span class='darkgrey'>#{formatted_phone_number ph.phone_number}</span>".html_safe + (" <span class='blue'>(#{ph.phone_number_type})</span>".html_safe if ph.phone_number_type.present?) }.join(', ').html_safe %>,
+			<% else %>
+				<span class="blue">no phone numbers</span>,
+			<% end %>&nbsp;
+			
+			<% if appointment.customer.emails.size > 0 %>
+				<%= appointment.customer.emails.map { |email| "<span class='darkgrey'>#{email.address}</span>" }.join(', ').html_safe %>			
+			<% else %>
+				<span class="blue">no email addresses</span>
+			<% end %>
+			
+			<br>
+		<div style="width:100px;display:inline-block;"><em><strong>ADDRESS</strong></em></div> <span class="darkgrey"><%= render appointment.address %></span><br>
+		<div style="width:100px;display:inline-block;"><em><strong>ASSIGNED</strong></em></div>
+             <% if appointment.assignments.size > 0 %>
+             	<span class="darkgrey"><%= appointment.employees.map(&:full_name).join(', ') %></span>
+             <% else %>
+             	<span class="red"> no cleaners assigned </span>
+             <% end %>
+             	
+             <% if appointment.team.present? %>
+             	<span class="blue">(<%= appointment.team.name %>)</span> 
+            <% end %>
+		
+	</div>
+	
+	</div>
+	<br>
+<% end %>
+
+</div>
+
+<% end %>
+
+<% end %>

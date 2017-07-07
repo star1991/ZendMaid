@@ -1,0 +1,27 @@
+<h1>Listing appointment_service_items</h1>
+
+<table>
+  <tr>
+    <th>Appointment</th>
+    <th>Appointment field</th>
+    <th>Amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @appointment_service_items.each do |appointment_service_item| %>
+  <tr>
+    <td><%= appointment_service_item.appointment_id %></td>
+    <td><%= appointment_service_item.appointment_field_id %></td>
+    <td><%= appointment_service_item.amount %></td>
+    <td><%= link_to 'Show', appointment_service_item %></td>
+    <td><%= link_to 'Edit', edit_appointment_service_item_path(appointment_service_item) %></td>
+    <td><%= link_to 'Destroy', appointment_service_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Appointment service item', new_appointment_service_item_path %>

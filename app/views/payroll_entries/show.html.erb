@@ -1,0 +1,62 @@
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+
+		<%= render 'shared/flash_notice' %>
+
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+			
+			<div class="row-fluid">
+				<div class="span6">
+					<span style="font-size:30px;line-height:50px"><em><%= @payroll_entry.full_name %></em> <span class="darkgrey" style="font-size:20px;">Detailed View</span></span>
+				</div>
+				<div class="span6">
+					<div class="pull-right">
+						<strong style="font-size:18px;"><%= "Payroll ID ##{@payroll.payroll_number}" %></strong>
+						<div class="darkgrey" style="margin-top:5px;font-size:16px;"><em><%= "#{@payroll.start_date.strftime('%-m/%-d/%Y')} - #{@payroll.end_date.strftime('%-m/%-d/%Y')}" %></em></div>
+					</div>
+				</div>
+			</div><hr>
+
+			<div class="row-fluid" style="margin-top:20px;">
+			<div class="span6">
+				<strong style="font-size:16px;color:blue;margin-right:10px;"><%= display_pay_rate @payroll_entry %></strong> <%= link_to "Edit", '#', :data => {:entry => @payroll_entry.id, :id => @payroll_entry.employee.try(:id), :source => 'payroll' }, :class => "btn btn-green btn-mini add-pay-rate" %>
+			</div>
+			<div class="span6">
+				<div class="pull-right">
+					<%= link_to 'Delete', @payroll_entry, :method => :delete, :class => "btn btn-red", :data => {:confirm => "Are you sure you want to remove this employee from this payroll draft?"}  %>
+					<%= link_to 'Back To Payroll Summary', @payroll, :class => "btn btn-inverse" %>
+				</div>
+			</div>
+			</div>
+			
+			<div class="row-fluid">
+			<div class="span12">
+				<% if @payroll_entry.pay_type == "Hourly" %>
+					<%= render 'hourly_detailed_view' %>
+				<% elsif @payroll_entry.pay_type == "Revenue Share" %>
+					<%= render 'rev_share_detailed_view' %>
+				<% else %>
+					<%= render 'fixed_rate_detailed_view' %>
+				<% end %>
+
+			</div>
+			</div>
+
+
+			
+		</div>
+		</div>
+		
+		</div>
+		
+		</div>
+	</div>
+</div>
+
+</div>
+
+<%= render 'assignments/edit_job_wage_modal' %>

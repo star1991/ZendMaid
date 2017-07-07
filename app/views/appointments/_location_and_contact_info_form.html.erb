@@ -1,0 +1,21 @@
+      	
+      	
+      	<!-- Form fields -->
+      	<%= simple_form_for @customer, :url => edit_location_and_contact_info_path(@customer), :remote => true, :html => {:class => "form-horizontal", :id => "location-contact-info-form" } do |f| %>
+      		<h6>Customer Contact Information</h6><hr>
+      		<%= render 'instant_booking/customer_fields', :f => f %>
+      
+      		<h6>Appointment Address</h6><hr>
+      
+      		<%= f.simple_fields_for :subscriptions, @subscription do |subscription_builder| %>
+				<%= subscription_builder.simple_fields_for :appointments, @appointment do |appointment_builder| %>
+					<%= appointment_builder.simple_fields_for :address do |address_builder| %>
+						<%= render 'instant_booking/address_fields', :f => address_builder %>
+					<% end %>
+				<% end %>
+			<% end %>
+      		<div class="form-actions">
+        		<%= f.button :submit, 'Edit', { class: 'btn btn-primary' } %>
+				<a class="btn cancel" data-dismiss="modal">Cancel</a>
+			</div>
+      	<% end %>

@@ -1,0 +1,43 @@
+<%= link_to customer.full_name, customer %><br>
+
+<div class="row-fluid">
+
+<div class="span6">
+
+<% if customer.emails.size == 0 %>
+	<i class='icon-envelope-alt'></i> <span class="red">No email on record</span><br>
+<% else %>
+	<% customer.emails.each do |email| %>
+		<i class='icon-envelope-alt'></i> <%= email.address %><br>
+	<% end %>
+<% end %>
+
+<% if customer.phone_numbers.size == 0 %>
+	<i class='icon-phone'></i> <span class="red">No phone number on record</span><br>
+<% else %>
+	<% customer.phone_numbers.each do |phone_number| %>
+		<i class='icon-phone'></i>
+		<% if phone_number.phone_number_type.present? %>
+			<small class="darkblue"><%= phone_number.phone_number_type %></small>
+		<% end %>
+		<%= formatted_phone_number(phone_number.phone_number) %>
+	<% end %>
+<% end %>
+</div>
+<div class="span6">
+
+ 	<strong class="darkblue">Service Location(s)</strong><br>
+ 	<% if customer.service_addresses.size == 0 %>
+ 		<i class="black icon-map-marker"></i> <span class="red">No record</span><br>
+ 	<% else %>
+ 		<% customer.service_addresses.each do |address| %>
+ 			<i class="black icon-map-marker"></i> <%= render address %><br>
+ 		<% end %>
+ 	<% end %>
+ 	<br>
+ 	<strong class="darkblue">Billing Address</strong><br>
+ 	<i class="black icon-map-marker"></i> <%= customer.billing_address.present? ? render(customer.billing_address) : '<span class="red">No record</span>'.html_safe %><br>
+ 	<br>
+ 	
+</div>
+</div>

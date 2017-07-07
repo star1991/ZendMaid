@@ -1,0 +1,19 @@
+<%= f.input :company_name %>
+
+
+<%= f.input :company_email, :hint => "This is the email that optionally shows up on your invoices, customer reminder emails, and lead generation form" %>
+<%= f.input :company_phone_number, :label => "Company phone", :hint => "This is the phone number that optionally shows up on your invoices, customer reminder emails, and lead generation form" %>
+
+<%= f.input :website, :as => :string, :hint => "URL of your website" %>
+
+<%= f.input :facebook_page, :as => :string, :hint => "URL of your Facebook page" %>
+
+<% if f.object.logo.present? %>
+<div class="controls">
+	<%= image_tag f.object.logo_url %>
+	<div class="darkblue">Current Logo</div>
+</div>
+<% end %>
+
+<%= f.input :logo, :as => :file, :hint => "Uploaded images must be smaller than 1 MB" %>
+

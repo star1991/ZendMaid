@@ -1,0 +1,14 @@
+			<%= render 'conflicts_notification' %>
+        		
+        	
+			<%= simple_form_for @appointment, :html => { :class => "form-horizontal uni" }, :remote => true, :method => :put, :url => update_from_calendar_path(@appointment) do |f| %>
+				<%= f.hidden_field :start_time %>
+				<%= f.hidden_field :end_time %>
+				<%= hidden_field_tag 'apply_to_subscription', params[:apply_to_subscription] %>
+				<%= f.hidden_field :allow_conflicts, :value => true %>
+				<%= f.hidden_field :status_id %>
+				
+				<%= f.button :submit, "Save Anyway" , :class => "btn btn-red", :id => "save-button" %>
+				<%= link_to 'Cancel Changes', '#', :class => "btn btn-green", :id => "cancel-button" %>
+				
+			<% end %>

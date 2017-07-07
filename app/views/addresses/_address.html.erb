@@ -1,0 +1,5 @@
+<%= link_to "http://maps.google.com/?q=#{address.line1}, #{address.city}, #{address.state} #{address.postal_code}", :target => "_blank" do %>
+	<%= address.line1 %><br>
+	<%= address.city %>, <%= address.state %> <%= address.postal_code %>
+<% end %>
+

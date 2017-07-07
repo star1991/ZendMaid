@@ -1,0 +1,43 @@
+<% if current_user.employees.count == 0 %>
+	
+	<div id="assignment-fields">
+	<span class="blue" style="margin-right:20px;">You have not yet added any employees</span>
+	<%= link_to new_employee_path, :class => "btn btn-info" do %>
+		<i class="icon-plus"></i> Create Employee
+	<% end %>
+	</div>
+
+<% elsif @user.preferences[:employees_as_checkbox] %>
+
+<div id="alternate-assignment-fields">
+	
+	<% i = 0 %>
+	<%= appointment_builder.simple_fields_for :assignments, @appointment.assignments.sort { |a, b| a.employee.first_name <=> b.employee.first_name } do |assignments_builder| %>
+		<% i += 1 %>
+		<%= assignments_builder.input :_destroy, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+		:inline_label => assignments_builder.object.employee.full_name, :input_html => {:checked => assignments_builder.object.new_record? ? false : true } %>
+		<%= assignments_builder.hidden_field :employee_id, :value => assignments_builder.object.employee_id %>
+		<% if i % 2 == 0 %><br><% end %>
+	<% end %>
+</div>
+
+<% else %>
+
+<div id="assignment-fields">
+    <% if @appointment.assignments.count == 0 %>
+    	<div id="no-assignments-notification" class="blue bottom10">
+    		<i>No employees have been assigned to this appointment</i>
+    	</div>	
+    <% end %>
+    		
+	<%= appointment_builder.simple_fields_for :assignments do |assignments_builder| %>
+		<%= render 'assignment_fields', :f => assignments_builder %>
+	<% end %>
+	
+	<div class="links">
+			<%= select_tag "employee-select", options_from_collection_for_select(current_user.employees, "id", "full_name") %>
+			<%= link_to_add_association '<i class="icon-plus"></i> Add Employee'.html_safe, appointment_builder, :assignments, :class => "btn btn-info" %>
+	</div>
+</div>
+
+<% end %>

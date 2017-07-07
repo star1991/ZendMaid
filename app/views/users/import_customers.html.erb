@@ -1,0 +1,76 @@
+<% provide(:title, "Import Customers") %>
+<% provide(:icon, "icon-cogs") %>
+
+
+<div class="container">
+  <div class="row-fluid">
+  	<div class="span12">
+      <div class="content-box">
+        <div class="content-box-header">
+          <i class="icon-money"></i> Export Customers
+        </div>
+
+        <div class="padded">
+          <div class="row-fluid">
+      
+            <div class="span12 padded">
+              <h3>Export Customers</h3>
+              <%= link_to '#', :class => "btn btn-green",'data-toggle' =>"modal",'data-target'=>"#customer-export-modal" do %>
+                <i class="icon-file"></i> Export
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    	<div class="content-box">
+      	<div class="content-box-header">
+        	<i class="icon-money"></i> Import
+      	</div>
+
+        <div class="padded">
+      	
+          <div class="row-fluid">
+            <%= render 'shared/flash_notice' %>  
+          </div>
+          <div class="row-fluid">
+      		  <div class="span12 padded">
+              <h3>Import Customers</h3>
+        			<%= form_tag import_customers_path, multipart: true do %>
+        				<%= file_field_tag :file %>
+        				<%= submit_tag "Import Customers", :class => "btn btn-info" %><br>
+      	     			Set default status as inactive? <%= check_box_tag "inactive" %><br>
+      			     	Filter out duplicates? <%= check_box_tag " filter_duplicate" %>
+    		  	  <% end %>
+              <br/>
+              <%= button_to "Undo Imported Customers", undo_recent_imported_customers_customers_path, :class => "btn btn-red" %>
+                        
+            </div>
+          </div>
+        </div>
+    	  <div class="row-fluid">
+  		
+  		    <div class="span12 padded">
+  			    <h3>Import Notes</h3>
+  			    <%= form_tag import_attached_notes_customers_path, multipart: true do %>
+    				  <%= file_field_tag :file %>
+    				  <%= submit_tag "Import Notes", :class => "btn btn-info" %><br>
+  			    <% end %>
+      		</div>
+      	</div>
+
+    	  <div class="row-fluid">
+  		    <div class="span12 padded">
+  			    <h3>Import Appointments</h3>
+  			    <%= form_tag import_appointments_customers_path, multipart: true do %>
+    				  <%= file_field_tag :file %>
+    				  <%= submit_tag "Import Appointments", :class => "btn btn-info" %><br>
+  			    <% end %>
+    		  </div>
+    	  </div>
+  	  </div>
+  	</div>
+  </div>
+</div>
+
+<%= render :partial => 'customers/export_customers_modal' %>

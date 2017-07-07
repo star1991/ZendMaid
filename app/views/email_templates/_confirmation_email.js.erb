@@ -1,0 +1,11 @@
+$('#confirmation-email-modal').remove();
+
+$("body").append("<%= escape_javascript(render('email_templates/confirmation_email_modal').html_safe)%>");
+
+$('#confirmation-email-modal').modal({
+	backdrop: 'static'
+});
+
+$('.close-confirmation-email-modal').click(function () {
+	$('#confirmation-email-modal').modal('hide');
+});

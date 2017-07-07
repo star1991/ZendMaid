@@ -1,0 +1,22 @@
+<div class="modal fade hide" id="confirmation-email-modal">
+    <div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-body">
+        		<h4>Send confirmation email for this appointment?</h4>
+        		
+        		Email will be sent to <%= @appointment.customer.automatable_emails.map(&:address).to_sentence %><br>
+        		
+        		<%= simple_form_for :email_template, :url => send_email_path(:id => @confirmation_email.id, :appointment_id => @appointment.id), :defaults => {:required => false}, :method => :post, :remote => true do |f| %>
+				
+				<div style="margin-top:10px;">
+     				<%= f.button :submit, "Yes" , :class => "btn btn-blue close-confirmation-email-modal" %>
+        			<%= link_to 'No', '#', :class => "btn btn-blue close-confirmation-email-modal" %>
+        			<%= link_to 'View Confirmation Email Template', edit_email_template_path(@confirmation_email), :class => "btn btn-green", :target => "_blank" %>
+        		</div>
+        		
+        		<% end %>
+        		
+        	</div>
+    	</div>
+	</div>
+</div>

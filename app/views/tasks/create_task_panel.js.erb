@@ -1,0 +1,22 @@
+$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+$("#pageslide").append("<%= escape_javascript(render('tasks/create_task_panel').html_safe) %>");
+eventPopoverPanel.reattach_events();
+
+$("input.date_picker").each( function(i){
+  $(this).datepicker({
+    altFormat: "dd/mm/yy",
+    dateFormat: "mm/dd/yy",
+    altField: $(this).next(), 
+  })
+})
+
+$pageslide.find('form .btn.cancel').click(function() {
+  $pageslide.find('.close-pageslide').trigger('click');
+});
+
+window.calendar.fullCalendar('windowResize');
+
+// Used to rescue bound click events in pageSlide (don't know why)
+$('#pageslide').unbind();
+$('#pageslide').data("validator", null);
+$.validator.unobtrusive.parse(document);

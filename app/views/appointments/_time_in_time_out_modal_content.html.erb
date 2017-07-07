@@ -1,0 +1,53 @@
+<% if @appointment.assignments.size == 0 %>
+
+	<h5 class="darkblue">There are no cleaners assigned to this appointment</h5>
+	<em class="red">Click <%= link_to 'here', '#assignments-modal', :id => "edit-assigned-appointments" %> to assign cleaners to this appointment</em>
+
+<% else %>
+
+	<%= simple_form_for @appointment, :html => { :class => "form-horizontal uni" }, :remote => true, :method => :put, :url => update_from_calendar_path(@appointment) do |f| %>
+		
+		<table style="margin-bottom:20px;">
+
+		<%= f.hidden_field :allow_conflicts, :value => true %>
+		
+		<% if !current_employee.admin? %>
+			<%= hidden_field_tag :from_employee_calendar, true %>
+		<% end %>
+
+		<%= f.simple_fields_for :assignments, @appointment.assignments.sort { |a, b| a.employee.first_name <=> b.employee.first_name } do |assignments_builder| %>
+			
+			<tr colspan="3" class="errors">
+			
+			</tr>
+			
+			<% if current_employee.admin? || current_employee.id == assignments_builder.object.employee.id %>
+
+				<tr>			
+					<td>
+						<strong class="darkblue" style="font-size:12px;margin-right:40px;"><%= assignments_builder.object.employee.full_name %></strong>
+						<%= assignments_builder.input :use_appointment_date, :as => :hidden, :value => true %>
+					</td>
+					
+					<td>
+						<%= assignments_builder.input :time_in, :label => "In", :as => :string, :wrapper_html => {:class => "compact-horizontal", :style => "margin-bottom:0px;"}, :input_html => {:class => "timepicker", :value => assignments_builder.object.time_in.try(:strftime, '%-I:%M %p')} %>
+					</td>
+					
+					<td>
+						<%= assignments_builder.input :time_out, :label => "Out", :as => :string, :wrapper_html => {:class => "compact-horizontal", :style => "margin-bottom:0px;"}, :input_html => {:class => "timepicker", :value => assignments_builder.object.time_out.try(:strftime, '%-I:%M %p')} %>
+					</td>
+				</tr>
+
+			<% end %>
+			
+		<% end %>
+		
+		</table>
+
+		<div class="pull-right">
+			<%= f.button :submit, "Save" , :class => "btn btn-red", :id => "save-button" %>
+			<%= link_to 'Cancel', '#', :class => "btn btn", :id => "cancel-button" %>
+		</div>
+	<% end %>
+
+<% end %>

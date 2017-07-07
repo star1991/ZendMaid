@@ -1,0 +1,26 @@
+<%= link_to '#', :class => "btn btn-small btn-blue", :id => "new-appointment-button", :data => {:date => @from.try(:strftime, '%m/%d/%Y')}, :style => "margin-right: 3px;" do %>
+    <i class="icon-plus-sign"> </i> Appointment
+<% end %>
+
+
+	<%= link_to '#print-schedule-modal', :class => "btn btn-small btn-green", :style => "margin-right:3px;", :data => {:toggle => "modal"} do %>
+		<i class="icon-print"></i> Route Sheets
+	<% end %>
+
+	<%= link_to '#email-schedule-modal', :class => "btn btn-small btn-inverse", :style => "margin-right:3px;", :data => {:toggle => "modal"} do %>
+		<i class="icon-bullhorn"></i> Work Orders
+	<% end %>   
+
+<div class="btn-group">
+	<a class="btn btn-small btn-red dropdown-toggle" style="margin-top:-7px;" data-toggle="dropdown" href="#">
+		 <%= current_calendar_view %>
+		<span class="caret"></span>
+	</a>
+
+    <ul class="dropdown-menu">
+		<li style="<%= "background-color:#d9d9d9;" if current_calendar_view == "Calendar" %>"><%= link_to "Calendar", appointments_path %></li>
+		<li style="<%= "background-color:#d9d9d9;" if current_calendar_view == "List" %>"><%= link_to "List", list_appointments_path %></li>
+		<li style="<%= "background-color:#d9d9d9;" if current_calendar_view == "Grid" %>"><%= link_to "Grid", grid_appointments_path %></li>
+		
+	</ul>
+</div>

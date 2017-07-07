@@ -1,0 +1,64 @@
+<% provide(:title, "Payrolls") %>
+<% provide(:icon, "icon-briefcase") %>
+
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+    	<div class="content-box-header">
+        	<i class="icon-briefcase"></i> Payroll History
+    	</div>
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+			<%= render 'shared/flash_notice' %>
+			<div class="row-fluid">
+				<div class="span12">
+ 					<div class="pull-right">
+ 						<%= simple_form_for :date_range, :html => { :class => "form-horizontal uni" }, :method => :post, :url => payrolls_path do |f|%>	
+							<%= f.input :from, :as => :date_picker, :required => false, :input_html => { :readonly => true, :class => "input-calendar", :style => "width:100px;", :value => Time.zone.now.strftime("%m/%d/%Y")}, :label => false, :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+							<%= f.input :to, :as => :date_picker, :required => false, :input_html => {:readonly => true, :class => "input-calendar", :style => "width: 100px;", :value => (Time.zone.now + 1.week).strftime("%m/%d/%Y")}, :label => "to", :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+					  		
+					  		<% if @draft_payroll.blank? %>
+					  			<%= f.button :submit, "Run Payroll", :class => "btn btn-blue" %>
+					  		<% else %>
+					  			<%= f.button :submit, "Run Payroll", :class => "btn btn-blue", :data => {:confirm => "Are you sure you wish to create a new payroll? Your current draft payroll will be deleted."} %>
+					  		<% end %>
+					  		
+							<br>
+						<% end %>    
+					</div>  
+
+				</div>
+			</div>
+			
+			<hr>
+			
+        	<% if params[:date_range].present? %>
+			
+			<div class="row-fluid" style="margin-bottom:20px;">
+			<div class="span12">
+    			<em class="blue" style="font-size:14px;"><%= "Showing #{pluralize(@payrolls.size, "approved payroll")} with pay period overlapping with the date range #{@from.strftime('%-m/%-d/%Y')} - #{@to.strftime('%-m/%-d/%Y')}" %></em>
+    			<div style="display:inline-block;" class="pull-right">
+					<%= link_to "Show All Payrolls", payrolls_path, :class => "btn btn-green" %>
+				</div>
+			</div>
+			</div>
+
+			<% end %>
+
+			<div class="row-fluid">
+        	<div class="span12">
+        	<div id="dataTables" style="margin-top:10px;">
+           		<%= render 'payrolls_table' %>
+       		 </div>
+       		 </div>
+       		 </div>
+       	</div>
+      	</div>
+      	</div>
+    
+    </div>
+</div>
+
+</div>

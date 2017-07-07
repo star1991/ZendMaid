@@ -1,0 +1,4 @@
+<p>You have a cleaning scheduled for <%= formatted_time(@appointment.start_time) %> on <%= @appointment.start_time.strftime('%a, %b %d') %></p>
+
+If you wish to reschedule or cancel your appointment, please email us at <%= @user.user_profile.company_email %> or call us at <%= formatted_phone_number @user.user_profile.company_phone_number %>
+

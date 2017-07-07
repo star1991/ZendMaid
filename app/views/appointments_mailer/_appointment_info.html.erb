@@ -1,0 +1,23 @@
+<b>Appointment Details</b><br>
+
+Date: <%= appointment.start_time.strftime('%a, %b %d, %Y') %><br>
+Time: <%= formatted_time(appointment.start_time, {:exact => exact}) %><br>
+Address: <%= "#{appointment.address.line1} #{appointment.address.line2}, #{appointment.address.city}, #{appointment.address.state} #{appointment.address.postal_code}" %><br>
+
+<% if appointment.user.service_types.count > 1 %>
+Cleaning Type: <%= appointment.service_type.name %><br>
+<% end %>
+<p>
+<% appointment.appointment_items.each do |item| %>
+<%= "#{item.custom_field.field_name}: #{item.value_name}" %>	<br>
+<% end %>
+<p>
+
+<% if appointment.requests.present? %>
+<b>Requests</b><br>
+<%= appointment.requests %><br>
+<% end %>
+<p>
+<% if appointment.price.present? && appointment.price > 0 %>
+Estimated Price: <%= appointment.price %><br>
+<% end %>

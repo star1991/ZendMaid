@@ -1,0 +1,7 @@
+$('#location-contact-info-modal').modal('hide');
+
+setTimeout( function() { 
+	$('#location-contact-info').effect('highlight', {color: "lightgreen"}); 
+	$('#location-contact-info').html("<%= escape_javascript(render('appointments/location_and_contact_info')) %>");
+}, 600);
+

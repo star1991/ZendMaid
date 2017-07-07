@@ -1,0 +1,22 @@
+<div class="modal fade hide" id="sync-quickbook-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="email-or-print" style="margin-bottom:15px;">
+         <strong class="blue">I’d like to...</strong>
+         <%= radio_button_tag 'sync_quickbook', 'to_quickbook', :checked => true %> Sync my contacts from ZenMaid to QuickBooks
+         <%= radio_button_tag 'sync_quickbook', 'from_quickbook' %>Sync my contacts from QuickBooks to ZenMaid
+         <%= radio_button_tag 'sync_quickbook', 'both' %>Sync my contacts both ways
+        </div>
+
+        <div class="pull-right" style="margin-top:10px;">
+          <%= f.button :submit, "Start Sync", :class => "btn btn-green" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

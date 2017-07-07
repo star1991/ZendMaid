@@ -1,0 +1,14 @@
+        <div class='new-task'> </div>
+        <ul class="activity bordered" id="task-list">
+        	<% if @tasks.size > 0 %>
+            	<% @tasks.each do |task| %>
+				    <li class="task">
+					   <%= render :partial => 'tasks/task', :locals => {:task => task} %>
+				    </li>
+            	<% end %>
+			<% else %>
+				<li id="no-tasks-notification">
+					<div style="text-align:center;"><em>No tasks to display. Create one by pressing the "+New Task" button at the top right of this panel</em></div>
+				</li>
+			<% end %>
+		</ul>

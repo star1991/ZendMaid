@@ -1,0 +1,20 @@
+<div class="nested-fields" style="margin-top:5px;margin-bottom:5px;">
+
+<%= f.hidden_field :instruction_id, :class => "instruction-id" %>
+<%= f.hidden_field :field_name, :class => "field-name" %>
+
+<div class="row-fluid">
+
+<div class="span4">
+	<span class="field-name-visible"><%= f.object.field_name %></span>
+</div>
+
+<div class="span7">
+    <%= f.input_field :value_name, :as => :text, :class => "width400", :rows => 2, :placeholder => "Add description..." %>
+</div>
+
+<span class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger" %></span>
+
+</div>
+
+</div>

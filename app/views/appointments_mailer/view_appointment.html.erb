@@ -1,0 +1,7 @@
+<p>Hello <%= @appointment.customer.first_name %>,</p>
+
+<p>Thank you for booking with us! We will contact you shortly to confirm your appointment</p>
+
+<%= render :partial => './appointments_mailer/appointment_info', :locals => {:appointment => @appointment, :exact => false} %><br>
+
+If you wish to reschedule or cancel your appointment, please email us at <%= @user.user_profile.company_email %> or call us at <%= formatted_phone_number @user.user_profile.company_phone_number %>

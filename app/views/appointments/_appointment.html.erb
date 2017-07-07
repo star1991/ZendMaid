@@ -1,0 +1,19 @@
+<dl class = "dl-horizontal">
+	<dt>Date</dt>
+	<dd><%= appointment.start_time.strftime('%a, %b %d, %Y') %></dd>
+	<dt><%= start_time_label %></dt>
+	<dd><%= formatted_time appointment.start_time %></dd>
+	<dt>Address</dt>
+	<dd><%= render appointment.address %></dd>
+	<dt>Cleaning Type</dt>
+	<dd><%= appointment.service_type.name %></dd>
+	<dt>Requests</dt>
+	<dd class="clearfix"><%= appointment.requests %></dd>
+	<% if current_user?(appointment.user) %>
+		<dt>Confirmed</dt>
+		<dd><%= yes_no appointment.confirmed? %></dd>
+		<dt>Paid</dt>
+		<dd><%= yes_no appointment.paid? %></dd>
+	<% end %>
+	
+</dl>

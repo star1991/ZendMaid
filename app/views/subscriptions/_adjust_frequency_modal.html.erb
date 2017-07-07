@@ -1,0 +1,31 @@
+<!-- edit location and contanct info popup -->
+<div class="modal fade hide" id="adjust-frequency-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="icon-edit blue"></i> Adjust Recurring Service</h4>
+        </div>
+        <div class="modal-body">
+        	<%= simple_form_for @subscription, :html => { :class => "form-horizontal uni" }, :method => :post, :url => adjust_subscription_path(@subscription) do |f| %>
+
+				<div class="alert alert-warning">
+				  <strong>Warning:</strong> In order to preserve old appointment data, this action will inactivate the current recurring service and create a new one starting with the selected appointment. All appointments starting after the selected appointment in the old recurrence will be deleted.
+				</div>
+
+				<%= render 'recurrence_fields_admin', :f => f %>
+
+ 				Starting with appointment on <%= f.input :inactivate_on, :as => :select, :include_blank => false, :collection => @subscription.appointments.actual.order('appointments.start_time ASC').map{ |a| [a.start_time.strftime('%b %-d, %Y'), a.id] }, :label => false, :wrapper_html => {:class => "inline compact-horizontal"} %><br>
+ 				</div>
+ 				
+				<%= f.button :submit, 'Update Service', :class => "pull-right btn btn-blue", :data => {:confirm => "Are you SURE you want to make this change?"} %>
+			
+			<% end %>
+			
+		</div>
+    </div>
+	</div>
+</div>
+
+
+</div>

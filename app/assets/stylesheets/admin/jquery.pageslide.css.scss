@@ -1,0 +1,17 @@
+#pageslide {
+    /* These styles MUST be included. Do not change. */
+    display: none;
+    position: absolute;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    z-index: 100;
+    overflow: auto;
+    
+    /* Specify the width of your pageslide here */
+    width: 400px;
+    padding: 20px 0px;
+    
+    /* These styles are optional, and describe how the pageslide will look */
+    background-color: #333;
+}

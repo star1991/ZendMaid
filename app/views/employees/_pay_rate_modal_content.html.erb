@@ -1,0 +1,13 @@
+<%= simple_form_for @employee, :html => { :class => "form-horizontal uni" }, :remote => true, :method => :post, :url => edit_pay_rate_employee_path(@employee) do |f| %>
+	
+	<%= hidden_field_tag :entry_id, params[:entry_id] %>
+	<%= hidden_field_tag :source, params[:source] %>
+	
+	<%= f.input :pay_type, :as => :select, :collection => ['Hourly', 'Revenue Share', 'Fixed Flat Rate', 'Variable Flat Rate'], :input_html => { :id => "pay-type-input" }, :include_blank => false %>
+
+	<div id="pay-rate" style="display:none;">
+		<%= f.input :pay_rate, :as => :string, :input_html => { :id => "pay-rate-input", :style => "width:100px;" } %>
+	</div>
+	
+	<%= f.button :submit, "Save Pay Rate" , :class => "pull-right btn btn-blue" %>
+<% end %>

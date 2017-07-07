@@ -1,0 +1,7 @@
+<div class="nested-fields" style="margin-bottom: 10px;">
+	<%= f.input :name, :label => "Name" %>
+	<%= f.input :base_price, :as => :string %>
+	<%= f.input :show_in_booking %>
+	
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger", :data => {:confirm => "Are you sure you wish to delete this field AND all associated data?"} %></div>
+</div>

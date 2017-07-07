@@ -1,0 +1,31 @@
+<div class="row-fluid">
+	<span class="pull-right"><%= link_to "Recent Activity", "#", :class => "btn btn-red btn-mini fetch-customer-recent-activity", :data => {:id => @customer.id} %></span>
+	<span class="customer-name" style="font-size:12px;"><%= link_to @customer.full_name, @customer %></span>
+</div>
+
+<div class="row-fluid">
+	
+	<div class="span6">
+		<strong>PHONE NUMBERS</strong><br>
+		<% if @customer.phone_numbers.size == 0 %>
+			<span class="red">No phone number on record</span><br>
+		<% else %>
+			<% @customer.phone_numbers.each do |phone_number| %>
+				<i class='icon-phone'></i>
+					<small class="darkblue"><%= phone_number.phone_number_type %></small>
+					<%= formatted_phone_number(phone_number.phone_number) %><br>
+			<% end %>
+		<% end %>
+	</div>
+				
+	<div class="span6">
+		<strong class="pull-right">EMAIL ADDRESSES</strong><br>
+		<% if @customer.emails.size == 0 %>
+			<span class="red pull-right">No email on record</span><br>
+		<% else %>
+			<% @customer.emails.each do |email| %>
+				<span class="pull-right"><i class='icon-envelope-alt'></i> <%= email.address %></span><br>
+			<% end %>
+		<% end %>
+	</div>
+</div>

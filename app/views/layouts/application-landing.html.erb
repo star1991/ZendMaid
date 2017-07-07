@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title><%= full_title(yield(:title)) %></title>
+  		<%= stylesheet_link_tag    "application-landing", :media => "all" %>
+  		<%= javascript_include_tag "application-landing" %>
+  		<%= csrf_meta_tags %>
+  		<%= render 'layouts/shim' %>
+  		
+  		<!--[if lt IE 7]>
+	<link href="assets/css/font-awesome-ie7.min.css" rel="stylesheet">
+	<![endif]-->
+    <!-- Fav and touch icons -->
+
+		<link href='//fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+  		<%= render 'shared/ga' if Rails.env.production? %>
+  		<%= render 'shared/inspectlet' if Rails.env.production? %>
+	</head>
+	<body>
+		<!--START MAIN-WRAPPER--> 
+		<div class="main-wrapper">
+		<%= render 'layouts/header-landing' %>
+		
+		<%= render 'shared/landing_hero' %>
+		
+		<div class="container">
+			<% flash.each do |name, msg| %>
+				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+      			<a class="close" data-dismiss="alert">&#215;</a>
+      			<%= content_tag :div, msg, :id => "flash_#{name}" %>
+    			</div>
+			<% end %>
+		</div>
+		
+
+		<%= yield %>
+
+		
+		<%= render 'layouts/footer-landing' %>
+		<div class="container">
+			<%= debug(params) if Rails.env.development? %>
+		</div>
+		</div>
+	</body>
+</html>

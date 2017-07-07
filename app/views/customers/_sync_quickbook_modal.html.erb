@@ -1,0 +1,29 @@
+<div class="modal fade hide" id="sync-quickbook-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title blue"> <i class="icon-cloud-download"></i>Quickbook Sync</h3>
+      </div>
+
+      <div class="modal-body">
+        <div id="qb_sync" style="margin-bottom:15px;">
+          <%= simple_form_for :quickbook_sync, :html => { :class => "form-horizontal uni" }, :method => :get, :url => quickbooks_sync_customers_path do |f|%>
+        
+            <strong class="blue">I’d like to...</strong><br>
+            <%= radio_button_tag 'quickbook_sync', 'from_quickbook' %>Sync my contacts from QuickBooks to ZenMaid <br>
+            
+            <%= radio_button_tag 'quickbook_sync', 'to_quickbook', :checked => true %> Sync my contacts from ZenMaid to QuickBooks<br>
+
+            <%= radio_button_tag 'quickbook_sync', 'both_way' %>Sync my contacts both ways <br>
+
+            <div class="pull-left" style="margin-top:10px;">
+             <%= f.button :submit, "Start Sync", :class => "btn btn-green",:submit =>
+              'quickbook_sync' %>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

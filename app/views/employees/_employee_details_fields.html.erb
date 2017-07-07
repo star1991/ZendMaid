@@ -1,0 +1,30 @@
+<div class="employee-items">
+
+<h6 class="darkblue bottom-bordered">Additional Information</h6>
+
+		<% if current_employee.owner? %>		
+			<%= f.input :pay_type, :as => :select, :collection => ['Hourly', 'Revenue Share', 'Fixed Flat Rate', 'Variable Flat Rate'], :input_html => { :id => "pay-type-input" }, :hint => "The pay type for this cleaner will be used to calculate their job wages for their assigned cleanings" %>
+			<div id="pay-rate" style="display:none;">
+				<%= f.input :pay_rate, :as => :string, :input_html => { :id => "pay-rate-input", :style => "width:100px;" } %>
+			</div>
+		<% end %>
+       
+<%= f.simple_fields_for :employee_items do |item_builder| %>
+	<%= item_builder.hidden_field :custom_field_id %>
+	<%= item_builder.input :value_name, simple_form_hash(item_builder.object.custom_field, :no_estimation => true) %>
+<% end %>
+
+
+<%= f.input :notes, :input_html => {:class => 'width400', :rows => 5 } %>
+
+<div class="control-group text inline">
+	<label class="control-label"></label>
+     <div class="controls">
+     	<div class="inline">
+         <%= f.input_field :calendar_color, :class => "colorpicker" %>
+        </div>
+      </div>
+</div>
+<div style="display:inline-block;margin-left:10px;">Calendar Color (click to edit)</div>
+
+</div>

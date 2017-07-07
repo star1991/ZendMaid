@@ -1,0 +1,30 @@
+<div class="nested-fields info-box">
+	<div class="row-fluid">
+	
+	<div class="span3">
+	<%= f.input :name, :label => "Team Name" %>
+
+	<div class="control-group text inline">
+    	<%= f.input_field :calendar_color, :class => "colorpicker" %>
+	</div>
+	<div style="display:inline-block;margin-left:10px;">Calendar Color</div><br>
+	</div>
+	
+	<% f.object.build_all_missing_teams_employees(current_user) %>
+	
+	<div class="span6 padded10 grey-background" id="teams-employees-fields">
+		<div class="bottom-bordered" style="margin-bottom:20px;"><strong>Team Members</strong></div>
+		<% i = 0 %>
+		<%= f.simple_fields_for :teams_employees, f.object.teams_employees.sort { |a, b| a.employee.first_name <=> b.employee.first_name } do |te_builder| %>
+			<% i += 1 %>
+			<%= te_builder.input :_destroy, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "inline"},
+			:inline_label => te_builder.object.employee.full_name, :input_html => {:checked => te_builder.object.new_record? ? false : true } %>
+			<%= te_builder.hidden_field :employee_id, :value => te_builder.object.employee_id %>
+			<% if i % 2 == 0 %><br><% end %>
+		<% end %>
+	</div>
+
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger", :data => {:confirm => "Are you sure you wish to delete this team? This team will be un-linked from all assigned appointments, but the records of employees assigned to these appointments will be unchanged."} %></div>
+
+	</div>
+</div>

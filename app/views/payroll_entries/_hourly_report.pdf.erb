@@ -1,0 +1,96 @@
+<%= render 'payroll_entries/report_header', :entry => entry %>
+
+<div style="margin-top:20px;">
+	<table class="table table-pdf" border="1" style="width:100%;border-collapse:collapse;">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Customer</th>
+				<th>Time In</th>
+				<th>Time Out</th>
+				<th>Worked</th>
+				<th>Rate</th>
+				<th>Wage</th>
+				<th>Extras</th>
+				<th>Total</th>
+			</tr>	
+		</thead>
+		<tbody>
+				<% entry.payroll_assignments.order('appointment_start_time ASC').each do |assignment| %>
+					<tr>
+						<td> 
+							<%= assignment.appointment_start_time.strftime('%-m/%-d/%Y') %>
+						</td>
+						<td style="text-align:left;">
+							<%= assignment.customer_name %>
+						</td>
+						<td>
+							<%= assignment.time_in_time %>
+						</td>
+						<td>
+							<%= assignment.time_out_time %>
+						</td>
+						<td>
+							<%= format("%d:%02d", assignment.duration/3600, (assignment.duration/60) % 60) %>
+						</td>
+						<td>
+							<%= number_to_currency entry.pay_rate %>
+						</td>
+						<td>
+							<%= number_to_currency assignment.job_wage %>
+						</td>
+						<td>
+							<%= number_to_currency assignment.extras %>
+						</td>
+						<td>
+							<%= number_to_currency assignment.total %>
+						</td>
+					</tr>
+				<% end %>
+
+				<tr>
+					<td class="label-data padded" colspan="4"><strong>Subtotals</strong></td>
+					<td>
+						<%= format("%d:%02d", entry.total_duration/3600, (entry.total_duration/60) % 60) %>
+					</td>
+					<td>
+						<%= number_to_currency entry.pay_rate %>
+					</td>					
+					<td>
+						<%= number_to_currency entry.total_job_wage %>
+					</td>
+					<td>
+						<%= number_to_currency entry.total_extras %>
+					</td>
+					<td>
+						<strong><%= number_to_currency entry.wage %></strong>
+					</td>
+				</tr>
+
+				<tr class="no-border">
+					<td colspan="8" class="label-data"><strong>&minus; Deductions</strong></td>
+					<td>
+						<%= number_to_currency entry.deductions %>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="8" class="label-data"><strong>+ Bonus</strong></td>
+					<td>
+						<%= number_to_currency entry.bonus %>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="8" class="label-data padded"><strong>TOTAL PAY</strong></td>
+					<td>
+						<strong><%= number_to_currency entry.total_pay %></strong>
+					</td>
+				</tr>
+
+
+		</tbody>
+	</table>	
+</div>
+
+<%= render 'payroll_entries/report_approval_signature' %>

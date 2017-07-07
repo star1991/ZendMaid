@@ -1,0 +1,89 @@
+/*
+ * This is a manifest file that'll be compiled into application-pdf.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ * 
+ */
+
+body {
+  font-size: 14px;
+}
+
+
+.table-pdf {
+
+font-size:11px;
+page-break-inside:auto;
+
+thead, tr, th {
+  border: 1px solid black;
+  text-align:center;
+  page-break-inside: avoid !important;
+  page-break-after:auto;
+}
+
+
+th {
+  padding: 8px;
+  background-color: lightgrey;
+}
+
+.label-data {
+  text-align:right;
+  background-color: lightgrey;
+}
+
+td {
+  padding: 3px;
+  page-break-inside: avoid !important;
+
+}
+
+.padded {
+    padding: 8px !important;
+  }
+
+}
+
+.page {
+  page-break-after: always;
+}
+
+@page {
+  size: auto;
+  margin: 25mm 25mm 25mm 25mm;
+}
+
+.green {
+  color: green;
+}
+
+.black {
+  color: black;
+}
+
+.blue {
+  color: blue;
+}
+
+.darkblue {
+  color: darkblue;
+}
+
+.red {
+  color: red;
+}
+
+.grey {
+  color: #c8c8c8;
+}
+
+.darkgrey {
+  color: #222222;
+}

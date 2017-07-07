@@ -1,0 +1,18 @@
+        	<em class="red">Scheduling conflicts have been detected for <span class="blue"><%= @conflicts.size %></span> cleaner(s) assigned to this appointment</em>       	
+        	
+        	<div style="margin:10px 0px;">
+				<strong>CURRENT APPOINTMENT</strong> <span class="blue"><%= @appointment.start_time.strftime('%-m/%-d/%Y') %> <%= @appointment.start_time_time %> - <%= @appointment.end_time_time %></span>
+			</div>
+			
+			<strong>CONFLICTING OBLIGATIONS</strong>
+        	<ul class="cleaners-list">
+        		<% @conflicts.each do |employee| %>
+ 					<% logger.debug employee %>
+	        		<li><%= employee.full_name %></li>
+    	    		<ul>
+        				<% employee.assigned_appointments.each do |appointment| %>
+        					<li><em class="darkgrey"><%= appointment.customer.full_name %></em> <span class="blue"><%= appointment.start_time.strftime('%-m/%-d/%Y') %> <%= appointment.start_time_time %> - <%= appointment.end_time_time %></span></li>
+        				<% end %>
+        			</ul>
+        		<% end %>	
+        	</ul>

@@ -1,0 +1,23 @@
+<b>Appointment Details</b><br>
+
+Date: <%= instant_booking.start_time.strftime('%a, %b %d, %Y') %><br>
+Time: <%= formatted_time(instant_booking.start_time, {:exact => exact}) %><br>
+Address: <%= "#{instant_booking.address.line1} #{instant_booking.address.line2}, #{instant_booking.address.city}, #{instant_booking.address.state} #{instant_booking.address.postal_code}" %><br>
+
+<% if instant_booking.user.service_types.count > 1 %>
+Cleaning Type: <%= instant_booking.service_type.name %><br>
+<% end %>
+<p>
+<% instant_booking.instant_booking_items.each do |item| %>
+<%= "#{item.custom_field.field_name}: #{item.value_name}" %><br>
+<% end %>
+<p>
+
+<% if instant_booking.requests.present? %>
+<b>Requests</b><br>
+<%= instant_booking.requests %><br>
+<% end %>
+<p>
+<% if instant_booking.price.present? && instant_booking.price > 0 %>
+Estimated Price: <%= number_to_currency(instant_booking.price) %><br>
+<% end %>

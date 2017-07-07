@@ -1,0 +1,31 @@
+<div class="modal fade hide" id="email-schedule-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+       		<h4 class="modal-title darkblue"> <i class="icon-bullhorn"></i> Work Orders</h4>
+        </div>
+        <div class="modal-body">
+
+			<div id="email-or-print" style="margin-bottom:15px;">
+ 				<strong class="blue">I want to</strong>
+ 				<%= radio_button_tag 'work_order', 'print', :checked => true %> print work orders
+ 				<%= radio_button_tag 'work_order', 'email' %> email work orders
+ 			</div>
+
+			<div id="print-work-order">
+				<%= render 'employees/print_work_order_form' %>
+			</div>
+
+
+			<div id="email-work-order" style="display:none;">
+				<%= render 'employees/email_work_order_form' %>
+			</div>
+			
+		</div>
+    </div>
+	</div>
+</div>
+
+
+</div>

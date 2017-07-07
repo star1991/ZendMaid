@@ -1,0 +1,3 @@
+<% if @confirmation_email.present? && @confirmation_email.time_offset != nil %>
+	<%= render 'confirmation_email' %>
+<% end %>

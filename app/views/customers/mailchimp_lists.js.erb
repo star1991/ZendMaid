@@ -1,0 +1,14 @@
+<% if @success %>
+
+	$('#mailchimp-sync-contacts-modal').find('.modal-body').html("<%= escape_javascript( render 'customers/mailchimp_modal_content') %>");
+
+	if( $("#sync_list_name").val() != 'new_list' && $("#sync_list_name").val() != undefined )
+	{
+		$(".sync_new_list").hide();
+	}
+
+<% else %>
+	
+	$('#mailchimp-sync-contacts-modal').find('.modal-body').html("<%= escape_javascript( render 'shared/flash_notice', :flash => {:notice => 'There was an error in contacting MailChimp. Please try again in a few minutes. If this problem persists, try renewing the integration in your Mailchimp Settings or contact us.'}) %>");
+
+<% end %>

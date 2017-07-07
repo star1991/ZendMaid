@@ -1,0 +1,62 @@
+<%= provide(:banner_title, "Appointment Confirmation") %>
+
+
+<div class="row-fluid instant-booking-confirmation">
+
+<% if @appointment.user.user_profile.present? && @appointment.user.instant_booking_profile.show_about_us? %>
+<div class="span3">
+	<%= render @appointment.user.user_profile, :show_about_us => false, :show_contact_us => true %>	
+</div>
+
+<div class="span9">
+<% else %>
+
+<div class="span12">
+
+<% end %>
+
+<% if params[:embed] %>
+<h1>Appointment Confirmation</h1>	
+<% end %>
+
+<%= render 'shared/flash_notice' %>
+
+
+<h3 class="standard-h2title line2">Contact Information</h2>
+<dl class="dl-horizontal">
+	<dt>Name</dt>
+	<dd><%= @appointment.customer.full_name %></dd>
+    <dt>Email</dt>
+    <dd><%= @appointment.customer.email %></dd>
+    <dt>Phone</dt>
+    <dd><%= formatted_phone_number @appointment.customer.phone_number %></dd>
+</dl>
+
+<h3 class="standard-h2title line2">Appointment Details</h2>
+
+	<%= render @appointment %>	
+	
+	<% if @appointment.appointment_items.count > 0 %>
+	<strong>Booking Details</strong>
+	<table id="price-table" class="table table-condensed">
+		<tbody>
+			<% @appointment.appointment_items.each do |item| %>
+				<tr>
+					<td class="quantity-item"><%= item.appointment_field.field_name %></td>
+					<td class="quantity-price"><%= item.value_name %></td>
+				</tr>
+			<% end %>
+			<% if @appointment.user.instant_booking_profile.show_price? && @appointment.price > 0 %>
+			<tr>
+				<td class="quantity-price"><strong>Estimated Price</strong></td>
+				<td class="quantity-price"><%= number_to_currency @appointment.price %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% end %>
+	
+	<%= link_to "Book another appointment!", instant_booking_path(@appointment.user.instant_booking_profile, :embed => params[:embed]), :class => "btn #{@appointment.user.instant_booking_profile.button_color_class}"  if current_user.blank? %>
+
+</div>
+</div>

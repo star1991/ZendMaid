@@ -1,0 +1,47 @@
+ <div class="description-panel-alt" style="padding:20px;font-size:16px;">
+
+            <p>Hi <%= current_employee.first_name %>,</p><br>
+            
+            <% if controller_name == 'instant_booking_profiles' and action_name == 'edit' %>
+
+
+            <p>Thanks again for using ZenMaid, I hope you're absolutely loving the experience!</p><br>
+
+            <p>If you're visiting this page, you're probably interested in our <strong>most popular feature.</strong></p><br>
+
+
+            <% else %>
+
+            
+
+            <p>My name is Amar, CEO of ZenMaid Software. I just wanted to thank you for trying ZenMaid and share with you our <strong>most popular feature.</strong></p><br>
+
+            <% end %>
+
+            <p>This feature brings you <strong>qualified leads looking for your service</strong> and delivers them <strong>directly to your inbox!</strong></p><br>
+
+            <p>It's the <strong class="darkblue">ZenMaid Instant Booking Form.</strong></p><br> 
+
+            <p>This feature singlehandedly makes the ZenMaid Software <strong>pay for itself</strong>, and then some, once installed on your website.</p></br> 
+
+            <p>Here's how it works:</p><br>
+
+            <p>We set up a form on your website for your visitors to fill out when they land on your page. In this form we can provide them a quote that's customized to how you personally price your services.</p><br> 
+
+            <p><strong>What this does is allow your potential customer to request a booking with your team without ever picking up the phone to call you.</strong> It's more convenient for them (trust me, they're sick of leaving voicemails for your competitors) and it's easy business for you.</p><br>
+
+            <p>All you have to do is pick up the phone, call them back, and find a time on your schedule that works for you and your newest customer!</p><br>
+
+            <p>And there's virtually no selling necessary on this call because they already have a great idea of what it'll cost them!</p><br>
+
+            <p><strong>Interested in getting this setup?</strong> Shoot me an email at <%= mail_to "amar@zenmaid.com", "Amar@Zenmaid.com" %> with any questions you have and we'll get started!<p></br>
+
+            <p>Please note that this feature requires being on the premium plan simply because it makes our customers so much money (and requires manual work and man hours from my team to setup)</p><br>
+
+            To you and your business success!<br>
+            Amar<br>
+            <%= image_tag 'amar.png', :style => "margin-top:5px;margin-right:10px;" %>
+            <div class="cleafix"></div>
+
+          </div>
+

@@ -1,0 +1,6 @@
+<%= f.input :line1, :label => "Street", :input_html => {:class => 'width400'}%>
+<%= f.input :city %>
+
+<%= f.input :state, :collection => us_states , :wrapper_html => {:class => "inline"}, :input_html => {:style => 'width: 60px'} %>
+<%= f.input :postal_code, :wrapper_html => {:class => "inline"}, :label => "Zip" %>
+

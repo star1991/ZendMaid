@@ -1,0 +1,45 @@
+<div class="container-fluid" id="calendar-container">
+
+<div class="row-fluid">
+
+<div class="span12">
+
+<%= render 'calendar_grid_view' %>
+
+</div>
+
+</div>
+</div>
+
+			<div class="pull-right calendar-info-panel" style="margin-left: 0px;display:none;">
+				<%= render 'calendar_filter_panel', :grid => true, :show_employees => true, :show_teams => false %>
+				<%= render 'create_event_panel' %>
+				<div id="calendar-info">
+				<h5 class="background-green">How to use the calendar</h5>
+				<ul class="padded">
+					<li>Toggle between week, month, and day view using the buttons on the top right of the calendar</li>
+					<li>Click the left and right arrows to navigate to the previous or next day, week, or month (depending on which view you are in)</li>
+					<li>Click on an appointment to view and edit it</li>
+					<li>Click and drag appointments around on the calendar to reschedule them (you will be given the option to reschedule the entire recurrence if the appointment is part of a recurring service)</li>
+					<li>Click and drag on an empty area of the calendar to create an appointment</li>
+					<li>Click the red "Filters" button in the top left corner to filter and color appointments by assigned employee or status</li>
+					<li>Information about filters, existing appointments, and new appointments will show up here</li>
+				</ul>
+				</div>
+			</div>
+
+<%= render 'email_templates/select_template_modal' %>
+
+<%= render 'text_templates/select_template_modal' %>
+
+<%= render 'customers/log_entries_modal' %>
+
+<%= render 'time_in_time_out_modal' %>
+
+<%= render 'conflicts_modal' %>
+
+<%= render 'employees/print_schedule_modal' %>
+
+<%= render 'employees/email_schedule_modal' %>
+
+<%= render 'customers/manage_credit_card_modal' %>

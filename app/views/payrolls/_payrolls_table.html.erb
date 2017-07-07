@@ -1,0 +1,17 @@
+<table id="payrolls-datatable" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th><div>ID</div></th>
+            <th><div>Pay Period</div></th>
+            <th><div>Total Pay</div></th>
+            <th><div>Link</div></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% @payrolls.each do |payroll| %>
+        
+			<%= render 'payroll_table_entry', :payroll => payroll %>
+        <% end %>
+    </tbody>
+</table>

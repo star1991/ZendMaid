@@ -1,0 +1,29 @@
+
+<% if !params[:embed] %>
+<div class="about-us shift60up">
+
+<h3><%= user_profile.company_name %><br></h3>
+<% else %>
+<div class="about-us">
+<% end %>
+
+<i class="fa-icon-phone-sign"></i> <%= formatted_phone_number user_profile.company_phone_number%><br>
+<i class="fa-icon-envelope-alt"></i> <%= user_profile.company_email %>
+
+
+<% if show_about_us %>
+<h4 class="line3 center standart-h4title"><span>About Us</span></h4>
+
+<%= simple_format user_profile.user.instant_booking_profile.about_us %>
+
+<% end %>
+
+<% if show_contact_us %>
+<h4 class="line3 center standart-h4title"><span>Contact us</span></h4>
+<div class="contact-us">
+If the below information is incorrect or you wish to cancel or change your appointment, please contact us
+at the email address or phone number listed above
+</div>
+<% end %>
+
+</div>

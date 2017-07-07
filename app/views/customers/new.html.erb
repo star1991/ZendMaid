@@ -1,0 +1,101 @@
+<% provide(:title, "New Customer") %>
+<% provide(:icon, "icon-edit") %>
+
+
+<div class="container">
+
+<% if @instant_booking.present? %>	
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="content-box">
+    		<div class="content-box-header">
+        		<i class="icon-book"></i> Booking for <%= @instant_booking.full_name %>
+    		</div>
+    		<div class="row-fluid">
+    		<div class="span12 padded">
+				<%= render @instant_booking %>
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+		
+<% end %>
+
+<%= simple_form_for @customer, :html => { :class => @possible_duplicates.present? ? "form-vertical" : "form-horizontal" } do |f| %>
+
+<%= hidden_field_tag "instant_booking_id", @instant_booking.try(:id) %>
+
+<div class="row-fluid">
+
+	<% if @possible_duplicates.present? %>
+	<div class="span6">
+  		<div class="content-box">
+    	<div class="content-box-header">
+        	<i class="icon-warning-sign red"></i> Possible Duplicate Detected!
+    	</div>
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+           	<div class="alert alert-error">This record may be a duplicate of one of the following record(s)</div>
+ 			<% @possible_duplicates.each do |duplicate| %>
+ 				<%= render duplicate %><hr>
+ 			<% end %>
+ 			<%= f.input :allow_duplicate, :label => false, :as => :boolean, :inline_label => "Save Anyway?"%>
+        </div>
+        </div>
+    	</div>
+    </div>
+    
+    <div class="span6">
+    
+    <% else %>
+    
+    <div class="span12">
+    
+	<% end %>
+	
+
+ 	<div class="content-box">
+  	<div class="content-box-header">
+    	<i class="icon-plus"></i> New Customer
+  	</div>
+
+  	<div class="row-fluid">
+      	<div class="padded">
+		
+		<% if @possible_duplicates.present? %>
+		<div class="span12">
+		<% else %>
+		<div class="span7 offset2">
+		<% end %>
+		
+			<%= render 'shared/flash_notice' %>
+
+            <%= hidden_field_tag :commit %>
+            
+            <%= hidden_field_tag :start_time, params[:start_time] %>
+            <%= hidden_field_tag :end_time, params[:end_time] %>
+ 
+            <%= render 'customers/customer_fields', :f => f %>
+
+			<%= render 'customers/customer_details_fields', :f => f%>
+			<%= render 'customers/customer_addresses_fields', :f => f %>
+       		<br>
+			<div class="pull-right">
+				 	<% if !params[:to_appointment] %>
+                		<%= f.button :submit, 'Save', :class => "btn btn-green new-customer" %>
+                	<% end %>
+                	<%= f.button :submit, 'Save and Create Appointment', :name => "create-appointment", :class => 'btn btn-red new-customer' %>
+                	<%= link_to 'Cancel', @customer, :class => "btn btn-inverse" %>
+
+            </div>
+			</div>
+	</div>	
+	</div>
+
+	</div>
+</div>
+
+<% end %>
+
+</div>

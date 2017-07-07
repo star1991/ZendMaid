@@ -1,0 +1,23 @@
+<%= simple_form_for :sync, :html => { :class => "form-horizontal uni" }, :method => :post, :url => sync_contacts_customers_path do |f|%>
+
+  
+  <% if @mailchimp_lists.present? %>
+
+ 	<%= f.input :sync_for, :label => "Sync", :required => false, :collection => ['Leads', 'Customers', 'All Contacts'], :include_blank => false, :wrapper_html => {:class => "inline compact-horizontal"}, :input_html => {} %><br>
+
+    <%= f.input :list_name, :label => "List", :required => false, :collection => @mailchimp_lists.collect {|list| [list['name'], list['id']]}, :include_blank => false, :wrapper_html => {:class => "inline compact-horizontal"}, :input_html => {} %><br>
+
+	  <div class="pull-right" style="margin-top:10px;">
+	    <%= f.button :submit, "Start Sync", :class => "btn btn-green" %>
+	  </div>
+
+  <% else %>
+
+	  <div class="alert alert-error">
+	  	You have not created any lists in your mailchimp account. Please login to your MailChimp account and create a list to sync your contacts to, then try the sync again.
+	  </div>
+
+  <% end %>
+
+
+<% end %>

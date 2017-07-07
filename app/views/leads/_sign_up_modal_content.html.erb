@@ -1,0 +1,35 @@
+<%= render 'shared/flash_notice' %>
+
+<% if @lead.api_error.present? %>
+	<div class="alert alert-error">
+		<%= @lead.api_error %>
+	</div>
+<% end %>
+
+<%= simple_form_for @lead, :url => sign_up_lead_path, :defaults => {:required => false }, :html => { :class => "form-horizontal uni narrow-control-groups compact-horizontal-wide" }, :remote => true, :method => :post do |f| %>
+
+  <%= f.input :name, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+  <%= f.input :email, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+  <%= f.input :phone_number, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+  <%= f.input :company_name, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+
+	<div id="new-card-form-fields" class="description-panel-alt" style="margin:0px;">
+  	<strong class="blue">Payment Information</strong><br><br>
+		<%= f.input :plan_id, :as => :select, :include_blank => false, :collection => [["Premium ($99/mo)", "premium"], ["Premium Plus ($249/mo)", "premium_plus"], ["Enterprise ($999/mo)", "enterprise"]], :label => "Select Plan", :input_html => {:style => "width:220px;"},
+		:wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+		<%= f.input :card_number, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+		<%= f.input :expiry_date, :label => "Exp. Date", :input_html => {:style => "width:75px;", :id => "expiry-date"}, :wrapper_html => {:class => "compact-horizontal-wide inline"} %>
+
+		<%= f.input :cvc, :label => "CVC", :input_html => {:style => "width:50px;"}, :wrapper_html => {:class => "compact-horizontal inline"} %><br>
+
+		<small>Don't worry, I won't charge your card until completely you're up and running</small><br>
+	</div>
+	
+		<%= f.button :submit, "I'm ready to get started!", :class => "btn btn-green", :style => "width:100%;" %>
+
+<% end %>
+
+

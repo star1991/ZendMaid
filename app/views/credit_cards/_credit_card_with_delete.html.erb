@@ -1,0 +1,8 @@
+<div class="credit-card-with-delete" data-card-id="<%= credit_card.id %>">
+	<div style="display:inline-block;width:350px;vertical-align:middle;">
+		<%= render credit_card %>
+	</div>
+	<%= link_to credit_card_path(credit_card), :class => "delete btn btn-mini btn-danger", :alt => "delete card", :method => :delete, :remote => true, :data => { :confirm => 'Are you sure you want to delete this card?' }  do %>
+		<i class="icon-remove"></i>
+	<% end %>
+</div>

@@ -1,0 +1,21 @@
+
+$('#calendar').fullCalendar('refetchEvents');
+
+
+$('#time_in_time_out_modal').modal('hide');
+
+if(window.location.href.indexOf("/appointments/list") != -1) {
+	window.location.reload();
+} else {
+
+	toastr.success("<%= escape_javascript flash[:notice] %>");
+
+	<% if params[:from_employee_calendar].nil? %>
+		hideAllPanels();
+		$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+		$('#pageslide').append("<%= escape_javascript(render('appointments/preview_panel').html_safe) %>");
+		eventPopoverPanel.id = <%= @appointment.id %>;
+		eventPopoverPanel.reattach_events();
+	<% end %>
+
+}

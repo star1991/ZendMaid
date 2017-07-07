@@ -1,0 +1,40 @@
+<h4><%= @user.company_name %></h4>
+
+<dl class="dl-horizontal">
+	<dt>Plan</dt>
+	<dd><%= @user.plan_id.present? ? @user.plan_id : "None" %></dd>
+	
+	<dt>On marketing plan?</dt>
+	<dd><%= @user.marketing_plan? ? "True" : "False" %></dd>	
+	
+	<dt>Last Sign In</dt>
+	<dd><%= @user.current_sign_in_at.try(:strftime,'%m/%d/%Y') %></dd>
+	
+	<dt>Created On</dt>	
+	<dd><%= @user.created_at.try(:strftime,'%m/%d/%Y') %></dd>
+	
+	<dt># Customers</dt>	
+	<dd><%= @user.customers.size %></dd>	
+
+	<dt># Employees</dt>	
+	<dd><%= @user.employees.size %></dd>
+
+	<dt># Appointments</dt>	
+	<dd><%= @user.appointments.size %></dd>
+	
+	<dt># Bookings</dt>	
+	<dd><%= @user.instant_bookings.size %></dd>
+
+	<dt># Customers created in last week</dt>	
+	<dd><%= @user.customers.where("customers.created_at > ?", Time.zone.now - 1.week).size %></dd>	
+
+	<dt># Employees created in last week </dt>	
+	<dd><%= @user.employees.where("employees.created_at > ?", Time.zone.now - 1.week).size %></dd>
+
+	<dt># Appointments created in last week</dt>	
+	<dd><%= @user.appointments.where("appointments.created_at > ?", Time.zone.now - 1.week).size %></dd>
+	
+	<dt># Bookings created in last week</dt>	
+	<dd><%= @user.instant_bookings.where("instant_bookings.created_at > ?", Time.zone.now - 1.week).size %></dd>
+
+</dl>

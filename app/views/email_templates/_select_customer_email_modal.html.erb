@@ -1,0 +1,15 @@
+<div class="modal fade hide" id="select-customer-template-modal">
+    <div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-body">
+      			<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+         		 	<h4 class="modal-title">Select Email Type</h4>
+        		</div>
+        		<div class="modal-body">
+					<div class="input-append"><%= select_tag "template-list", options_from_collection_for_select(current_user.email_templates.where(:template_resource => "Customer"), "id", "template_type") %><button type="button" id="generate-customer-template-button" data-customer="<%= @customer.id %>" class="btn btn-info">Generate Email</button></div>
+        		</div>
+        	</div>
+    	</div>
+	</div>
+</div>

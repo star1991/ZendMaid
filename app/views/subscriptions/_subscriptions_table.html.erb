@@ -1,0 +1,45 @@
+
+<table id=<%= id %> class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr>
+			<th><div>Type</div></th>
+			<th><div>Occurs</div></th>
+			<th><div>Start Date</div></th>
+			<th><div>End Date</div></th>
+			<th><div>Manage</div></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% subscriptions.sort_by {|s| s.start_time }.each do |subscription| %>
+			<tr>
+				<td style="text-align:center;"><strong><%= subscription.repeat ? '<span class="red">Recurring</span>'.html_safe : '<span class="blue">One Time</span>'.html_safe %></strong></td>
+				<td><%= recurrence_description(subscription, subscription.appointment_prototype || subscription.appointments.first) %></td>
+				<td style="text-align:center;">
+					<% if subscription.repeat %>
+						<%= subscription.constraints[:start_date].strftime('%-m/%d/%Y') %>
+					<% else %>
+						N/A
+					<% end %>
+				</td>
+				<td style="text-align:center;">
+					<% if subscription.repeat %>
+						<%= subscription.constraints[:end_date].present? ? subscription.constraints[:end_date].strftime('%-m/%d/%Y') : "ongoing" %>
+					<% else %>
+						N/A
+					<% end %>
+				</td>
+				<td style="text-align:center;">
+					<% if subscription.repeat %>
+						<%= link_to edit_subscription_path(subscription), :class => "btn btn-mini btn-green" do %>
+							<i class="icon-edit"></i> Manage Recurring Service
+						<% end %>
+					<% else %>
+						<%= link_to edit_appointment_path(subscription.appointments.first), :class => "btn btn-mini btn-blue" do %>
+							<i class="icon-edit"></i> Manage Appointment
+						<% end %>
+					<% end %>
+				</td>
+			</tr>
+		<% end%>
+	</tbody>
+</table>

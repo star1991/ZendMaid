@@ -1,0 +1,14 @@
+var $sign_up_modal = $('#sign-up-modal');
+$sign_up_modal.find('.modal-body').html("<%= escape_javascript(render('leads/sign_up_modal_content').html_safe) %>");
+
+$sign_up_modal.find('#expiry-date').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: 'mm/yy',
+    onClose: function(dateText, inst) { 
+        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        $(this).datepicker('setDate', new Date(year, month, 1));
+    }
+});

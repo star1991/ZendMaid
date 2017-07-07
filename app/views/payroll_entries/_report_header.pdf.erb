@@ -1,0 +1,8 @@
+<div>
+	<div style="text-align:left;">
+		<span style="font-size:20px;"><%= entry.full_name %></span><br>
+		<span style="font-size:14px;">Payroll ID # <%= @payroll.payroll_number %></span><br>
+		<span style="font-size:14px;"><%= "#{@payroll.start_date.strftime('%-m/%-d/%Y')} - #{@payroll.end_date.strftime('%-m/%-d/%Y')}" %>, Worked <%= entry.assignments_count %> appointments</span><br>
+		<span style="font-size:14px;">Default pay rate - <%= display_pay_rate entry %></span>
+	</div>
+</div>

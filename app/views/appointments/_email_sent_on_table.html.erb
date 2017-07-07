@@ -1,0 +1,77 @@
+<table class="table table-bordered table-hover sent-on-table">
+	<tr>
+		<td>Appointment Reminder</td>
+		<td id="appointment-reminder-email">
+			<% if @appointment.sent_on["Appointment Reminder Email"].present? %>
+				<span class="green">Sent on <%= @appointment.sent_on["Appointment Reminder Email"].strftime('%b %-d, %Y') %></span>
+			<% elsif @customer.automatable_emails.size == 0 %>
+				<%= link_to edit_customer_path(@customer) do %>
+					<i class="icon-edit"> </i> No approved customer email
+				<% end %>		
+			<% elsif @appointment_reminder_email.time_offset == nil || @appointment.status_id != @appointment_reminder_email.preferences[:after_status] %>
+				<%= link_to edit_email_template_path(@appointment_reminder_email) do %>
+					<i class="icon-calendar"> </i> Not scheduled
+				<% end %>
+			<% elsif Time.zone.now > (@appointment.start_time + @appointment_reminder_email.time_offset).beginning_of_day + 6.hours %>
+				Not sent
+			<% else %>
+				<span class="darkblue">Scheduled for <%= (@appointment.start_time + @appointment_reminder_email.time_offset.seconds).strftime('%b %-d') %></span>
+			<% end %>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>Work Order</td>
+		<td id="work-order-email">
+			<% if @appointment.sent_on["Work Order Email"].present? %>
+				<span class="green">Sent on <%= @appointment.sent_on["Work Order Email"].strftime('%b %-d, %Y') %></span>
+			<% elsif @appointment.assignments.count == 0 %>
+				<span class="red">No cleaners assigned</span>			
+			<% elsif @work_order_email.time_offset == nil %>
+				<%= link_to edit_email_template_path(@work_order_email) do %>
+					<i class="icon-calendar"></i> Not scheduled
+				<% end %>
+			<% elsif Time.zone.now > @appointment.start_time.beginning_of_day + 6.hours %>
+				Not sent
+			<% else %>
+				<span class="darkblue">Scheduled for <%= (@appointment.start_time - 1.day).strftime('%b %-d') %></span>
+			<% end %>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>Appointment Follow-Up</td>
+		<td id="appointment-follow-up-email">
+			<% if @appointment.sent_on["Appointment Follow-Up Email"].present? %>
+				<span class="green">Sent on <%= @appointment.sent_on["Appointment Follow-Up Email"].strftime('%b %-d, %Y') %></span>
+			<% elsif @customer.automatable_emails.size == 0 %>
+				<%= link_to edit_customer_path(@customer) do %>
+					<i class="icon-edit"> </i> No approved customer email
+				<% end %>
+			<% elsif @appointment_follow_up_email.time_offset == nil || !@appointment_follow_up_email.send_follow_up?(@appointment, @customer) %>
+				<%= link_to edit_email_template_path(@appointment_follow_up_email) do %>
+					<i class="icon-calendar"> </i> Not scheduled
+				<% end %>
+			<% elsif Time.zone.now > (@appointment.start_time + @appointment_follow_up_email.time_offset).beginning_of_day + 10.hours %>
+				Not sent
+			<% else %>
+				<span class="darkblue">Scheduled for <%= (@appointment.start_time + @appointment_follow_up_email.time_offset.seconds).strftime('%b %-d') %></span>
+			<% end %>
+		</td>
+	</tr>
+	
+	<% @untimed_email_templates.each do |name, template| %>
+		<tr>
+			<td><%= name %></td>
+			<td>
+				<% if @appointment.sent_on["#{name} Email"].present? %>
+					<span class="green">Sent on <%= @appointment.sent_on["#{name} Email"].strftime('%b %-d, %Y') %></span>
+				<% else %>
+					Not Sent
+				<% end %>
+			</td>
+		</tr>
+	
+	<% end %>
+
+</table>

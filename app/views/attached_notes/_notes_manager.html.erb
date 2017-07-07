@@ -1,0 +1,14 @@
+<ul class="latest-comments">
+	<div id="attached-notes">
+		<%= render 'attached_notes/attached_notes' %>
+	</div>
+	<li class="comment-box view-more" style="padding:5px;">
+		<%= simple_form_for @new_attached_note, :remote => true, :html => {:class => "attached-notes-form"} do |f| %>
+			<%= f.hidden_field :noteable_id %>
+			<%= f.hidden_field :noteable_type %>
+		 	<%= f.input_field :body, :rows => 2, :style => "width: 100%", :placeholder => "Add a note..." %>
+		 	<%= f.submit "Add Note" , :class => "btn btn-inverse btn-small" %>
+		<% end %>
+	</li>
+	
+</ul>

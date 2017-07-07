@@ -1,0 +1,15 @@
+
+<% if @user.service_types.bookable.count > 1 %>
+<%= f.input :service_type_id, :label => "Service Type", :collection => @user.service_types.bookable.map { |type| [type.name, type.id] }, :input_html => {:id => "service-type"} %>
+<% else %>
+<%= f.hidden_field :service_type_id, :value => @user.service_types.bookable.first.id, :id => "service-type" %>
+<% end %>
+
+<div class="service-items">
+<%= f.simple_fields_for :instant_booking_items, @instant_booking.instant_booking_items do |item_builder| %>
+	<%= render "instant_bookings/booking_items_fields", :f => item_builder %>
+<% end %>
+</div>
+
+
+

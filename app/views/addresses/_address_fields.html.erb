@@ -1,0 +1,6 @@
+<%= f.input :line1, :label => "Street", :wrapper_html => {:class => "compact-horizontal"}, :input_html => {:class => "street"} %>
+<%= f.input :city, :wrapper_html => {:class => "compact-horizontal"}, :input_html => {:class => "city"} %>
+
+<%= f.input :state, :collection => us_states , :wrapper_html => {:class => "compact-horizontal inline"}, :input_html => {:class => "state", :style => 'width: 60px;', :data => {:placeholder => '...'}} %>
+<%= f.input :postal_code, :wrapper_html => {:class => "compact-horizontal inline"}, :label => "Zip", :input_html => {:class => "zip", :style => "width: 100px;"} %><br>
+

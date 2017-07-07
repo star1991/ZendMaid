@@ -1,0 +1,28 @@
+<% provide(:title, "Bookings") %>
+<% provide(:icon, "icon-book") %>
+
+<div class="container">	
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+    	<div class="content-box-header">
+        	Bookings
+    	</div>
+    	<div class="row-fluid">
+    	<div class="span12 padded">
+            <% if current_user.booking_form_started? %>
+			    <%= render 'shared/flash_notice' %>
+                <%= render 'instant_bookings_table' %>
+            <% else %>
+
+                <%= render 'instant_bookings/instant_bookings_pitch' %>
+
+
+            <% end %>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>

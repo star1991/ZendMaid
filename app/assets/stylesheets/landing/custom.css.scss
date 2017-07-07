@@ -1,0 +1,336 @@
+
+
+
+/* mixins, variables, etc */
+//Shamelessly adapted from bootstrap examples - AD
+
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+
+
+/*@import "bootswatch/amelia/bootswatch";*/
+
+
+.appointments {
+    list-style: none;
+}
+
+.customers {
+  list-style: none;
+}
+
+.center {
+  text-align: center;
+}
+/* CUSTOMIZE THE NAVBAR
+ -------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+
+/* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+
+  .container {
+      position: relative;
+      z-index: 9;
+  }
+
+  .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+  }
+
+  .item {
+      height: 600px;
+  }
+  
+  img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 750px;
+  }
+
+  .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      padding: 0 20px;
+      margin-top: 200px;
+      
+      h1, .lead {
+        margin: 0;
+        line-height: 1.25;
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      }
+  
+      .btn {
+        margin-top: 10px;
+      }
+  }
+}
+
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999;
+  
+  
+  small {
+    float: left;
+  }
+  
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+  
+}
+
+.dl-horizontal {
+  margin-bottom: 40px;
+}
+
+.form-actions {
+  border-top: none;
+  
+  .btn [class ^="fa-icon-"] {
+    line-height: normal;
+  }
+  
+  .price-estimate {
+    display: inline-block !important;
+    #total-price {
+      margin-right: 30px;
+      color: navy;
+    }
+  }
+}
+
+.instant-booking-confirmation {
+  .dl-horizontal {
+    dt {
+      text-align: left;
+    }
+  }
+}
+
+/* sidenav */
+
+.main-menu-span {
+
+  .sidebar-nav { 
+  ul {
+    margin: 20px 0px 0px -20px;
+    padding-bottom: 1px;
+  }
+  
+  .nav {
+    list-style: none;
+    padding-left: 20px;
+    filter: none;
+    
+    li > a {
+      display: block;
+      line-height: 20px;
+    }
+  }
+  
+  
+  }
+
+}
+
+/*Datatables*/
+
+.dataTables_wrapper {
+  .row {
+    margin-left: 0px;
+  }
+}
+
+/* forms */
+.control-group.inline {
+  display: inline-block;
+}
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
+
+.btn-toolbar {
+  input {
+    float: left;
+    margin-right: 10px;
+    display: inline-block;
+  }
+}
+
+
+
+/*Tables*/
+
+#price-table {
+  margin-top: 10px;
+}
+
+table {
+  
+
+  .quantity-item {
+    text-align: left;
+  }
+
+  .quantity-price {
+    text-align: right;
+  }
+}
+
+.feature-comparison {
+  margin-top: 30px;
+  margin-bottom: 0px;
+  
+  tr {
+    td, th {
+      text-align: center;
+      vertical-align: middle;
+      .fa-icon-remove {
+        color: rgba(219, 32, 93, 0.5);
+      }
+      
+    }
+    .left {
+      text-align: left;
+      padding-left: 20px;
+    }
+  }
+}
+
+/* miscellaneous */
+
+.width400 {
+  width: 400px;
+}
+
+.appointment-field-elements {
+  padding-left: 160px;
+  padding-bottom: 10px;
+}
+
+
+div[class="tooltip-inner"] {
+    max-width: 350px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+}
+
+
+.landing-devices {
+  position: absolute;
+  left: 50%;
+  top: 155px;
+  margin-left: -400px;
+  background: url("/assets/devices_landing.png");
+  height: 498px;
+  width: 870px;
+  z-index: 1;
+}
+
+.landing-message {
+  position: absolute;
+  width: 380px;
+  left: 50%;
+  margin-left: -468px;
+  top: 100px;
+  z-index: 99;
+  .lead {
+    color: #D8D8D8;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000000;
+  }
+}
+
+
+@media (max-width: 979px) and (min-width: 768px) {
+  
+.landing-message {
+  width: 250px;
+  left: 50%;
+  margin-left: -361px;
+  margin-top: 0px;
+  top: -80px;
+}
+
+.landing-devices {
+  background-size: 740px 424px;
+  margin-left: -380px;
+  top: 90px;
+  width: 740px;
+  height: 424px;
+
+}
+
+}
+
+@media (max-width: 767px) {
+  .landing-devices {
+    top: 270px;
+    margin-left: -220px;
+    height: 232px;
+    width: 360px;
+    background-size: 360px 232px;
+    left: 50%;
+  }
+  
+  .landing-message {
+    position: static;
+    width: 80%;
+    padding: 0 0 0 40px;
+    margin: 0;
+    h1 {
+      margin-top: 80px !important;
+    }
+  }
+  
+  .features {
+    text-align: center !important;
+  }
+}

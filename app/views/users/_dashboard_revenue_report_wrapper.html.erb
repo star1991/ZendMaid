@@ -1,0 +1,30 @@
+<div class="row-fluid">
+	<div class="span12">
+		<div class="content-box">
+			<div class="padded">
+			
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="pull-left">
+						<strong style="font-size:14px;">Revenue Report</strong>
+					</div>
+					<div class="pull-right">
+
+					    <%= simple_form_for :date_range, :html => { :class => "form-horizontal uni" }, :method => :get, :remote => true, :url => revenue_panel_path do |f|%> 
+
+					      <%= f.input :from, :as => :date_picker, :required => false, :input_html => { :readonly => true, :class => "input-calendar", :style => "width:100px;", :id => "appointments-from", :value => @from.try(:strftime, "%m/%d/%Y")}, :label => false, :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+					      <%= f.input :to, :as => :date_picker, :required => false, :input_html => {:readonly => true, :class => "input-calendar", :style => "width: 100px;", :id => "appointments-to", :value => @to.try(:strftime, "%m/%d/%Y")}, :label => "to", :wrapper_html => {:class => "inline compact-horizontal", :style => "margin-bottom: 0px;" } %>
+					      <%= f.button :submit, "Fetch Report", :id => "update-revenue-panel", :class => "btn btn-blue" %>
+					      <br>
+					    <% end %>    
+					  </div>					
+				</div>
+			</div>
+			
+			<div id="dashboard-report-wrapper">
+
+			</div>
+			
+			</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<table id='instant-booking-table' class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr>
+			<th><div>Date</div></th>
+			<th><div>Time</div></th>
+			<th><div>Name</div></th>
+			<th><div>Service Type</div></th>
+			<% if current_user.instant_booking_profile.show_price? %>
+			<th><div>Estimated Price</div></th>
+			<% end %>
+			<th><div>Link</div></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @instant_bookings.each do |booking| %>
+			<tr>
+				<td><%= booking.start_time.strftime('%a, %b %d, %Y') %></td>
+				<td><%= formatted_time(booking.start_time, {:exact => false}) %></td>
+				<td><%= booking.full_name %></td>
+				<td><%= booking.service_type.name %></td>
+				<% if current_user.instant_booking_profile.show_price? %>
+				<td><%= number_to_currency booking.price %></td>
+        		<% end %>
+        		<td class="center"><%= link_to 'View', instant_booking_path(booking) %></td>
+			</tr>
+		<% end%>
+	</tbody>
+</table>

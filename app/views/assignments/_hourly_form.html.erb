@@ -1,0 +1,73 @@
+<div style="margin-right:70px;">
+
+<%= simple_form_for @assignment, :html => { :class => "form-horizontal uni" }, :method => :post, :remote => true, :url => update_hourly_assignment_path(@assignment) do |f| %>
+	
+	<%= f.input :updated_from_payroll_entry, :as => :hidden, :input_html => {:value => true} %>
+	
+	<%= f.input :reset_job_wage, :as => :hidden, :input_html => {:value => true} %>
+
+	<table style="margin-bottom:10px;" class="pull-right">
+			<tr>			
+
+				<%= f.input :use_appointment_date, :as => :hidden, :value => true %>
+				
+				<td>
+					<%= f.input :time_in, :label => "In", :as => :string, :wrapper_html => {:class => "compact-horizontal", :style => "margin-bottom:0px;"}, :input_html => {:class => "timepicker", :value => f.object.time_in.try(:strftime, '%-I:%M %p')} %>
+				</td>
+				
+				<td>
+					<%= f.input :time_out, :label => "Out", :as => :string, :wrapper_html => {:class => "compact-horizontal", :style => "margin-bottom:0px;"}, :input_html => {:class => "timepicker", :value => f.object.time_out.try(:strftime, '%-I:%M %p')} %>
+				</td>
+			</tr>
+	</table>
+	
+			<div class="inline-elements pull-right">
+					<div style="width:70px;text-align:center;">
+						<strong class="darkgrey">Worked</strong><br>
+						<span style="font-size:20px;"><%= format("%d:%02d", @assignment.duration/3600, (@assignment.duration/60) % 60) %></span>
+					</div>
+					
+					<div style="width:20px;text-align:center;vertical-align:top;margin-top:10px;">
+						<i class="icon-remove" style="font-size:20px;color:grey;"></i>
+					</div>
+					
+					<div style="width:75px;text-align:center;">
+						<strong class="darkgrey">Rate</strong><br>
+						<span style="font-size:20px;"><%= number_to_currency @payroll_entry.pay_rate %></span>
+					</div>
+					
+					<div style="width:20px;text-align:center;vertical-align:top;margin-top:10px;">
+						<strong style="font-size:20px;color:grey;">=</strong>
+					</div>
+					
+					<div style="width:90px;text-align:center;">
+						<strong class="darkblue">Wage</strong><br>
+						<span style="font-size:20px;"><%= number_to_currency @assignment.job_wage %></span>
+					</div>			
+			
+					<div style="width:20px;text-align:center;vertical-align:top;margin-top:10px;">
+						<strong style="font-size:20px;color:grey;">+</strong>
+					</div>					
+
+					<div style="width:90px;text-align:center;">
+						<strong class="darkblue">Extras</strong><br>
+							<%= f.input_field :extras, :as => :string, :value => number_to_currency(@assignment.extras), :id => 'job-extras' %>
+					</div><br>
+			</div>
+			
+			<div style="margin-left:290px;margin-bottom:20px;" class="inline-elements pull-right">
+					<div style="width:20px;text-align:center;vertical-align:top;margin-top:10px;">
+						<strong style="font-size:20px;color:darkred;">=</strong>
+					</div>
+
+					<div style="width:90px;text-align:center;">
+						<strong id='total-job-pay' style="color:darkblue;font-size:20px;line-height:40px;"><%= number_to_currency @assignment.total %></strong>
+					</div>
+			</div>
+			
+			<div class="clearfix"></div>
+
+			<%= f.button :submit, "Save Job Pay" , :class => "pull-right btn btn-blue" %>
+<% end %>
+
+</div>

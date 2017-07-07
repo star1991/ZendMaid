@@ -1,0 +1,70 @@
+<% provide(:title, "Settings") %>
+<% provide(:icon, "icon-cogs") %>
+
+<div class="container">
+
+<%= render "settings_nav", :active => "Account" %>
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+  	<div class="content-box-header">
+    	<i class="icon-user"></i> My account - <%= current_employee.full_name %>
+  	</div>
+
+  	<div class="row-fluid">
+    	<div class="span12">
+      	<div class="padded">
+        	<div class="profile">
+  			<%= render 'shared/flash_notice' %>
+  
+  			<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal uni", :method => :put, :multipart => true }) do |f| %>
+
+            <div class="row-fluid">
+            	<div class="span2">
+              	</div>
+
+            	<div class="span7">
+
+        			<%= f.input :email, :hint => "This is the email you use to sign in and the one we can use to contact you" %>
+        			
+        			<%= f.input :send_daily_digest, :label => false, :inline_label => "Email me a daily digest of my scheduled appointments", :as => :boolean, :checked_value => true, :unchecked_value => false %>
+        			
+			        <%= f.input :phone_number %>
+
+      			 	<div class="control-group" id="show-password-fields" style="<%= "display:none;" if !@hide_password_fields %>">
+      			 		<label class="control-label">Password</label>
+     					<div class="controls">
+     						<%= link_to "Change Password", "#", :style => "line-height:32px" %>
+        				</div>
+     				</div>		        
+			        
+			        <div id="password-fields" style="<%= "display:none;" if @hide_password_fields %>">
+        				<%= f.input :password, :hint => '(leave blank if you don\'t want to change it)' %>
+        				<%= f.input :password_confirmation %>
+					</div>
+					
+					<hr>
+					
+      			 	<div class="control-group">
+     					<div class="controls">
+     						<%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+        				</div>
+     				</div>
+     
+      			</div>
+      			
+     			<div class="span3"></div> 			
+    		</div>
+			<% end %>		
+  			</div>
+     
+
+		</div>
+		</div>
+	</div>
+	</div>
+	
+	</div>
+</div>

@@ -1,0 +1,180 @@
+<% provide(:title, @employee.full_name) %>
+<% provide(:icon, "icon-truck") %>
+
+<div class="container">
+
+<%= render 'shared/flash_notice' %>
+
+<div class="row-fluid">
+
+<div class="span12">
+ 
+	<div class="content-box">
+
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+				
+				<div class="row-fluid">
+				
+     			<div class="pull-left">
+            		<%= link_to 'Back', :back, class: "btn" %>
+            		<% unless @employee.owner? && !current_employee.owner %>
+           				<%= link_to 'Edit', edit_employee_path(@employee), class: "btn btn-blue" %>
+        			<% end %>
+        		</div>
+        		
+        		<% if !(@employee.owner? || current_employee.id == @employee.id) %>
+        		
+        			<div class="pull-right">
+        				<% if @employee.active? %>
+        					<%= link_to 'Inactivate', inactivate_employee_path(@employee), :class => "btn btn-success", :data => {:confirm => "Are you sure you want to inactivate this employee? Doing so will de-assign the employee from their assigned teams and appointments starting Today, #{Time.zone.now.strftime('%b %-d, %Y')}" } %>
+        				<% else %>
+        					<%= link_to 'Reactivate', reactivate_employee_path(@employee), :class => "btn btn-success", :data => {:confirm => "Are you sure you want to reactivate this employee?" } %>
+        				<% end %>
+        			
+            			<%= link_to 'Delete', @employee, class: "btn btn-orange", method: :delete, data: { confirm: 'Are you you want delete this employee and all associated data? If you wish to preserve old data, try inactivating the employee instead.' }  %>
+        			</div>
+				
+				<% end %>
+				
+				<% if current_employee.id == @employee.id %>
+					<div class="clearfix"></div>
+					<div class="alert alert-success">
+						You are currently signed in as <%= @employee.full_name %>
+					</div>
+				<% end %>
+				
+				</div>
+				
+				<div class="row-fluid" style="margin-top:10px;">
+				
+				<div class="pull-left">
+					<strong style="margin-bottom:0px;font-size:18px;line-height:20px;font-family: Arial, Helvetica, sans-serif;">
+						<%= @employee.full_name %>
+					</strong><br>
+					
+					<% if @employee.active? %>
+						<span class="grey" style="margin-top:0px;"><em>Employed since <%= @employee.created_at.strftime("%b %Y") %></em></span>
+					<% else %>
+						<span class="grey" style="margin-top:0px;"><em>Employed from <%= @employee.created_at.strftime("%b %Y") %> to <%= @employee.inactivated_on.strftime("%b %Y") %> </em></span>
+					<% end %>
+				</div>
+				
+				<div class="pull-right" style="margin-right:20px;">
+					<strong>STATUS</strong><br>
+					<span style="font-size:24px;"><%= @employee.active? ? '<span class="green">Active</span>'.html_safe : '<span class="red">Inactive</span>'.html_safe %></span>
+				</div>
+				
+				<div class="clearfix"></div>
+				<hr>
+				</div>
+
+				<div class="row-fluid">
+				
+				<div class="span4">
+					<strong>PHONE NUMBER</strong><br>
+					<% if @employee.phone_number.blank? %>
+						<span class="red">No phone number on record</span><br>
+					<% else %>
+						<i class='icon-phone'></i>
+						<%= formatted_phone_number(@employee.phone_number) %><br>
+					<% end %>
+				</div>
+				
+				<div class="span4">
+					<strong>EMAIL ADDRESS</strong><br>
+					<% if @employee.email.blank? %>
+						<span class="red">No email on record</span><br>
+					<% else %>
+						<i class='icon-envelope-alt'></i> <%= mail_to @employee.email %><br>
+					<% end %>
+
+				</div>
+
+				<div class="span4">
+					<strong>CUSTOM FIELDS</strong><br>
+        			<% @employee.employee_items.each do |item| %>
+        				<b class="black"><%= item.custom_field.field_name %></b>
+        				<%= item.value_name.present? ? item.value_name : '<span class="red">No record</span>'.html_safe %><br>
+        			<% end %>
+        		</div>				
+ 				
+				</div>
+				
+ 				<div class="row-fluid" style="margin-top:20px;">
+ 				
+ 				<div class="span4">
+ 				<strong>Address</strong><br>
+ 					<% if @employee.address.blank? %>
+ 						<i class="black icon-map-marker"></i> <span class="red">No record</span><br>
+ 					<% else %>
+ 						<i class="black icon-map-marker"></i> <%= render "addresses/address_one_line", :address => @employee.address %><br>
+ 					<% end %>
+ 				</div>
+ 				
+ 				<div class="span4">
+ 					<strong>DEFAULT PAY RATE</strong><br>
+ 					<%= display_pay_rate @employee %>
+ 				</div>
+ 				
+ 				</div>
+ 				
+ 				<div class="row-fluid" style="margin-top:20px;"> 
+        			<strong>NOTES</strong><br>
+        			<% if @employee.notes.blank? %>
+        				<span class="red">None</span><br>
+        			<% else %>
+        				<%= @employee.notes %><br>
+        			<% end %>
+        		</div>
+        		
+        	</div>
+    	</div>
+    </div>
+</div>
+
+
+<div class="row-fluid">
+  <div class="span12">
+
+	<div class="content-box">
+  		<div class="content-box-header">
+    		<i class="icon-person"></i> Schedule for <%= @employee.full_name %>
+  		</div>
+
+  		<div class="row-fluid">
+      		<div class="span12 padded">
+            	<div id="employee-calendar"></div>
+          	</div>
+        </div>
+     </div> 
+  </div>
+</div>
+
+<!-- create-event popup -->
+<div class="modal fade hide" id="createEventPanelEmp">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create Unavailability</h4>
+        </div>
+        <div class="modal-body">
+      	<p class="time-range"></p>
+
+      	<!-- Form fields -->
+      	<%= simple_form_for @subscription, :remote => true, :html => { :id => "employee-obligation-form" } do |f| %>
+        	<%= f.input :title, label: 'Add description' %>
+			<%= hidden_field_tag "employee_id", @employee.id %>
+			<%= f.hidden_field :start_time, :id => "start-time-input" %>
+			<%= f.hidden_field :end_time, :id => "end-time-input" %>
+   		
+        	<%= f.button :submit, 'Create', { class: 'btn btn-small btn-primary' } %>
+			<a class="btn cancel">Cancel</a>
+      	<% end %>
+
+	</div>
+    </div>
+</div>
+</div>
+

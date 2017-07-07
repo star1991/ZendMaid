@@ -1,0 +1,25 @@
+<% if current_employee.admin? %>
+	<strong>Outstanding Balance</strong> 
+	<strong class="<%= @customer.balance > 0 ? 'red' : 'green' %>"><%= number_to_currency @customer.balance %></strong>
+	<a href="#" rel="tooltip" data-toggle="tooltip" data-title="The outstanding balance for a customer is the sum of the balance owed from all unpaid appointments for this customer occuring on or before today, <%= Time.zone.now.strftime('%b %-d, %Y') %>.<br><br> Customer balances are updated every day at midnight. Any changes you make to your appointments will be reflected in the customer balance on the following day." data-placement="bottom" class="question">?</a><br>
+<% end %>
+
+<% if @customer.emails.size == 0 %>
+	<i class='icon-envelope-alt'></i> <span class="red">No email on record</span><br>
+<% else %>
+	<% @customer.emails.each do |email| %>
+		<i class='icon-envelope-alt'></i> <%= email.address %><br>
+	<% end %>
+<% end %>
+
+<% if @customer.phone_numbers.size == 0 %>
+	<i class='icon-phone'></i> <span class="red">No phone number on record</span><br>
+<% else %>
+	<% @customer.phone_numbers.each do |phone_number| %>
+		<i class='icon-phone'></i>
+		<% if phone_number.phone_number_type.present? %>
+			<small class="darkblue"><%= phone_number.phone_number_type %></small>
+		<% end %>
+		<%= formatted_phone_number(phone_number.phone_number) %><br>
+	<% end %>
+<% end %>

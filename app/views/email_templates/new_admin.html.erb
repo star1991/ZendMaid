@@ -1,0 +1,64 @@
+<% provide(:title, "Edit Email Template") %>
+<% provide(:icon, "icon-cogs") %>
+
+<div class="container">
+
+<div class="row-fluid">
+	<div class="span12">
+    	
+  	<div class="content-box">
+
+	<div class="row-fluid">
+		<div class="span12" style="padding-left:10px;padding-right:10px;padding-top:10px;background-color:whitesmoke;border-bottom:1px solid #e8e8e8;">
+			<%= render 'users/settings_nav', :active => "Templates" %>		
+		</div>
+	</div>		
+
+  	<div class="row-fluid">		
+
+  	<div class="row-fluid padded">
+  		<div class="span2">
+  			
+  		</div>
+  		
+		<div class="span10">
+		
+    	<%= render 'shared/flash_notice' %>
+    	
+    	<h4>Add New Mass Email Template</h4>
+
+		<% if @email_template.template_resource == "Appointment" %>
+			<%= render 'appointment_template_commands' %>
+		<% elsif @email_template.template_resource == "Customer" %>
+			<%= render 'customer_template_commands' %>
+		<% end %>
+
+		<%= simple_form_for @email_template, :html => { :class => "form-vertical" }, :defaults => {:required => false} do |f| %>
+			
+			<%= f.input :template_type, :label => "Template Name" %>
+
+			<%= f.input :template_resource, :collection => ['Appointment', 'Customer'], :include_blank => false %>
+
+			<%= render 'email_template_fields', :f => f %>
+
+
+		<div class="control-group">
+     		<div class="controls">
+     			<%= link_to 'Preview', '#', :class => "btn btn-info preview-email-template", :data => { :id => f.object.id } %>
+     			<%= f.button :submit, "Create Template" , :class => "btn btn-green pull-right" %>
+        	</div>
+     	</div>
+		
+		<% end %>
+		
+		</div>
+		<div>
+	</div>
+
+	</div>
+	
+	</div>	
+</div>
+</div>
+
+<%= render 'preview_modal' %>

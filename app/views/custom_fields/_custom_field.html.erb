@@ -1,0 +1,48 @@
+
+<div class="row-fluid">
+	<div class="span1">
+
+	</div>
+	<div class="span11">
+
+        <div class='pull-right' style="margin-bottom:9px;margin-left:10px;">
+            <%= link_to 'Edit', edit_custom_field_path(custom_field), :class => "btn btn-mini btn-green", :method => :get, :remote => true %>
+
+          	<%= link_to 'Delete', custom_field, :class => "btn btn-mini btn-danger delete", :alt => "delete", :method => :delete, :remote => true, :data => { :confirm => 'Are you sure you want to delete this custom field AND all associated data?' } %>
+        </div>	
+
+		<div class="custom-field-content">
+			<div style="font-size:16px;margin-bottom:5px;">
+				<strong><%= custom_field.field_name %></strong>
+				<em class="blue">(<%= custom_field.human_readable_input_type %>)</em><br>
+			</div>
+
+			<div style="display:inline-block;width:200px;vertical-align:top;">
+				<% if custom_field.default.present? %>
+					<em>Default value</em><br><strong class="darkblue"><%= custom_field.default %></strong>
+				<% else %>
+					<strong class="red">No default value</strong>
+				<% end %>
+			</div>
+
+			<div style="display:inline-block;width:200px;">
+				<% if custom_field.input_type == 'select' %>
+					<em>Options</em><br>
+					<strong class="darkblue"><%= safe_join(custom_field.value_names.values, "<br>".html_safe) %></strong>
+				<% end %>
+			</div>
+
+			<% if custom_field.toggle_visibility? %> 
+				<div style="display:inline-block;vertical-align:top;">
+					<% if custom_field.hide_from_employees? %>
+						<i class="icon-eye-close" style="font-size:16px;color:grey;"></i> <small><em>hidden from employees</em></small>
+					<% else %>
+						<i class="icon-eye-open" style="font-size:16px;color:grey;"></i> <small><em>visible to employees</em></small>
+					<% end %>
+				</div>
+			<% end %>
+
+		</div>	
+
+	</div>
+</div>

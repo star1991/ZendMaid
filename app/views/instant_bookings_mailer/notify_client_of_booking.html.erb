@@ -1,0 +1,10 @@
+<p>You just received an appointment request through ZenMaid.com!</p>
+
+<b>Customer Contact Information</b><br>
+Name: <%= @instant_booking.full_name %><br>
+Email: <%= @instant_booking.email %><br>
+Phone Number: <%= formatted_phone_number @instant_booking.phone_number %><br><p>
+
+<%= render :partial => './instant_bookings_mailer/instant_booking_info', :locals => {:instant_booking => @instant_booking, :exact => false} %><br>
+
+<p><%= link_to 'Click here to view the booking and create an appointment', instant_booking_url(@instant_booking, :subdomain => "app") %></p>

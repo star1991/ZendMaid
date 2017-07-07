@@ -1,0 +1,82 @@
+<div id="eventPreviewPanel">
+	<h5 class="background-green" style="margin-top:47px;">
+		Appointment Information
+		<%= render 'shared/close_pageslide' %>	
+	</h5>
+	<div class="padded10">
+
+		<div class="center" id="status-panel">
+			<strong style="color:#FFF;">Status</strong><br>
+			<div class="btn-group">
+				<button class="btn btn-blue" id="current-status"><%= @appointment.status.name %></button>
+			</div>
+		</div>
+		
+		<div class="description-panel">
+			<span class="service-type"><%= @appointment.service_type.present? ? "#{@appointment.service_type.name} Service" : "Residential Service" %></span><br>
+			<span class="appointment-recurrence"><%= @appointment.subscription.repeat ? "Repeats #{recurrence_in_words(@appointment.subscription)}" : "One Time" %></span><br>
+			<span class="appointment-time"><%= "#{@appointment.start_time.strftime('%a, %b %-d %-I:%M %p')} - #{@appointment.end_time.strftime('%-I:%M %p')}" %></span><br>
+		</div>
+		<div class="description-panel-alt">
+			<span class="grey">Customer Information</span><br>
+			<span class="customer-name"><%= @customer.full_name %></span>
+			<div class="contact-info-panel"><%= render 'customers/contact_info' %></div>
+			
+			<% @customer.customer_items.visible.order("custom_fields.order ASC").each do |item| %>
+				<em class="darkgrey"><%= item.custom_field.field_name %></em><span class="blue" style="margin-left:5px;"><%= item.value_name %></span><br>
+			<% end %>
+
+			<div style="margin-top:7px;">
+				<strong>Public Notes</strong><br>
+				<%= simple_format(@customer.notes) %>				
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+		<div class="peach-background padded5 pull-left" style="width:48%;">
+			<% if current_employee.allow_enter_time? %>
+				<div class="pull-right">
+					<%= link_to '#time_in_time_out_modal', :id => 'edit_time_in_time_out', :class => "btn btn-mini btn-inverse", :data => {:id => @appointment.id} do %>
+						<i class="icon-time"></i>
+					<% end %>
+
+				</div>
+			<% end %>
+		
+			<%= render 'assigned_employees_list' %>
+		</div>
+		
+		</div>
+		
+		<div class="appointment-info description-panel-alt">
+			<span class="grey">Appointment Information</span>
+			<div class="address-panel"><i class='icon-map-marker'></i> <%= render(@appointment.address) %></div>
+			
+			<div class='row-fluid' style="margin:7px 0px;">
+				<div class="span6">
+					<strong>WORK ITEMS</strong><br>
+					<% @appointment.appointment_service_items.joins(:instruction).order("instructions.order").each do |item| %>
+						<%= item.field_name %><br>
+					<% end %>
+				</div>
+				
+				<div class="span6">
+					<strong>CUSTOM FIELDS</strong><br>
+					<% @appointment.appointment_items.visible.order("custom_fields.order ASC").each do |item| %>
+						<em class="darkgrey"><%= item.custom_field.field_name %></em><span class="blue" style="margin-left:5px;"><%= item.value_name %></span><br>
+					<% end %>
+				</div>
+			</div>
+			
+			
+			<strong>Owed </strong><%= @appointment.price.present? ? number_to_currency(@appointment.price) : "<span class='red'> Not set</span>".html_safe %>
+			<span style="margin-left:10px;"><%= @appointment.paid? ? "<i class='icon-ok green'></i> Paid".html_safe : "<i class='icon-remove red'></i> Not paid".html_safe %></span><br>
+			
+			<div style="margin-top:7px;">
+				<strong>Notes</strong>
+				<%= simple_format(@appointment.notes) %>				
+			</div>
+			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,5 @@
+$('.latest-comments').prepend("<%= escape_javascript(render(@attached_note).html_safe) %>");
+
+$attached_notes_form = $('.attached-notes-form');
+$attached_notes_form.find('#attached_note_body').val('');
+$attached_notes_form.find('input[type=submit]').removeAttr('disabled');

@@ -1,0 +1,16 @@
+<%= render 'conflicts_notification' %>
+        			
+<%= simple_form_for @appointment, :html => { :class => "form-horizontal uni" }, :remote => true, :method => :post, :url => update_assignments_appointment_path(@appointment.id) do |f| %>
+	<%= f.hidden_field :allow_conflicts, :value => true %>
+	<%= f.hidden_field :team_id %>
+	<%= f.hidden_field :assign_to %>
+	
+	<%= f.simple_fields_for :assignments do |assignments_builder| %>
+		<%= assignments_builder.hidden_field :_destroy, :value => assignments_builder.object.marked_for_destruction? %>
+		<%= assignments_builder.hidden_field :employee_id, :value => assignments_builder.object.employee_id %>
+	<% end %>
+		
+	<%= f.button :submit, "Save Anyway" , :class => "btn btn-red", :id => "save-button" %>
+	<%= link_to 'Cancel Changes', '#', :class => "btn btn-green", :id => "cancel-button" %>
+				
+<% end %>

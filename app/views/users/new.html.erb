@@ -1,0 +1,128 @@
+<% provide(:title, "Sign Up for ZenMaid") %>
+
+<div class="container">
+  <div class="row-fluid" id="sign-up-form-container">
+   <div class="span12">
+      <div class="content-box">
+        <div class="row-fluid">
+         <div class="span12">
+           <div class="padded">
+             <div class="row-fluid">
+               <div class="span6">
+
+                 <span style="font-size:22px;color:#401600;display:block;line-height:100%;margin-bottom:10px;">
+                   14 Day Free Trial, Risk Free
+                 </span>
+
+                 <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:10px;">
+                   Cancel Anytime! And no contracts when you sign up! Access every feature and benefit during the 14 day risk free trial.
+                  </span>
+
+                 <span style="font-size:22px;color:#401600;display:block;margin-top:40px;line-height:100%;margin-bottom:10px;">
+                   Free Setup Assistance, Training and Business Assistance
+                 </span>
+
+                 <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:10px;">
+                   No hidden setup fees or training costs. No plans where only the most expensive plan gets you VIP treatment. Whether you're a franchise or 1 man powerhouse you'll get direct access to the founders and all of their industry expertise.
+                 </span>
+
+                 <span style="font-size:22px;color:#401600;display:block;margin-top:40px;line-height:100%;margin-bottom:10px;">
+                    Unlimited Support and Help Directly from the Founders
+                  </span>
+
+                  <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:30px;">
+                   We take pride in helping our customers and relationships succeed whether it be software or business input. You can send us an email at <%= mail_to "Amar@ZenMaid.com", "Amar@ZenMaid.com" %> or call us right now if you have questions
+                 </span>
+
+                 <div class="clearfix"></div>
+          
+                 <%= image_tag 'amar.png', :style => "float:left;margin-right:10px;" %>
+                  <span class="cobalt-grey">
+                    Our founder, Amar, ran Fast Friendly Spotless in Orange County, CA and speaks regularly around to the US about marketing for residential cleaning services
+                  </span>
+          
+                  <div class="clearfix"></div>
+
+                  <div style="text-align:center;">
+                    <%= image_tag "zenmaid-logo.png" %>
+                 </div>
+               </div>
+
+               <div class="span6">
+                 <div class="padded" style="background-color: #e5e5e5;border: 1px solid #d2d2d2">
+
+                 <span style="font-size:24px;color:#60ad48">Start Your 14-Day Free Trial</span><br><br>
+
+                 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name, :anchor => "sign-up-form-container"), :html => { :class => "form-horizontal uni sign-up-form" }, :defaults => {:required => false}) do |f| %>
+
+                   <%= f.input :email, :placeholder => "Email" %>
+
+                   <%= f.input :password, :placeholder => "Password" %>
+
+                   <%= f.input :password_confirmation, :placeholder => "Confirm Password" %>
+            
+                   <!-- <hr> -->
+
+
+                   <div class="actions clearfix">
+                     <%= f.button :submit, "Start My 14-Day FREE Trial Now!", :class => "btn btn-green btn-large", :style => "width:100%;" %>
+                   </div>
+                 <% end %>
+                 <br><br>
+
+                 <div style="text-align:center;">
+                   <%= render "devise/shared/links" %>
+                 </div><br>
+
+
+                 Questions? Call us now at 747-222-6243 or email our founder at <%= mail_to 'amar@zenmaid.com', 'Amar@ZenMaid.com' %>
+                </div>
+             </div>
+           </div>
+
+           <div class="row-fluid" style="margin-top:20px;">
+             <div class="span12">
+                <div class="padded" style="background-color: #f5f5f5;border: 2px solid #d2d2d2;font-size:16px;">
+                 <div>
+                   <strong class="blue" style="font-size:24px;">"</strong><em>I have had the pleasure of using Zenmaid, and it has relieved so much stress &amp; headache. Amar &amp; his staff are incredibly knowledgable &amp; easy to get ahold of. I highly recommend using this product no matter the size of your business.</em><strong class="blue" style="font-size:24px;">"</strong><br>
+                 </div>
+                  <div style="text-align:right;"><strong>Amanda Bartlett</strong>,  Owner at Essence Home Cleaning, LLC </div>
+                  </div>
+               </div>
+             </div>
+           </div>
+           <div class="row-fluid">
+             <div class="span12">
+               <hr>   
+
+               <div style="margin-left:16px;line-height:20px;color:maroon;font-size:16px;">
+                  <strong>Am I agreeing to a contract when I take a free trial?</strong>
+                </div>
+               <div style="font-size:14px;margin-left:16px;line-height:18px;margin-bottom:10px;">
+                 Nope! You are under no obligation when you sign up for a monthly subscription. You can cancel at any time in the Billing page of your account.          
+                </div>  
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+  </div>
+</div>
+
+<%= stylesheet_link_tag "sign_up" %>
+
+<!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '6421970';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/6421970.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script>

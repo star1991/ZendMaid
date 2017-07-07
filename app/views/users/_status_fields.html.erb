@@ -1,0 +1,28 @@
+<div class="nested-fields" style="margin-bottom: 10px;cursor:move;">
+	<span style="margin-left: 20px;margin-right: 20px;"><i class="darkblue icon-sort"></i></span><%= f.input :name, :wrapper_html => {:class => "inline" } %> 
+    	<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :calendar_color, :class => "colorpicker" %></div> Calendar Color <br>
+    	
+    	<div class="controls">
+    		<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :show_by_default %></div> Show by default in calendar?
+    		<a href="#" data-toggle="tooltip" data-title="Appointments with this status are shown by default in the calendar. Appointments without this status can still be viewed by adjusting the filters" data-placement="top" class="question">?</a>
+    		
+    		<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :show_in_work_orders %></div> Put in work order?
+    		<a href="#" data-toggle="tooltip" data-title="Appointments with this status automatically included in any automatically generated work orders, such as the ones generated using the print schedules feature and those sent automatically to cleaners via email or text. Work orders can still be generated manually for appointments whose status has this setting disabled." data-placement="top" class="question">?</a>
+
+			<br>
+			<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :use_for_conflicts %></div> Use to calculate scheduling conflicts?
+			
+			<a href="#" data-toggle="tooltip" data-title="When scheduling or rescheduling an appointment, Zenmaid automatically checks for scheduling conflicts with existing appointments with this status if this setting is enabled." data-placement="top" class="question">?</a>
+
+			<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :use_for_payroll %></div> Include in payroll?
+			
+			<a href="#" data-toggle="tooltip" data-title="Check this box to include appointments with this status in payroll calculations" data-placement="top" class="question">?</a>
+
+			<div class="control-group text inline" style="margin-left:20px;"><%= f.input_field :use_for_invoice %></div> Include in revenue reports?
+			
+			<a href="#" data-toggle="tooltip" data-title="Check this box to include appointments with this status in revenue calculation (i.e, total, outstanding revenue)" data-placement="top" class="question">?</a>
+
+		</div>
+			
+	<%= f.hidden_field :order, :class => "order-field" %>
+</div>

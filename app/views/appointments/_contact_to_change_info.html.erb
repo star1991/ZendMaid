@@ -1,0 +1,1 @@
+<p><%= "If the below information is inaccurate or you wish to change or cancel your appointment, please email us at #{mail_to user.user_profile.company_email} or call us at #{formatted_phone_number user.user_profile.company_phone_number}".html_safe if user.user_profile.present? %></p>

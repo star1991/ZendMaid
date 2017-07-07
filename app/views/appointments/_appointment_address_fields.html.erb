@@ -1,0 +1,12 @@
+      			<% if @customer.service_addresses.size > 1 %>
+      				<div class="peach-background control-group compact-horizontal">
+      					<label class="control-label blue" style="margin-top:3px;">Select</label>
+      					<div class="controls">
+      						<%= select_tag "address-select", options_for_select([["New Address", 0]] + @customer.service_addresses.map { |address| [render('addresses/address_one_line_nolink', :address => address), address.id] })%>
+      					</div>
+      				</div>
+      			<% end %>
+      			
+   				<%= f.simple_fields_for :address do |address_builder| %>
+					<%= render 'addresses/address_fields', :f => address_builder %>
+				<% end %>

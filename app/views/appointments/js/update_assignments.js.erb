@@ -1,0 +1,19 @@
+
+filterObject.refresh_calendar();
+
+gridObject.refreshDateInfo();
+
+eventPopoverPanel.assignedPanel.el.modal('hide');
+eventPopoverPanel.assignedPanel.el.remove();
+
+if(window.location.href.indexOf("/appointments/list") != -1) {
+	window.location.reload();
+} else {
+
+	hideAllPanels();
+	$.pageslide({ href: '#for-pageslide', modal: true, iframe: true, direction: 'left' } );
+	$('#pageslide').append("<%= escape_javascript(render('appointments/preview_panel').html_safe) %>");
+	eventPopoverPanel.id = <%= @appointment.id %>;
+	eventPopoverPanel.reattach_events();
+
+}

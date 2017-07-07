@@ -1,0 +1,13 @@
+<div class="customer-items">
+<% if @customer.customer_items.size > 0 %>
+
+<%= f.simple_fields_for :customer_items do |item_builder| %>
+	<%= item_builder.hidden_field :custom_field_id %>
+	<%= item_builder.input :value_name, simple_form_hash(item_builder.object.custom_field, :no_estimation => true) %>
+<% end %>
+
+<% end %>
+
+</div>
+
+<%= f.input :notes, :label => "Public Notes", :hint => "These notes can be set to appear on work orders sent to your cleaners" %>

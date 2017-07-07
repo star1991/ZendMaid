@@ -1,0 +1,34 @@
+<table id=<%= id %> class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th><div>Name</div></th>
+            <th><div>Email</div></th>
+            <th><div>Phone number</div></th>
+            <th><div>Link</div></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% @employees.each do |employee| %>
+            <tr>
+                <td>
+                	<%= link_to employee.full_name, employee %>
+                	<% if employee.owner? %>
+                		<span class="label" style="background-color:green;">Owner</span>
+                	<% end %>
+                	
+                	<% if employee.admin? %>
+                		<span class="label" style="background-color:blue;">Office Manager</span>
+                	<% end %>
+                </td>
+                <td><%= employee.email %></td>
+                <td><%= formatted_phone_number employee.phone_number %></td>
+                <td class="center">
+                	<% unless employee.owner? && !current_employee.owner? %>
+                		<%= link_to 'Edit', edit_employee_path(employee)%>
+                	<% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

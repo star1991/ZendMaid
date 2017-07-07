@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title><%= full_title(yield(:title), no_full = true) %></title>
+  		<%= stylesheet_link_tag    "application-landing", :media => "all" %>
+  		<%= include_gon %>
+  		<%= javascript_include_tag "application-landing" %>
+  		<%= csrf_meta_tags %>
+  		<%= render 'layouts/shim' %>
+  		<%= render 'shared/ga' if Rails.env.production? %>
+  		<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div class="main-wrapper">
+		
+		<%= render 'layouts/banner-title' %>
+		
+		<div class="container">
+		<%= yield %>
+		</div>
+		
+		<%= render 'layouts/footer-landing' %>
+		
+		<div class="container">
+			<%= debug(params) if Rails.env.development? %>
+		</div>
+		</div>
+		
+	</body>
+</html>

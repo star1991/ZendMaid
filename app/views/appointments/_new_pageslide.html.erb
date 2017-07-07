@@ -1,0 +1,127 @@
+<div id="eventPreviewPanel">
+	<h5 class="background-green" style="margin-top:47px;">
+		Create Appointment
+		<%= render 'shared/close_pageslide' %>	
+	</h5>
+	<div class="padded10">
+
+	<%= render 'shared/flash_notice' %>
+		
+	<div class="description-panel-alt">
+		<span class="pull-right"><%= link_to "Recent Activity", "#", :class => "btn btn-green btn-mini fetch-customer-recent-activity", :data => {:id => @customer.id} %></span>
+		<span class="grey">Contact Information</span><br>
+		<span class="customer-name"><%= link_to @customer.full_name, @customer %></span>
+		<div class="contact-info-panel"><%= render 'customers/contact_info' %></div>
+	</div>
+
+	<%= simple_form_for @subscription, :html => { :class => "form-horizontal uni" }, :remote => true, :method => :post, :url => appointments_path(:customer_id => @customer.id) do |f| %>	
+	
+	<%= f.simple_fields_for :appointments, @appointment do |appointment_builder| %>
+
+	<%= hidden_field_tag "instant_booking_id", params[:instant_booking_id] %>
+
+	<div class="description-panel padded narrow-control-groups">
+		<%= appointment_builder.association :status, :collection => current_user.statuses, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:class => "compact-horizontal-wide" } %>
+
+		<% if @user.service_types.count > 1 %>
+			<%= appointment_builder.input :service_type_id, :label => "Cleaning Type", :collection => @user.service_types.map { |type| [type.name, type.id] }, :input_html => {:id => "service-type"}, :wrapper_html => {:class => "compact-horizontal-wide" }, :include_blank => false %>
+		<% else %>
+			<%= appointment_builder.hidden_field :service_type_id, :value => @user.service_types.first.try(:id), :id => "service-type" %>
+		<% end %>
+	</div>
+	
+	<% if @user.appointment_fields.size > 0 %>
+		<div class="description-panel-alt padded narrow-control-groups">
+			<span class="grey">Custom Fields</span><br>
+			<%= appointment_builder.simple_fields_for :appointment_items, @appointment.appointment_items.sort { |a, b| a.custom_field.order <=> b.custom_field.order } do |item_builder| %>
+				<%= render "appointments/appointment_items_fields", :f => item_builder %>
+			<% end %>
+		</div>
+	<% end %>
+
+	<div class="description-panel-alt padded narrow-control-groups">
+		<span class="grey">Time and Recurrence</span><br>
+		
+		<div id="recurrence-toggle" class="padded5" style="margin-bottom:5px;">
+    		<strong class="darkblue">This service is</strong><%= f.input_field :repeat, :class => "repeat-toggle inline", :collection => [["One Time", false], ["Recurring", true]], :as => :radio_buttons %><br>
+    	</div>
+    		
+		<div id="repeat-fields">
+			<%= render "subscriptions/recurrence_fields_admin", :f => f %>
+		</div>
+			
+		<div id="no-repeat-fields">
+    		<%= appointment_builder.input :start_time_date, :as => :date_picker, :wrapper_html => {:class => "compact-horizontal" }, :input_html => {:class => "mirrored-start", :readonly => true, :value => @appointment.start_time.try(:strftime,'%m/%d/%Y'), :style => "width: 105px"}, :label => "Date"  %>
+		</div>
+			
+		<%= render 'appointments/time_fields_admin', :f => appointment_builder %>		
+
+	</div>
+	
+	<div class="description-panel-alt padded narrow-control-groups"  id="addresses-wrapper">
+		<span class="grey">Service Address</span><br>
+		<div style="margin-right:20px;">
+		<%= render 'appointment_address_fields', :f => appointment_builder %>
+		</div>
+	</div>
+
+	<% if @conflicts.present? && @conflicts.size > 0 %>
+		<div class="description-panel-alt error-border">
+			
+			<i class="icon-warning-sign red"></i> Scheduling Conflicts Detected!<br>
+			
+			<%= render 'conflicts_notification' %>
+			<%= appointment_builder.input :allow_conflicts, :label => false, :as => :boolean, :inline_label => "Save Anyway?", :wrapper_html => { :class => "checkbox" } %>
+
+			
+		</div>
+	<% end %>
+	
+	<div class="description-panel-alt">
+		<div class="pull-right">
+			<%= link_to 'Edit', '#assignments-modal', :id => "edit-assigned-appointments", :class => 'btn btn-mini btn-inverse', :data => {:toggle => "modal"} %>
+		</div>
+		
+		<%= render 'assigned_employees_list' %>
+		<%= render 'assignments_modal', :f => appointment_builder %>
+	</div>
+	
+	<div class="description-panel-alt padded narrow-control-groups">
+		<span class="grey">Work Items</span><br>
+		<div id="alternate-service-items-fields">
+		<% i = 0 %>
+		<%= appointment_builder.simple_fields_for :appointment_service_items, @appointment.appointment_service_items.sort { |a, b| a.instruction.order <=> b.instruction.order } do |service_item_builder| %>
+			<% i += 1 %>
+			<%= service_item_builder.input :_destroy, :as => :boolean, :checked_value => '0', :unchecked_value => '1', :label => false, :wrapper_html => {:class => "compact-horizontal inline"}, :inline_label => service_item_builder.object.field_name, :input_html => {:checked => service_item_builder.object.new_record? ? false : true } %>
+			<%= service_item_builder.hidden_field :instruction_id %>
+			<%= service_item_builder.hidden_field :field_name %>
+			<% if i % 2 == 0 %><br><% end %>
+		<% end %>
+		</div>
+	</div>
+	
+	<div class="description-panel-alt padded narrow-control-groups">
+		<span class="grey">Billing</span><br>	
+		<%= appointment_builder.input :price, :input_html => {:style => "width:100px", :value => number_to_currency(@appointment.price)}, :as => :string, :label => "Price", :wrapper_html => {:class => 'compact-horizontal inline'} %>
+		<%= appointment_builder.input :paid, :label => false, :inline_label => "Paid", :wrapper_html => {:class => 'compact-horizontal inline'} %>
+	</div>
+	
+	<div class="description-panel-alt padded narrow-control-groups">	
+		<span class="grey">Notes</span><br>
+		<%= appointment_builder.input_field :notes, :rows => 5, :placeholder => "Record notes here..." %>
+		<br><br>
+
+		<% if @customer.lead? %>
+			<%= f.input :make_record_customer, :as => :boolean, :label => false, :inline_label => "Change contact from lead to customer after creating appointment?", :wrapper_html => {:class => "compact-horizontal inline margin0"}, :input_html => {:checked => true} %>
+		<% end %>
+
+	</div>
+	
+	<% end %>
+	
+	<%= f.button :submit, "Create Appointment" , :class => "pull-left btn btn-blue" %>
+	
+	<% end %>
+	
+	</div>
+</div>

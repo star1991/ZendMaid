@@ -1,0 +1,150 @@
+<% provide(:title, "Customers") %>
+<% provide(:icon, "icon-group") %>
+
+
+<div class="container">	
+  <div class="row-fluid">
+  	<div class="span12">
+  		<div class="content-box">
+      	<div class="content-box-header">
+          <i class="icon-group"></i>Contacts
+      	</div>
+
+        <div class="row-fluid">
+          <div class="span12 padded">
+            <div class="row-fluid">
+              <%= render 'shared/flash_notice' %>  
+            </div>
+
+      			<div class="row-fluid">
+            	
+              <div class="span12">
+       			    <div class="pull-left">
+                  <% if current_user.qb_company_id.present? %>
+                    <% if !current_user.qb_syncing? %>
+                      <%= render 'customers/sync_quickbook_toggle_menu'%>
+                      <% if current_user.qb_last_sync.present? %>
+                        <span class="darkgrey"><em>Last synced <%= time_ago_in_words current_user.qb_last_sync %> ago</em></span>
+                      <% end %>
+                    <% else %>
+                     <%= link_to quickbooks_sync_customers_path, :class => "btn btn-green", :style => "margin-right: 20px;", :disabled => true do %>
+                        <i class="icon-refresh"></i> Quickbooks Sync in Progress...
+                      <% end %>
+                    <% end %>
+
+                    <br>
+         					<% end %>
+
+                  <%= link_to new_customer_path, :class => "btn btn-red" do %>
+              			<i class="icon-plus-sign"></i> New Contact
+              		<% end %>
+        				</div>
+
+                <% if current_user.mailchimp_auth_exists? %>
+                  <%= render 'customers/mailchimp_sync_contacts' %>
+                  
+                  <div class="pull-right">
+                    <% unless current_user.mailchimp_syncing? %>
+
+                      <%= link_to "#", :class => "btn btn-inverse", :id => "fetch-mailchimp-sync-contacts-modal" do  %>
+                        <i class="icon-plus-sign"></i> Sync Contacts to MailChimp
+                      <% end %>
+                    <% else %>
+                      <%= link_to 'javascript:void(0);', :class => "btn btn-inverse", :style => "margin-right:3px;" do %>
+                        Mailchimp Sync in progress…
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+      			</div>
+
+            <div class='row-fluid'>
+              <div class="pull-left">
+
+                <strong style="margin-right:5px;font-size:14px;vertical-align:middle;">Show</strong>
+                <div class="btn-group">
+                  <a class="btn btn-blue btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+                    <%= params[:filter].gsub('_', ' ').titleize rescue nil || 'All Records' %>
+                    <span class="caret"></span>
+                    <%= hidden_field_tag "customers-filter", params[:filter] || 'all_records' %>
+                  </a>
+
+                  <ul id='customer-filter-dropdown'class="pull-right dropdown-menu">
+                    <li><a href='#' value="all_records">All Records</a></li>
+                    <li><a href='#' value="leads">Leads</a></li>
+                    <li><a href='#' value="customers">Customers</a></li>
+                  </ul>
+                </div>
+
+                <strong style="margin-right:5px;margin-left:20px;font-size:14px;vertical-align:middle;">Sort by</strong>
+                <div class="btn-group" style="padding-top:2px;">
+                  <a class="btn btn-blue btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+                    <%= params[:sort_by].gsub('_', ' ').titleize rescue nil || 'First Name' %>
+                    <span class="caret"></span>
+                    <%= hidden_field_tag "sort-by", params[:sort_by] || 'first_name' %>
+                  </a>
+                  <ul id='sort-by-filter-dropdown'class="pull-right dropdown-menu">
+                    <li><a href='#' value="first_name">First Name</a></li>
+                    <li><a href='#' value="last_name">Last Name</a></li>
+                    <li><a href='#' value="company_name">Company Name</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="pull-right">
+                <div class="input-append">
+                  <input type="text" id="customers-search-query" size="16" placeholder="Enter search query here..." value="<%= params[:query] %>">
+                  <button class="btn" id="customers-query-submit">Search</button>
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row-fluid">
+              <div class="span12">
+                <% (["All"] + ("A".."Z").to_a).each do |letter| %>
+                  <% if params[:letter] %>
+                    <%= link_to letter, '#', :class =>  params[:letter] == letter ? "letter-btn selected" : "letter-btn"  %>
+                  <% else %>
+                    <%= link_to letter, '#', :class =>  letter == 'All' ? "letter-btn selected" : "letter-btn"  %>
+                  <% end %> 
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row-fluid">
+              <div class="span12" style="font-size:16px;">
+                <%= page_entries_info @customers, :entry_name => "#{params[:filter].present? && params[:filter] != "all_records" ? params[:filter]: 'record'}" %>
+                <% if params[:query].present? %>
+                  matching query <strong class="darkblue">"<%= params[:query] %>"</strong>
+                <% end %>
+
+                <% if params[:letter].present? && params[:letter] != "All" %>
+                 with <%= params[:sort_by].try(:gsub, /_/, ' ') || 'first_name' %> starting with <strong class="darkblue">"<%= params[:letter] %>"</strong>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row-fluid">
+              <div class="span12">
+                <%= render 'customers/customers_table', :customers => @customers, :id => 'customers-datatable' %>
+                <%= will_paginate @customers, :class => 'will-paginate' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if current_user.qb_syncing? %>
+  <script>
+    window.setTimeout(function() {location.reload();}, 60000);
+  </script>
+<% end %>
+
+<%= render 'email_templates/mass_email_modal' %>
+<%= render 'customers/sync_quickbook_modal'%>

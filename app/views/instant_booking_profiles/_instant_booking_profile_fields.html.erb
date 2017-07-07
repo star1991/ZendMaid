@@ -1,0 +1,30 @@
+
+
+<%= f.input :call_to_action, :hint => "This text will display above your instant booking form" %>
+
+<%= f.input :subdomain, :hint => "URL will be subdomain.#{request.domain}" %>
+
+<%= f.input :about_us, :hint => "Put information about you, your areas covered, and your pricing here", :input_html => { :rows => 20}%>
+
+<%= f.input :show_about_us, :label => false, :inline_label => "Show about us?" %>
+
+
+<h6 class="darkblue bottom-bordered">Advanced</h6>
+
+<%= f.input :show_price, :label => false, :inline_label => "Show price?" %>
+
+<div class="control-group boolean optional user_instant booking profile_embed">
+<div class="controls embed-checkbox">
+	<label>
+		<div class="checker">
+			<span> <%= f.input_field :embed %></span>
+		</div> I want to embed the instant booking form on my website 
+	</label>
+</div>
+</div>
+
+<%= f.input :custom_css, :label => "Custom CSS", :input_html => {:rows => 50} %>
+
+<%= f.input :button_color_class %>
+
+<%= f.input :compact, :label => false, :inline_label => "Compact?" %>

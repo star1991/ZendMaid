@@ -1,0 +1,17 @@
+var conflicts_modal = $('#conflicts-modal');
+$('#assignments-modal').modal('hide');
+
+conflicts_modal.find('.modal-body').html("<%= escape_javascript(render('appointments/assignments_conflicts_modal_content').html_safe) %>");
+
+conflicts_modal.find('#cancel-button').click(function () {
+	conflicts_modal.modal('hide');
+})
+
+conflicts_modal.find('#save-button').click(function () {
+	conflicts_modal.modal('hide');
+})
+
+conflicts_modal.modal({
+	backdrop: 'static',
+	keyboard: false
+});

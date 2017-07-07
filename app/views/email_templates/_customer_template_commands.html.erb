@@ -1,0 +1,11 @@
+		<div class="blue-message">
+			<i class="icon-large icon-info-sign blue"></i> Sent emails can be automatically customized for each customer by using the following "special codes".The value in the {{ }} curly brackets tells the system what information to retrieve from the customer's account. Currently supported variables are: <br><br>
+				<ul>
+					<li> {{customer.contact_name}} - name of customer (e.g., John Smith)</li>
+					<li> {{customer.company_name}} - company name of customer, if present (i.e., Widget, Co.)</li>
+					<li> {{customer.contact_emails}} - customer email records on file</li>
+					<li> {{customer.contact_phone_numbers}} - customer phone numbers on file</li>
+					<li> {{customer.billing_address}} - billing address of customer</li>
+				</ul>
+				<strong>Please email Amar at <%= mail_to "amar@zenmaid.com" %> if you want to put information in the template which isn't listed above</strong> 
+		</div>

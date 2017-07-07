@@ -1,0 +1,12 @@
+
+$('#custom-field-modal').modal('hide');
+$('#custom-field-modal').remove();
+
+$('body').append("<%= escape_javascript(render('new_custom_field_modal')).html_safe %>");
+
+$('#custom-field-modal').find(":checkbox").uniform();
+
+// Method in admin/custom-fields.js
+toggle_input_specific_fields();
+
+$('#custom-field-modal').modal();

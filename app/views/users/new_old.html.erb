@@ -1,0 +1,215 @@
+<% provide(:title, "Sign Up for ZenMaid") %>
+
+<div class="container">
+
+<div class="row-fluid">
+  <div class="span12">
+      
+    <div class="content-box">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="padded">
+
+        <div class="row-fluid">
+        <div class="span12">
+          <div style="text-align:center;">
+            <span style="font-size:30px;line-height:100%;display:block;color:#401600;">
+              The only software to help maid services manage, run and grow their businesses WHILE saving them time
+            </span><br>
+
+            <span class="cobalt-grey" style="display:block;font-size:18px;margin-bottom:10px;">
+              You're just minutes away from growing your business twice as fast as before...
+            </span>
+
+            <iframe src="https://player.vimeo.com/video/129866178" width="750" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <br>
+
+            <%= link_to '#sign-up-form-container', :class => "btn btn-red btn-large", :style => "margin-top:10px;margin-bottom:0px;width:500px;font-size:24px;" do %>
+              <i class="icon-arrow-right"></i> Sign Up Now
+            <% end %>
+          </div>
+        </div>
+        </div> 
+
+        <div class="row-fluid" style="margin-top:20px;">
+          <div class="span12">
+            <div class="padded" style="background-color: #f5f5f5;border: 2px solid #d2d2d2;font-size:16px;line-height:24px;">
+              <div>
+                <strong class="blue" style="font-size:24px;">"</strong><em>  I have been using Zenmaid since they launched this amazing software! I can use it anywhere with my tablet, smart phone or computer. I love that it sends my clients a reminder for the scheduled service every time. This has saved me an enormous amount of time! If you have a small cleaning business or an established business look no further, this software will save you time and money!</em><strong class="blue" style="font-size:24px;">"</strong><br>
+              </div>
+              <div style="text-align:right;"><strong>Alejandro Coronado</strong>, Owner at The Clean Fairies</div>
+            </div>
+          </div>
+        </div>
+      
+
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+
+<%= render 'pricing_tables' %>
+
+<div class="row-fluid" id="sign-up-form-container">
+  <div class="span12">
+      
+    <div class="content-box">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="padded">
+
+        <div class="row-fluid">
+        <div class="span6">
+
+          <span style="font-size:22px;color:#401600;display:block;margin-top:40px;line-height:100%;margin-bottom:10px;">
+            14 Day Free Trial, Risk Free
+          </span>
+
+          <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:10px;">
+            Cancel Anytime! And no contracts when you sign up! Access every feature and benefit during the 14 day risk free trial.
+          </span>
+
+          <span style="font-size:22px;color:#401600;display:block;margin-top:40px;line-height:100%;margin-bottom:10px;">
+            Free Setup Assistance, Training and Business Assistance
+          </span>
+
+          <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:10px;">
+            No hidden setup fees or training costs. No plans where only the most expensive plan gets you VIP treatment. Whether you're a franchise or 1 man powerhouse you'll get direct access to the founders and all of their industry expertise.
+          </span>
+
+          <span style="font-size:22px;color:#401600;display:block;margin-top:40px;line-height:100%;margin-bottom:10px;">
+            Unlimited Support and Help Directly from the Founders
+          </span>
+
+          <span class="cobalt-grey" style="font-size:16px;display:block;line-height:24px;margin-bottom:30px;">
+            We take pride in helping our customers and relationships succeed whether it be software or business input. You can send us an email at <%= mail_to "Amar@ZenMaid.com", "Amar@ZenMaid.com" %> or call us right now if you have questions
+          </span>
+
+          <div class="clearfix"></div>
+          
+          <%= image_tag 'amar.png', :style => "float:left;margin-right:10px;" %>
+          <span class="cobalt-grey">
+            Our founder, Amar, ran Fast Friendly Spotless in Orange County, CA and speaks regularly around to the US about marketing for residential cleaning services
+          </span>
+          
+          <div class="clearfix"></div>
+
+          <div style="text-align:center;">
+            <%= image_tag "zenmaid-logo.png" %>
+          </div>
+        </div>
+
+        <div class="span6">
+        <div class="padded" style="background-color: #e5e5e5;border: 1px solid #d2d2d2">
+
+          <span style="font-size:24px;color:#60ad48">Start Your 14-Day Free Trial</span><br><br>
+
+          <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name, :anchor => "sign-up-form-container"), :html => { :class => "form-horizontal uni sign-up-form" }, :defaults => {:required => false}) do |f| %>
+          
+            <%= f.input :company_name, :placeholder => "Company Name" %>
+
+            <%= f.input :full_name, :placeholder => "Your Name" %>
+
+            <%= f.input :email, :placeholder => "Email" %>
+
+            <%= f.input :phone_number, :placeholder => "Phone Number", :maxlength => 40 %>
+
+            <%= f.input :password, :placeholder => "Password" %>
+
+            <%= f.input :password_confirmation, :placeholder => "Confirm Password" %>
+            
+            <hr>
+
+            <% if @user.api_error.present? %>
+              <div class="alert alert-error">
+                <%= @user.api_error %>
+              </div>
+            <% end %>
+
+            <%= f.input :plan_id, :as => :select, :include_blank => false, :collection => [["Premium ($99/mo)", "premium-new"], ["Basic ($49/mo)", "basic-new"]], :label => "Select Your Plan", :input_html => {:style => "height:40px;"} %>
+
+            <%= f.input :card_number, :placeholder => "Card Number" %>
+
+            <%= f.input :expiry_date, :label => "Exp. Date", :input_html => {:style => "width:100px;margin-right:20px;", :id => "expiry-date"}, :wrapper_html => {:class => "inline"}, :placeholder => "Exp. Date" %>
+
+            <%= f.input :cvc, :label => "CVC", :input_html => {:style => "width:50px;"}, :wrapper_html => {:class => "compact-horizontal inline"}, :placeholder => "CVC" %> 
+
+            <div class="actions clearfix">
+              <%= f.button :submit, "Start My Free 14-Day Trial", :class => "btn btn-green btn-large", :style => "width:100%;" %>
+            </div>
+          <% end %>
+          <small>Your 14-day free trial begins once you click the "Start My Free 14-Day Trial" button above. If you cancel your subscription in your first month you will not be charged. If you don't cancel by day 14, your card will be charged based on the plan your account qualifies for. You can cancel your subscription at any time.</small>
+          <br><br>
+
+          <div style="text-align:center;">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+        </div>
+
+        </div>
+
+        <div class="row-fluid" style="margin-top:20px;">
+          <div class="span12">
+            <div class="padded" style="background-color: #f5f5f5;border: 2px solid #d2d2d2;font-size:16px;">
+              <div>
+                <strong class="blue" style="font-size:24px;">"</strong><em>I have had the pleasure of using Zenmaid, and it has relieved so much stress &amp; headache. Amar &amp; his staff are incredibly knowledgable &amp; easy to get ahold of. I highly recommend using this product no matter the size of your business.</em><strong class="blue" style="font-size:24px;">"</strong><br>
+              </div>
+              <div style="text-align:right;"><strong>Amanda Bartlett</strong>,  Owner at Essence Home Cleaning, LLC </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span12">
+            <hr>
+
+            <div style="margin-left:16px;line-height:20px;color:maroon;font-size:16px;">
+              <strong>Why do you need my credit card info?</strong>
+            </div>
+            <div style="font-size:14px;margin-left:16px;line-height:18px;margin-bottom:10px;">
+              We ask for your credit card so you don’t experience any interruption to your schedule and automated reminders if you decide to continue your subscription.          
+            </div>    
+
+            <div style="margin-left:16px;line-height:20px;color:maroon;font-size:16px;">
+              <strong>Am I agreeing to a contract when I take a free trial?</strong>
+            </div>
+            <div style="font-size:14px;margin-left:16px;line-height:18px;margin-bottom:10px;">
+              Nope! You are under no obligation when you sign up for a monthly subscription. You can cancel at any time in the Billing and Subscription page of your account.          
+            </div>  
+
+          </div>
+        </div>
+
+    </div>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<!-- Drip -->
+<script type="text/javascript">
+  var _dcq = _dcq || [];
+  var _dcs = _dcs || {}; 
+  _dcs.account = '6421970';
+  
+  (function() {
+    var dc = document.createElement('script');
+    dc.type = 'text/javascript'; dc.async = true; 
+    dc.src = '//tag.getdrip.com/6421970.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(dc, s);
+  })();
+</script>

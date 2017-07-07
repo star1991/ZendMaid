@@ -1,0 +1,4 @@
+<div class="service-item-fields" data-id=<%= f.object.custom_field_id %>>
+<%= f.hidden_field :custom_field_id, :value => f.object.custom_field_id %>
+<%= f.input :value_name, simple_form_hash(f.object.custom_field, :no_estimation => true, :compact => true) %>
+</div>

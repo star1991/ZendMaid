@@ -1,0 +1,12 @@
+		<div class="blue-message">
+			<i class="icon-large icon-info-sign blue"></i> This is where you can edit email templates. The values in the curly {{ }} brackets are wildcards which tell the system where to put the corresponding information for each appointment. Currently supported wildcards are <br><br>
+				<ul>
+					<li> {{appointment.start_time}} - exact appointment start time (e.g., 12:30 PM)</li>
+					<li> {{appointment.start_time_approx_one}} - approximate appointment start time (e.g., 12 PM - 1 PM)</li>
+					<li> {{appointment.start_date}} - date of appointment (e.g., 10/3/2013)</li>
+					<li> {{appointment.start_date_in_words}} - date of appointment in words (e.g., Thursday, Oct 3) </li>
+					<li> {{appointment.address}} - address of appointment</li>
+					<li> {{appointment.contact_name}} - name of client (e.g., John Smith)</li>
+				</ul>
+				<strong>Please email Amar at <%= mail_to "amar@zenmaid.com" %> if you want to put information in the template which isn't listed above</strong> 
+		</div>

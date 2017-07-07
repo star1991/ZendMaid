@@ -1,0 +1,19 @@
+#tasks {
+  .top-bar {
+    margin: 15px 0;
+  }
+
+  .task-box {
+    border: solid $border-gray;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+
+    &.form-horizontal .control-label {
+        text-align: left;
+    }
+
+  .pagination {
+    text-align: center;
+  }
+}

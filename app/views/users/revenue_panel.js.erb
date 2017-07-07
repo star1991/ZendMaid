@@ -1,0 +1,62 @@
+$('#dashboard-report-wrapper').html("<%= escape_javascript(render('revenue_panel').html_safe) %>");
+
+var format_currency = function(value, index, values) {
+  return '$' + value.formatMoney(2, '.', ',');
+}
+
+
+var x_values = [];
+var y_values = [];
+var earnings= <%= raw @revenue_data.to_json %>;
+
+console.log(earnings);
+
+//var month_names=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+for(var i = 0; i<earnings.length; i++){
+	//x_values[i] = month_names[moment(earnings[i][0]).month()] + ' ' + moment(earnings[i][0]).format('DD');
+	x_values[i] = earnings[i][0];
+    y_values[i] = earnings[i][1];
+}
+
+console.log(x_values);
+console.log(y_values);
+
+var ctx = document.getElementById("report-graph");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: x_values,
+        datasets: [{
+            label: 'Revenue',
+            data: y_values,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2,
+            pointRadius: 3,
+            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },  
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    return 'Revenue: $' + tooltipItem.yLabel.formatMoney(2, '.', ',');
+                }
+            } 
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: format_currency,
+                }
+            }]
+        }
+    }
+});
+
+$('#update-revenue-panel').removeAttr('disabled');

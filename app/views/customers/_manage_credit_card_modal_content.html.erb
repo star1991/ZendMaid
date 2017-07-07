@@ -1,0 +1,44 @@
+<%= render 'shared/flash_notice' %>
+
+<% if @credit_card.api_error.present? %>
+	<div class="alert alert-error">
+		<%= @credit_card.api_error %>
+	</div>
+<% end %>
+
+<%= simple_form_for @credit_card, :url => process_card_credit_cards_path, :defaults => {:required => false }, :html => { :class => "form-horizontal uni narrow-control-groups compact-horizontal-wide" }, :remote => true, :method => :post do |f| %>
+
+	<%= hidden_field_tag "customer_id", @customer.id %>
+
+	<%= f.input :token, :as => :select, :include_blank => false, :collection => @customer.credit_cards.map { |credit_card| [ render(credit_card), credit_card.token] } + [["New Card", nil]], :label => "Select Card", :input_html => {:id => "card-token", :style => "width:320px;"},
+		:wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+	<div id="new-card-form-fields" class="description-panel-alt" style="margin:0px;display:none;">
+
+		<%= f.input :card_number, :input_html => {:style => "width:220px;margin-top:5px;"}, :wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+		<%= f.input :expiry_date, :label => "Exp. Date", :input_html => {:style => "width:75px;", :id => "expiry-date"}, :wrapper_html => {:class => "compact-horizontal-wide inline"} %>
+
+		<%= f.input :cvc, :label => "CVC", :input_html => {:style => "width:50px;"}, :wrapper_html => {:class => "compact-horizontal inline"} %> 
+
+	</div>
+
+	<%= f.input :charge, :label => "Amount", :input_html => {:style => "width:100px", :value => number_to_currency(@credit_card.charge) }, :hint => "Leave blank to save new credit card to file without charging it.", :wrapper_html => {:class => "compact-horizontal-wide"} %>
+
+	<% if params[:appointment_id].present? %>
+		<%= hidden_field_tag "appointment_id", params[:appointment_id] %>
+		<%= f.input :mark_appointment_as_paid, :as => :boolean, :label => false, :inline_label => "Mark this appointment as paid after charging card?", :wrapper_html => {:class => "compact-horizontal-wide"}, :input_html => {:checked => true} %>
+	<% end %>
+
+
+	<div class="green-message">
+		If you are charging this customer's card for multiple cleanings, please remember to mark the corresponding appointments as paid to ensure accurate record keeping!
+	</div>
+
+	<div class="pull-right">
+		<%= f.button :submit, "Charge Card", :class => "btn btn-blue" %>
+	</div>
+
+<% end %>
+
+

@@ -1,0 +1,11 @@
+<div class="nested-fields" style="margin-bottom: 10px;cursor:move;">
+	<span style="margin-left: 20px;margin-right: 20px;"><i class="darkblue icon-sort"></i></span><%= f.input :field_name, :label => "Name", :wrapper_html => {:class => "inline" } %> 
+	as <%= f.input_field :input_type, :as => "select",:include_blank => false, :collection => ['string', 'select', 'boolean'] %>
+	<%= f.hidden_field :order, :class => "order-field" %>
+	<%= f.hidden_field :field_type, :value => 'instant_booking' %>
+	<%= f.input :min_field_value, :as => :string %>
+	<%= f.input :max_field_value, :as => :string %>
+	<%= f.input :price, :as => :string %>
+	<%= f.input :service_type_id, :label => "Cleaning Type", :collection => @user.service_types.map { |type| [type.name, type.id] }, :include_blank => false %>
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger", :data => {:confirm => "Are you sure you wish to delete this field AND all associated data?"} %></div>
+</div>

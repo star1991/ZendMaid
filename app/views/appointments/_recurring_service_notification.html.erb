@@ -1,0 +1,22 @@
+<div class="info-box padded10">
+
+<% if @subscription.repeat %>
+
+<strong>
+	This appointment is part of a <span class="blue">recurring</span> service, repeating <span class="blue"><%= recurrence_in_words(@subscription) %></span> 
+	from <span class="blue"><%= @subscription.constraints[:start_date].strftime('%m/%d/%Y') %></span>
+	
+	<% if @subscription.constraints[:end_date].present? %>
+		to <span class="blue"><%= @subscription.constraints[:end_date].strftime('%m/%d/%Y') %></span>
+	<% else %>
+		onwards
+	<% end %>
+</strong>
+
+<% else %>
+
+<strong>This is a <span class="blue">one-time</span> service</strong>
+				
+<% end %>
+
+</div>

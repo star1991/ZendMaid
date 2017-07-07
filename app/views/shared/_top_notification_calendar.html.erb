@@ -1,0 +1,32 @@
+<% if !current_user.completed_onboarding? %>
+  <div class="row-fluid" style="margin-bottom:-10px;">
+  <div class="span12">
+    <div class="content-box center transparent">
+      
+      <h5 class="blue">
+        Please don't forget to finish your account setup
+
+        <%= link_to "Launch Setup Wizard", current_onboarding_page, :class => "btn btn-inverse", :style=>"font-weight:normal" %> 
+      </h5>
+    
+    </div>
+  </div>
+  </div>
+
+<% elsif current_user.plan_id.blank? && current_user.active?  %>
+
+  <div class="row-fluid" style="margin-bottom:-10px;">
+  <div class="span12">
+    <div class="content-box center transparent">
+      
+      <h5 class="blue">
+        Your free trial will end in <span style="color:darkred;"><%= (current_user.free_trial_end - Time.zone.now).to_i/1.day + 1 %> days</span>
+
+        <%= link_to "Subscribe now to enjoy uninterruped service", billing_path, :class => "btn btn-inverse", :style=>"font-weight:normal" %> 
+      </h5>
+    
+    </div>
+  </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,28 @@
+<!-- edit location and contanct info popup -->
+<div class="modal fade hide" id="adjust-status-modal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="icon-cog red"></i> Change Default Status</h4>
+        </div>
+        <div class="modal-body">
+        	<%= simple_form_for @subscription, :html => { :class => "form-horizontal uni" }, :method => :post, :url => edit_status_subscription_path(@subscription) do |f| %>
+        		
+      		<%= f.simple_fields_for :appointments, @appointment do |appointment_builder| %>
+				<%= appointment_builder.association :status, :collection => current_user.statuses, :label_method => :name, :value_method => :id, :include_blank => false, :label => "Change status to" %>  		
+        	<% end %>
+        	
+ 			<%= f.input :edit_on, :as => :date_picker, :input_html => {:value => Time.zone.now.try(:strftime,'%m/%d/%Y'), :readonly => true, :style => "width: 75px;"}, :label => "Starting on" %>
+ 				
+			<%= f.button :submit, 'Change Status', :class => "pull-right btn btn-red" %>
+			
+			<% end %>
+			
+		</div>
+    </div>
+	</div>
+</div>
+
+
+</div>

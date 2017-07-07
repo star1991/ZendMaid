@@ -1,0 +1,78 @@
+<% provide(:title, "Manage User Account") %>
+<% provide(:icon, "icon-cogs") %>
+
+
+<div class="container">
+
+
+<div class="row-fluid">
+	<div class="span12">    	
+  <div class="content-box">
+    <div class="content-box-header">
+        <i class="icon-cogs"></i> Manage User Account
+    </div>
+	
+  	<div class="row-fluid">		
+		  <div class="span12">
+		  <div class="padded">
+		
+		    <%= render 'shared/flash_notice' %>	
+
+        <%= simple_form_for @user, :url => users_path, :method => :put, :html => { :class => "form-horizontal uni" }, :defaults => {:required => false} do |f| %>
+
+          <%= f.input :active %>
+
+          <%= f.input :booking_form_started, :as => :boolean %>
+
+          <%= f.input :free_trial_end, :as => :date_picker, :input_html => {:class => "mirrored-start", :value => @user.free_trial_end.try(:strftime,'%m/%d/%Y'), :style => "width: 105px"}, :label => "Free Trial Ends" %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+            </div>
+          </div>
+
+        <% end %>
+
+  		</div>
+  		</div>
+  	</div>
+  	
+  </div>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">      
+  <div class="content-box">
+    <div class="content-box-header">
+        <i class="icon-cogs"></i> Change Plan
+    </div>
+  
+    <div class="row-fluid">   
+      <div class="span12">
+      <div class="padded">
+    
+        <%= render 'shared/flash_notice' %> 
+
+        <%= simple_form_for @user, :url => users_path, :method => :put, :html => { :class => "form-horizontal uni" }, :defaults => {:required => false} do |f| %>
+
+          <%= f.input :plan_id, :as => :select, :include_blank => false, :collection => [["Premium (Month-to-Month, $99/mo)", "premium-new"], ["Premium (Paid Annually, $59/mo)", "premium-annual"], ["Premium (One-Time Fee, $1,997)", "premium-1997"], ["Basic (Month-to-Month, $49/mo)", "basic-new"], ["Basic (Paid Annually, $29/mo)", "basic-annual"], ['Systems Week Launch ($79/mo)', 'systems-week-launch']], :label => "Change Plan To", :input_html => {:style => "height:40px;width:260px;"} %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= f.button :submit, "Save Changes" , :class => "btn btn-green pull-right" %>
+            </div>
+          </div>
+
+        <% end %>
+
+      </div>
+      </div>
+    </div>
+    
+  </div>
+  </div>
+</div>
+
+</div>

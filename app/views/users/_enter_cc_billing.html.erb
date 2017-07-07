@@ -1,0 +1,53 @@
+
+         <div class="blue-message">
+          
+          <% if !@user.active? %>
+            <span class="red"><strong>Your free trial expired on <%= @user.free_trial_end.strftime("%B %d, %Y") %>.</strong></span><br><br>
+
+              Don't worry! We've saved all of your information. Just subscribe to a plan below to continue using ZenMaid.
+          <% else %>
+            <span class="headline">You are currently trialing ZenMaid. Your free trial will end on <strong><%= @user.free_trial_end.try(:strftime, "%B %d, %Y") %></strong>.</span><br><br>
+
+            Subscribe to a plan below to enjoy uninterrupted service!
+          <% end %>
+         
+         </div>
+
+         <%= render 'pricing_tables_billing' %>
+
+          <div class="row-fluid">
+            <div class="span7 offset2">
+
+            <div class="description-panel-alt" style="padding:20px;">
+              <% if @user.api_error.present? %>
+                <div class="alert alert-error">
+                  <%= @user.api_error %>
+                </div>
+              <% end %>
+
+              <%= simple_form_for(current_user, :url => subscribe_plan_path, :method => :post, :html => { :class => "form-horizontal" }, :defaults => {:required => false}) do |f| %>
+
+                <%= f.input :plan_id, :as => :select, :include_blank => false, :collection => [["Premium (Month-to-Month, $99/mo)", "premium-new"], ["Premium (Paid Annually, $59/mo)*", "premium-annual"], ["Premium (One-Time Fee, $1,997)", "premium-1997"], ["Basic (Month-to-Month, $49/mo)", "basic-new"], ["Basic (Paid Annually, $29/mo)*", "basic-annual"]], :label => "Select Your Plan", :input_html => {:style => "height:40px;width:260px;"} %>
+
+                <%= f.input :card_number,:input_html => {:style => "width:300px;"}, :placeholder => "Card Number" %>
+
+                <%= f.input :expiry_month,:as => :select, :include_blank => false, :collection => 1..12 , :label => "Expiry Month", :input_html => {:style => "width:50px;margin-right:2px;", :id => "expiry-date"}, :wrapper_html => {:class => "inline"}, :placeholder => "mm" %>
+
+                <%= f.input :expiry_year,:as => :select, :include_blank => false,:collection => Time.now.year..Time.now.year+50, :label => "Year", :input_html => {:style => "width:70px;margin-right:2px;", :id => "expiry-date"}, :wrapper_html => {:class => "compact-horizontal inline"}, :placeholder => "yyyy" %>
+
+                <%= f.input :cvc, :label => "CVC", :input_html => {:style => "width:50px;"}, :wrapper_html => {:class => "compact-horizontal inline"}, :placeholder => "CVC" %> 
+
+                <!-- <hr> -->
+                <div class="actions clearfix" style="text-align:right;">
+                  <%= f.button :submit, "I'm Ready! Sign me up for ZenMaid now!", :class => "btn btn-green" %>
+                </div>
+              <% end %>
+
+              <br>
+              <small>*Annual plans are billed annually for the year in advance ($708/yr for Premium and $348/yr for Basic). The first yearly payment will be assessed immediately after sign up.</small> 
+              </div>
+            </div>
+          </div>
+
+
+

@@ -1,0 +1,35 @@
+<p>You have <%= pluralize(@upcoming_appointments.count, 'appointment') %> scheduled for today.</p>
+
+----------------------<br>
+<% @upcoming_appointments.each do |appointment| %>
+
+<b>Customer Contact Information</b><br>
+Name: <%= appointment.customer.full_name %><br>
+Email: <%= appointment.customer.email %><br>
+Phone Number: <%= formatted_phone_number appointment.customer.phone_number %><br><p>
+
+
+<b>Appointment Details</b><br>
+Time: <%= formatted_time(appointment.start_time, {:exact => true}) %><br>
+Address: <%= "#{appointment.address.line1} #{appointment.address.line2}, #{appointment.address.city}, #{appointment.address.state} #{appointment.address.postal_code}" %><br>
+
+<% if appointment.price.present? && appointment.price > 0 %>
+Estimated Price: <%= appointment.price %><br>
+<% end %>
+
+<% appointment.appointment_service_items.each do |service_item| %>
+<%= "#{service_item.field_name}: #{service_item.value_name}" %>	<br>
+<% end %>
+
+Requests: <%= appointment.requests %><br>
+
+<%
+=begin
+Notes: <%= appointment.notes %><br>
+Confirmed: <%= yes_no appointment.confirmed? %><br>
+Paid: <%= yes_no appointment.paid? %><br>
+=end
+%>
+-----------------------<br>
+
+<% end %>

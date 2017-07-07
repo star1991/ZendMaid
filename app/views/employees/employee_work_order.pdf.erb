@@ -1,0 +1,14 @@
+
+<div>
+	<span style="font-size:22px;color:blue;"><%= @employee.full_name %></span><br>
+	<span style="font-size:14px;color:#555555;">Work order for <%= @from.strftime('%-m/%-d/%Y') %> - <%= @to.strftime('%-m/%-d/%Y') %></span>
+	<span style="float:right;color:#555555;">Report generated on <%= Time.zone.now.strftime('%-m/%-d/%Y') %></span>
+		
+</div><hr>
+
+<% @employee.assigned_appointments.each do |appointment| %>
+	<div style="page-break-inside: avoid;padding: 10px 0px;border-bottom:1px solid grey;">
+		<%= @body_template.render('appointment' => AppointmentDrop.new(appointment)).html_safe %>
+	</div>
+<% end %>
+

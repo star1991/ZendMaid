@@ -1,0 +1,20 @@
+<p><%= "#{@user_profile.company_name} (ID #{@user.id}, email #{@user_profile.company_email}) just completed the onboarding process." %></p>
+
+<p>These are the results of their entrance survey:</p>
+
+<strong>How did you hear about us</strong><br>
+<%= simple_format @user_profile.where_hear_about_us %>
+<br>
+
+<strong>What made you sign up for ZenMaid?</strong><br>
+<%= simple_format @user_profile.why_sign_up %><br>
+<br>
+<strong>How do you currently manage your business?</strong><br>
+<%= simple_format @user_profile.current_management %><br>
+<br>
+<strong>Is there a specific feature or functionality that you are looking for in ZenMaid?</strong><br>
+<%= simple_format @user_profile.specific_features %><br>
+<br>
+<strong>Bonus: Is there something you're struggling with in your business at the moment you don't believe software can solve?</strong><br>
+<%= simple_format @user_profile.struggles %><br>
+<br>

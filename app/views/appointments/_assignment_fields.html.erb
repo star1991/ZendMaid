@@ -1,0 +1,5 @@
+<div class="nested-fields" style="max-width:800px;">
+	<%= f.hidden_field :employee_id, :class => "employee-id" %>
+	<span class="employee-name"><%= f.object.employee.try(:full_name) %></span>
+	<div class="pull-right"><%= link_to_remove_association '<i class="icon-remove"></i>'.html_safe, f, :class => "btn btn-mini btn-danger" %></div>
+</div>

@@ -1,0 +1,11 @@
+<div id="eventPreviewPanel">
+  <h5 class="background-green" style="margin-top:47px;">
+    Task Information
+    <%= render 'shared/close_pageslide' %>
+  </h5>
+  <div class="padded10">
+	<div class="description-panel-alt">
+	<%= render :partial => 'tasks/task', :locals => {task: task} %>
+	</div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+$("#task_<%=@task.id%>").closest("li").effect('highlight', {}, 400, function(){
+    $(this).fadeOut('fast', function(){
+        $(this).remove();
+    });
+});
+
+// refresh calender if called from calendar page
+if ($('#eventPreviewPanel').length) {
+  $pageslide.find('.close-pageslide').trigger('click');
+  filterObject.refresh_calendar();
+}

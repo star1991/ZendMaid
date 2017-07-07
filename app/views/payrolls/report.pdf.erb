@@ -1,0 +1,71 @@
+<div class="page">
+
+<div>
+	<div style="text-align:center;">
+		<span style="font-size:30px;">Payroll ID # <%= @payroll.payroll_number %></span><br>
+		<span style="font-size:27px;"><%= "#{@payroll.start_date.strftime('%-m/%-d/%Y')} - #{@payroll.end_date.strftime('%-m/%-d/%Y')}" %></span>
+	</div>
+</div>
+
+<div style="margin-top:30px;">
+	<table class="table table-pdf" border="1" style="width:100%;border-collapse:collapse;">
+		<thead>
+			<tr>
+				<th>Employee Name</th>
+				<th>Pay Rate</th>
+				<th>Wage</th>
+				<th>Bonus</th>
+				<th>Deductions</th>
+				<th>Total</th>
+			</tr>	
+		</thead>
+		<tbody>
+				<% @payroll.payroll_entries.each do |entry| %>
+					<tr>
+						<td> 
+							<strong><%= entry.full_name %></strong>
+						</td>
+						<td>
+							<%= display_pay_rate entry %>
+						</td>
+						<td>
+							<%= number_to_currency entry.wage %>
+						</td>
+						<td>
+							<%= number_to_currency entry.bonus %>
+						</td>
+						<td>
+							<%= number_to_currency entry.deductions %>
+						</td>
+						<td>
+							<%= number_to_currency entry.total_pay %>
+						</td>
+
+					</tr>
+				<% end %>
+				</tbody>
+	</table>	
+</div>
+
+<div style="font-size:18px;margin-top:30px;text-align:right;">
+	<strong style="margin-right:10px;">Total</strong>
+	<%= number_to_currency @payroll.total_pay %>
+</div>
+
+</div>
+
+<% @payroll.payroll_entries.each do |payroll_entry| %>
+
+	<div class="page">
+
+	<% if payroll_entry.pay_type == 'Hourly' %>
+		<%= render 'payroll_entries/hourly_report', :entry => payroll_entry %>
+	<% elsif payroll_entry.pay_type == 'Revenue Share' %>
+		<%= render 'payroll_entries/rev_share_report', :entry => payroll_entry %>
+	<% else %>
+		<%= render 'payroll_entries/fixed_rate_report', :entry => payroll_entry %>
+	<% end %>
+	
+	</div>
+
+<% end %>

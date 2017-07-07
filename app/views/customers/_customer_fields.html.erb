@@ -1,0 +1,36 @@
+	<div id="recurrence-toggle" class="padded10 description-panel-alt">
+    	<strong class="darkblue">This record is a</strong><%= f.input_field :lead, :class => "repeat-toggle inline", :collection => [["Lead", true], ["Customer", false]], :as => :radio_buttons %><br>
+    </div>
+
+    <%= f.input :title, :collection => ['Mr.', 'Mrs.', 'Ms.', 'Dr.'], :label => 'Contact Name', :input_html => {:class => "width75"}, :wrapper_html => {:class => "inline"} %>
+    <%= f.input :first_name, :label => false, :placeholder => "First Name...", :input_html => {:style => "width:130px;"}, :wrapper_html => {:class => "inline controls-margin0"} %>
+    <%= f.input :last_name, :label => false, :placeholder => "Last Name...", :input_html => {:style => "width:130px;"}, :wrapper_html => {:class => "inline controls-margin0"} %><br>
+    <%= f.input :company_name, :label => "Company Name" %>
+
+    <%= f.input :marketing_source, :collection => CustomField.get_marketing_sources(current_user), :label => 'Marketing Source', :wrapper_html => {:class => "inline"} %>
+
+    <div class="new-merketing-source-container">
+      <%= f.input :new_marketing_source, :label => "Marketing Source Name" %>
+    </div>
+
+	<div id="phone-numbers-fields" class="info-box">
+		<%= f.simple_fields_for :phone_numbers, @customer.phone_numbers do |phone_number_builder| %>
+			<%= render 'phone_number_fields', :f => phone_number_builder %>
+		<% end %>
+	
+					
+		<div class="links">
+			<%= link_to_add_association '<i class="icon-plus"></i> Add Phone Number'.html_safe, f, :phone_numbers %>
+		</div>
+	</div>	
+
+	<div id="emails-fields" class="info-box">
+		<%= f.simple_fields_for :emails, @customer.emails do |email_builder| %>
+			<%= render 'email_fields', :f => email_builder %>
+		<% end %>
+	
+					
+		<div class="links">
+			<%= link_to_add_association '<i class="icon-plus"></i> Add Email Address'.html_safe, f, :emails %>
+		</div>
+	</div>	

@@ -1,0 +1,26 @@
+<h6 class="bottom-bordered"> Service Locations </h6>
+
+<div id="addresses-fields">
+	<%= f.simple_fields_for :addresses, @service_addresses, :defaults => {:required => false} do |address_builder| %>
+		<%= render 'customers/address_fields', :f => address_builder %>
+	<% end %>
+					
+	<div class="links" style="margin-bottom: 10px;">
+		<%= link_to_add_association '<i class="icon-plus"></i> Add Service Location'.html_safe, f, :addresses, :render_options => {:defaults => {:required => false}} %>
+	</div>
+</div>	
+
+<h6 class="bottom-bordered"> Billing Address </h6>
+
+<div class="nested-fields" style="margin-bottom:5px;">
+	<div class="row-fluid">
+		<div class="span11">
+			<div class="peach-background padded10 narrow-control-groups" id="billing-address-fields">
+				<%= f.simple_fields_for :addresses, @billing_address, :defaults => {:required => false} do |address_builder| %>
+					<%= address_builder.hidden_field :billing %>
+					<%= render 'addresses/address_fields', :f => address_builder %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

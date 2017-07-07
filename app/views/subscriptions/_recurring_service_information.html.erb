@@ -1,0 +1,12 @@
+<div class="green-message" style="margin-top:20px;margin-bottom:0px;">
+<strong>
+	Appointments for this recurring service <%= @subscription.active? ? "are automatically created" : "were automatically created" %> <%= recurrence_description(@subscription, @appointment) %>, </span> 
+	
+	<% if @subscription.constraints[:end_date].present? %>
+		between the dates of <span class="blue"><%= @subscription.constraints[:start_date].strftime('%-m/%d/%Y') %></span> to <span class="blue"><%= @subscription.constraints[:end_date].strftime('%-m/%d/%Y') %></span>
+	<% else %>
+		starting from  <span class="blue"><%= @subscription.constraints[:start_date].strftime('%-m/%d/%Y') %></span> onwards
+	<% end %>
+</strong>
+
+</div>

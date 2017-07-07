@@ -1,0 +1,7 @@
+$("#task_<%= @task.id %>").replaceWith("<%= escape_javascript(render('tasks/task', :task => @task).html_safe) %>");
+$('#check_box_<%= @task.id %>').uniform();
+
+// refresh calender if called from calendar page
+if (filterObject) {
+  filterObject.refresh_calendar();
+}

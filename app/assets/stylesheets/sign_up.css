@@ -1,0 +1,371 @@
+
+body {
+    color: #666;
+    font-family: "Open Sans",Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7em;
+    margin: auto !important;
+    width: 100% !important;
+} 
+
+
+#body {
+    background-color: transparent !important;
+    background-image: none !important;
+    margin: 0;
+    padding: 0;
+} 
+
+a{
+	color:#2ea3f2 !important;
+}
+
+a:hover {
+    color:#9fd5f9 !important;
+}
+
+#main {
+    background:#2ea3f2;
+    margin-top: 0 !important;
+    overflow: none;
+    padding: 0 !important;
+	width:100%;
+}
+
+#main > .container::before {
+    content:"747-222-6243";
+	padding:14px 7.5%;
+	color:#fff;
+	text-transform:uppercase;
+} 
+
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+	width: 100% !important;
+}
+.content-box{
+	background:transparent !important;
+    border: medium none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0;
+}
+
+.padded{
+	padding:0 !important;
+}
+.span12>.padded>.row-fluid{
+	background:#283139 !important;
+}
+
+.container{
+	margin:0 !important;
+}
+
+#main>.container{
+	max-width:100%;
+	padding: 0;
+}
+
+.row-fluid> .span12> hr{
+	display:none;
+}
+
+.content-box > .row-fluid > .span12> .padded  .row-fluid:last-child{
+	margin-top:0 !important
+}
+
+.content-box > .row-fluid > .span12> .row-fluid{
+	padding:0 7.5% !important; 
+	margin:auto; background:#fff;
+}
+
+.padded > .row-fluid > .span6 >span{
+	color:#fff !important;
+	font-size: 26px !important;
+	line-height: 1em;
+    padding-bottom: 10px;
+}
+	
+.padded > .row-fluid > .span6 >span.cobalt-grey {
+    color: #fff !important;
+	font-size:16px !important;
+}
+
+.padded:last-child{
+	font-size:22px !important; 
+	padding:5% !important;;
+}
+
+.container::before, .container::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.container::after {
+    clear: both;
+}
+
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.row-fluid::before, .row-fluid::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+
+.row-fluid::after {
+    clear: both;
+}
+
+.row-fluid::after {
+    clear: both;
+}
+
+.row-fluid {
+    width: 100%;
+}
+
+
+.row-fluid [class*="span"] {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    margin-left: 2.5641%;
+    min-height: 30px;
+    width: 100%;
+}
+.row-fluid .span12 {
+    width: 100%;
+}
+
+.span12 {
+    width: 1170px;
+}
+[class*="span"] {
+    float: left;
+    margin-left: 30px;
+}
+
+
+.row-fluid [class*="span"]:first-child {
+    margin-left: 0;
+}
+
+.span12 {
+    width: 940px;
+}
+[class*="span"] {
+    float: left;
+    margin-left: 20px;
+}
+
+.padded > .row-fluid {
+    padding:7.5%;
+}
+
+.span6 .padded{
+	margin-left: 35% !important;    
+	background-color: rgb(46, 163, 242) !important;
+    border: 1px solid #d2d2d2; 
+	padding: 7.5% !important; 
+	text-align:center;
+}
+	
+.span6 .padded, .span6 .padded >a ,.span6 >.padded >div > a{ 
+	font-size:16px !important; 
+	color:#fff !Important;
+}
+
+.padded >a:hover ,.span6 >.padded >div > a:hover{ 
+    color:#bfbfbf !Important;
+}
+
+.span12 > .padded > .row-fluid:last-child{
+	background:#fff !important; 
+	padding:7.5% !important;
+}
+
+.padded:last-child > span{
+	color:#fff !important;
+}
+
+.row-fluid .span6 {
+    width: 48.7179%;
+}
+
+.span6 {
+    width: 570px;
+}
+.span6 {
+    width: 460px;
+}
+
+
+.footer {
+    background: #333333 none repeat scroll 0 0 !important;
+    color: rgba(144, 95, 28, 0.5);
+    max-width: 100%;
+    padding: 5px 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+	text-align:center;
+	font-size:18px;
+	margin-top:2%;
+	border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none  !important;
+	margin-bottom: 0 !important;
+}
+
+.footer h5{margin:0 !important;}
+
+
+.clearfix::before, .clearfix::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+.clearfix {
+}
+
+
+.blue {
+    color: inherit !important;
+}
+
+/*form css*/
+/*form css*/
+/*form css*/
+.form-horizontal .control-group::before, .form-horizontal .control-group::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.form-horizontal .control-group::after {
+    clear: both;
+}
+.form-horizontal .control-group::before, .form-horizontal .control-group::after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.sign-up-form .control-group {
+    margin-bottom: 7px;
+}
+.form-horizontal .control-group {
+    margin-bottom: 20px;
+}
+.control-group {
+    margin-bottom: 10px;
+}
+
+
+.sign-up-form .control-group label {
+    font-size: 14px;
+    font-weight: normal;
+}
+.form-horizontal .control-label {
+    float: left !important;
+    padding-top: 5px;
+    text-align: left;
+    width: 100%;
+}
+.form-horizontal label, .form-vertical label {
+    font-weight: bold;
+}
+label {
+    font-size: 12px;
+}
+body * {
+    box-sizing: border-box;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+label, input, button, select, textarea {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+
+.form-horizontal .controls {
+    margin-left: 0 !important;
+}
+
+
+.sign-up-form .control-group .controls input[type="password"], .sign-up-form .control-group .controls input[type="text"], .sign-up-form .control-group .controls input[type="email"], .sign-up-form .control-group .controls input[type="tel"] {
+    height: 40px;
+}
+.form-vertical input[type="text"], .form-vertical input[type="password"], .form-vertical input[type="datetime"], .form-vertical input[type="datetime-local"], .form-vertical input[type="date"], .form-vertical input[type="month"], .form-vertical input[type="time"], .form-vertical input[type="week"], .form-vertical input[type="number"], .form-vertical input[type="email"], .form-vertical input[type="url"], .form-vertical input[type="search"], .form-vertical input[type="tel"], .form-vertical input[type="color"], .form-vertical textarea, .form-vertical .uneditable-input, .form-horizontal input[type="text"], .form-horizontal input[type="password"], .form-horizontal input[type="datetime"], .form-horizontal input[type="datetime-local"], .form-horizontal input[type="date"], .form-horizontal input[type="month"], .form-horizontal input[type="time"], .form-horizontal input[type="week"], .form-horizontal input[type="number"], .form-horizontal input[type="email"], .form-horizontal input[type="url"], .form-horizontal input[type="search"], .form-horizontal input[type="tel"], .form-horizontal input[type="color"], .form-horizontal textarea, .form-horizontal .uneditable-input, .form-default input[type="text"], .form-default input[type="password"], .form-default input[type="datetime"], .form-default input[type="datetime-local"], .form-default input[type="date"], .form-default input[type="month"], .form-default input[type="time"], .form-default input[type="week"], .form-default input[type="number"], .form-default input[type="email"], .form-default input[type="url"], .form-default input[type="search"], .form-default input[type="tel"], .form-default input[type="color"], .form-default textarea, .form-default .uneditable-input {
+    width: 100%;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    font-size: 12px;
+    height: 30px;
+    line-height: 20px;
+}
+.form-search input, .form-search textarea, .form-search select, .form-search .help-inline, .form-search .uneditable-input, .form-search .input-prepend, .form-search .input-append, .form-inline input, .form-inline textarea, .form-inline select, .form-inline .help-inline, .form-inline .uneditable-input, .form-inline .input-prepend, .form-inline .input-append, .form-horizontal input, .form-horizontal textarea, .form-horizontal select, .form-horizontal .help-inline, .form-horizontal .uneditable-input, .form-horizontal .input-prepend, .form-horizontal .input-append {
+    margin-bottom: 5px;
+}
+.form-search input, .form-search textarea, .form-search select, .form-search .help-inline, .form-search .uneditable-input, .form-search .input-prepend, .form-search .input-append, .form-inline input, .form-inline textarea, .form-inline select, .form-inline .help-inline, .form-inline .uneditable-input, .form-inline .input-prepend, .form-inline .input-append, .form-horizontal input, .form-horizontal textarea, .form-horizontal select, .form-horizontal .help-inline, .form-horizontal .uneditable-input, .form-horizontal .input-prepend, .form-horizontal .input-append {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 3px;
+    color: #555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 9px;
+    padding: 4px 6px;
+}
+
+
+.btn{    
+	background: #1e73be none repeat scroll 0 0;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    max-width: 90%;
+    padding: 3%;
+    text-align: center;
+	cursor:pointer;
+}
+/*End form css*/
+/*End form css*/
+
+/*media query for small screen*/
+/*media query for small screen*/
+@media screen and (max-width:767px){
+.row-fluid .span6 {
+   width: 100%
+}
+
+.span6 .padded{
+	margin-left: 0 !important;
+}
+}

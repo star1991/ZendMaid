@@ -1,0 +1,4 @@
+<div class = "appointment-field-elements">
+<p><%= f.input_field :field_name %> as <%= f.input_field :input_type, :collection => [["Text", 'string'], ['Dropdown Menu', 'select'], ['Checkbox', 'boolean']], :class => "extra-appointment-fields-determiner" %>Order: <%= f.input_field :order %></p>
+<p> Price: $<%= f.input_field :price, :style => "width:20px", :value => f.object.price.to_i %>.00/Item (disregard min and max value for checkbox fields)<div class="extra-appointment-fields" style="padding-left:20px">Min Value: <%= f.input_field :min_field_value, :style => "width:20px;margin-right:10px" %>Max Value: <%= f.input_field :max_field_value, :style => "width:20px" %></div></p>
+</div>
